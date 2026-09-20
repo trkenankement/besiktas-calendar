@@ -1,41 +1,41 @@
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 
 from icalendar import Calendar
 
 from besiktas_calendar.ics import escape_text, fold_line, render_calendar, write_if_changed
 from besiktas_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match
 
-STAMP = datetime(2026, 9, 20, 12, 0, tzinfo=timezone.utc)
+STAMP = datetime(2026, 9, 20, 12, 0, tzinfo=UTC)
 
 
 def football(**overrides):
-    fields = dict(
-        source="tff",
-        source_id="317845",
-        sport=FOOTBALL,
-        competition="Trendyol Süper Lig",
-        round_label="7. Hafta",
-        start=datetime(2026, 10, 11, 19, 0, tzinfo=TURKEY_TZ),
-        home="Beşiktaş",
-        away="Kocaelispor",
-        venue="Beşiktaş Park, İstanbul",
-        info_url="https://www.tff.org/Default.aspx?pageId=29&macId=317845",
-    )
+    fields = {
+        "source": "tff",
+        "source_id": "317845",
+        "sport": FOOTBALL,
+        "competition": "Trendyol Süper Lig",
+        "round_label": "7. Hafta",
+        "start": datetime(2026, 10, 11, 19, 0, tzinfo=TURKEY_TZ),
+        "home": "Beşiktaş",
+        "away": "Kocaelispor",
+        "venue": "Beşiktaş Park, İstanbul",
+        "info_url": "https://www.tff.org/Default.aspx?pageId=29&macId=317845",
+    }
     fields.update(overrides)
     return Match(**fields)
 
 
 def basketball_tbd(**overrides):
-    fields = dict(
-        source="tbf",
-        source_id="346320",
-        sport=BASKETBALL,
-        competition="Türkiye Sigorta Basketbol Süper Ligi",
-        round_label="6. Hafta",
-        start=date(2026, 10, 31),
-        home="Beşiktaş",
-        away="Çayırova Belediyesi",
-    )
+    fields = {
+        "source": "tbf",
+        "source_id": "346320",
+        "sport": BASKETBALL,
+        "competition": "Türkiye Sigorta Basketbol Süper Ligi",
+        "round_label": "6. Hafta",
+        "start": date(2026, 10, 31),
+        "home": "Beşiktaş",
+        "away": "Çayırova Belediyesi",
+    }
     fields.update(overrides)
     return Match(**fields)
 
@@ -79,7 +79,7 @@ def test_calendar_is_valid_and_uses_crlf_only():
 def test_confirmed_match_is_written_in_utc_with_a_duration():
     _, events = parse(render_calendar([football()], "Test", "", stamp=STAMP))
     event = events[0]
-    assert event["DTSTART"].dt == datetime(2026, 10, 11, 16, 0, tzinfo=timezone.utc)  # 19:00 TSİ
+    assert event["DTSTART"].dt == datetime(2026, 10, 11, 16, 0, tzinfo=UTC)  # 19:00 TSİ
     assert event["DTEND"].dt - event["DTSTART"].dt == timedelta(hours=2, minutes=15)
     assert str(event["STATUS"]) == "CONFIRMED"
     assert str(event["SUMMARY"]) == "Beşiktaş - Kocaelispor"

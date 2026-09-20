@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Iterable
 from dataclasses import dataclass
-from datetime import date, datetime, timezone
+from datetime import UTC, date, datetime
 from pathlib import Path
-from typing import Iterable
 
 import requests
 
@@ -81,7 +81,7 @@ def write_outputs(out_dir: Path, matches: list[Match], now: datetime) -> dict[st
     changed: dict[str, bool] = {}
     for feed in FEEDS:
         content = ics.render_calendar(
-            feed.select(matches), feed.calendar_name, feed.description, stamp=now.astimezone(timezone.utc)
+            feed.select(matches), feed.calendar_name, feed.description, stamp=now.astimezone(UTC)
         )
         changed[feed.filename] = ics.write_if_changed(out_dir / feed.filename, content)
     changed["index.html"] = ics.write_if_changed(out_dir / "index.html", site.render_index(matches, now), ignore_prefixes=())

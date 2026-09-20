@@ -2,18 +2,23 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+import re
+from collections.abc import Iterable
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
-from typing import Iterable
 
 from .models import MATCH_DURATION, SOURCE_LABELS, SPORT_LABELS, Match
 
 PRODID = "-//besiktas-calendar//TR"
 TIMEZONE_ID = "Europe/Istanbul"
 CRLF = "\r\n"
+# RFC 5545 TEXT içinde yasak olan denetim karakterleri (sekme ve satır sonları hariç).
+_CONTROL_CHARS = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]")
 
 
 def escape_text(value: str) -> str:
+    """TEXT değerini RFC 5545'e göre kaçışlar; kaynaktan gelen veri yeni bir özellik ekleyemez."""
+    value = _CONTROL_CHARS.sub("", value)
     return (
         value.replace("\\", "\\\\")
         .replace(";", "\\;")
@@ -43,7 +48,7 @@ def fold_line(line: str) -> str:
 
 
 def _utc(moment: datetime) -> str:
-    return moment.astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return moment.astimezone(UTC).strftime("%Y%m%dT%H%M%SZ")
 
 
 def _description(match: Match) -> str:
@@ -72,7 +77,7 @@ def event_lines(match: Match, stamp: str) -> list[str]:
         f"CATEGORIES:{categories}",
     ]
     if match.time_confirmed:
-        start = match.start.astimezone(timezone.utc)
+        start = match.start.astimezone(UTC)
         lines += [
             f"DTSTART:{_utc(start)}",
             f"DTEND:{_utc(start + MATCH_DURATION[match.sport])}",
@@ -94,7 +99,7 @@ def event_lines(match: Match, stamp: str) -> list[str]:
 
 
 def render_calendar(matches: Iterable[Match], name: str, description: str, *, stamp: datetime | None = None) -> str:
-    stamp_text = _utc(stamp or datetime.now(timezone.utc))
+    stamp_text = _utc(stamp or datetime.now(UTC))
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",

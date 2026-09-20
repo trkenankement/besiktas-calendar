@@ -15,6 +15,8 @@ concurrency:
   group: update-calendar
   cancel-in-progress: false
 
+# Eylemler tam commit numarasına sabitlidir (sürüm yorumda). Güncellemek için yeni sürümün
+# commit numarasını bulup buradaki numarayı ve yorumu değiştirin.
 jobs:
   build:
     # ubuntu-latest 19 Ekim 2026'da Ubuntu 26'ya geçecek; günlük iş doğrulanmış imajda kalsın.
@@ -25,10 +27,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          # Token diskte kalmasın: paket kurulumu, testler ve üretici kod onu göremesin.
+          # Yalnızca aşağıdaki "Commit changes" adımına açıkça verilir.
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: "3.12"
           cache: pip
@@ -47,9 +54,18 @@ jobs:
 
       - name: Commit changes
         if: github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          OWNER: ${{ github.repository_owner }}
+          OWNER_ID: ${{ github.repository_owner_id }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          set -euo pipefail
+          # Otomatik commit'ler depo sahibinin (noreply) kimliğiyle atılır.
+          git config user.name "$OWNER"
+          git config user.email "${OWNER_ID}+${OWNER}@users.noreply.github.com"
+          auth=$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          push() { git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic ${auth}" push origin HEAD:main; }
           git add docs
           if git diff --cached --quiet; then
             echo "Takvimlerde değişiklik yok; commit atılmadı."
@@ -58,16 +74,16 @@ jobs:
             last_commit=$(git log -1 --format=%ct)
             if [ $(( $(date +%s) - last_commit )) -gt $(( 45 * 24 * 3600 )) ]; then
               git commit --allow-empty -m "chore: keep scheduled workflow active"
-              git push || { git pull --rebase origin main && git push; }
+              push || { git pull --rebase origin main && push; }
             fi
           else
             git commit -m "chore: update calendars"
-            git push || { git pull --rebase origin main && git push; }
+            push || { git pull --rebase origin main && push; }
           fi
 
       - name: Upload site
         if: github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: docs
 
@@ -85,4 +101,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

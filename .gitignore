@@ -5,6 +5,8 @@ __pycache__/
 build/
 dist/
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
 .venv/
 venv/
 
@@ -13,6 +15,13 @@ venv/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Gizli bilgiler asla depoya girmesin
+.env
+.env.*
+*.pem
+*.key
+*.p12
 
 # Her çalışmada değişen "son kontrol" zamanı; siteye girer ama git'e girmez
 docs/last_check.txt

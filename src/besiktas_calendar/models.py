@@ -66,7 +66,9 @@ class Match:
     @property
     def uid(self) -> str:
         # Tarih/saat değişse bile aynı kalır; takvim uygulaması etkinliği güncelleyip çoğaltmaz.
-        digest = hashlib.sha1(f"{self.source}:{self.source_id}".encode("utf-8")).hexdigest()[:24]
+        # SHA1 burada yalnızca kararlı bir kimlik üretir, güvenlik amacıyla kullanılmaz.
+        key = f"{self.source}:{self.source_id}".encode()
+        digest = hashlib.sha1(key, usedforsecurity=False).hexdigest()[:24]
         return f"{digest}@besiktas-calendar"
 
     @property

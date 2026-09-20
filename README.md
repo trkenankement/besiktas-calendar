@@ -52,7 +52,8 @@ taslak** etkinlik olarak yayınlanır. Saat açıklanınca aynı etkinlik (aynı
 
 Kaynaklardan biri yanıt vermezse ya da sayfa yapısı değişirse çalışma **başarısız olur** ve GitHub sizi
 bilgilendirir. Eksik veri yayınlanmaz; site bir önceki sağlam sürümle yayında kalır. Yalnızca kupa
-kaynağı isteğe bağlıdır: bozulursa uyarı verilir, diğer müsabakalar yayınlanmaya devam eder.
+kaynağı isteğe bağlıdır: bozulursa uyarı verilir, diğer müsabakalar yayınlanmaya devam eder. Web sayfası da
+son kontrol 36 saatten eskiyse ekranda "güncel olmayabilir" uyarısı gösterir.
 
 ### Kapsam ve bilinen sınırlar
 
@@ -61,14 +62,24 @@ kaynağı isteğe bağlıdır: bozulursa uyarı verilir, diğer müsabakalar yay
 - **Basketbol kupaları** (Türkiye Kupası, Cumhurbaşkanlığı Kupası) ve **Süper Kupa** henüz kapsanmıyor.
 - Yalnızca erkek A takımlar; altyapı ve kadın takımları yok.
 
+## Güvenlik
+
+Ayrıntılar [SECURITY.md](SECURITY.md) dosyasında. Kısaca: kaynak verisi ICS'e kaçışlanarak yazılır; web
+sayfası sıkı bir içerik güvenlik politikasıyla (CSP) yayınlanır; iş akışı en az yetkiyle çalışır, kullanılan
+Actions tam commit numarasına sabitlidir ve depo belirteci yalnızca commit adımına verilir. Bu kurallar
+`tests/test_security.py` ile her çalışmada denetlenir. Bir açık bulursanız lütfen herkese açık issue yerine
+[özel bildirim](https://github.com/trkenankement/besiktas-calendar/security/advisories/new) gönderin.
+
 ## Geliştirme
 
 ```bash
 python -m venv .venv
 .venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
-pip install -e ".[dev]"
+pip install -e ".[dev,lint]"
 
 pytest                          # çevrimdışı testler (gerçek yanıtlardan küçültülmüş örnekler)
+ruff check src tests            # stil ve olası hatalar
+bandit -r src -c pyproject.toml # güvenlik taraması
 besiktas-calendar               # canlı kaynaklardan docs/ klasörünü üretir (python -m besiktas_calendar de olur)
 besiktas-calendar --out cikti   # başka bir klasöre yaz
 ```
@@ -79,8 +90,9 @@ src/besiktas_calendar/
   providers/                            tff.py · uefa.py · euroleague.py · tbf.py (her biri ortak Match modeli döndürür)
   models.py  names.py  http.py          veri modeli, Türkçe isim düzeltme, yeniden denemeli HTTP
   ics.py     site.py   build.py  cli.py ICS/HTML üretimi, doğrulama ve komut satırı
-tests/                                  testler ve tests/fixtures (gerçek yanıt örnekleri)
+tests/                                  testler (test_security.py güvenlik kuralları) ve tests/fixtures (gerçek yanıt örnekleri)
 docs/                                   yayınlanan site: ICS dosyaları + index.html (otomatik üretilir)
+SECURITY.md                             güvenlik politikası ve açık bildirme yolu
 ```
 
 Yeni bir müsabaka eklemek için `providers/` altına Beşiktaş maçlarını `Match` listesi olarak döndüren

@@ -17,7 +17,16 @@ dependencies = [
 dev = [
     "pytest>=8",
     "icalendar>=6",
+    "pyyaml>=6",
 ]
+lint = [
+    "ruff>=0.6",
+    "bandit>=1.7",
+]
+
+[project.urls]
+Homepage = "https://trkenankement.github.io/besiktas-calendar/"
+Repository = "https://github.com/trkenankement/besiktas-calendar"
 
 [project.scripts]
 besiktas-calendar = "besiktas_calendar.cli:main"
@@ -28,3 +37,17 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "C4"]
+ignore = ["E501"]  # uzun satırlar (ör. Türkçe metinler) sorun değil
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]  # testlerde assert kullanılır
+
+[tool.bandit]
+exclude_dirs = ["tests"]

@@ -1,19 +1,19 @@
-from datetime import date, datetime, timedelta, timezone
+from datetime import UTC, date, datetime, timedelta
 
 from besiktas_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match, kickoff_or_day
 
 
 def make_match(**overrides):
-    fields = dict(
-        source="tff",
-        source_id="1",
-        sport=FOOTBALL,
-        competition="Trendyol Süper Lig",
-        round_label="1. Hafta",
-        start=datetime(2026, 10, 11, 19, 0, tzinfo=TURKEY_TZ),
-        home="Beşiktaş",
-        away="Kocaelispor",
-    )
+    fields = {
+        "source": "tff",
+        "source_id": "1",
+        "sport": FOOTBALL,
+        "competition": "Trendyol Süper Lig",
+        "round_label": "1. Hafta",
+        "start": datetime(2026, 10, 11, 19, 0, tzinfo=TURKEY_TZ),
+        "home": "Beşiktaş",
+        "away": "Kocaelispor",
+    }
     fields.update(overrides)
     return Match(**fields)
 
@@ -49,10 +49,10 @@ def test_uid_differs_between_matches_and_sources():
 
 def test_day_uses_turkey_time_not_utc():
     late = make_match(start=datetime(2026, 10, 11, 23, 30, tzinfo=TURKEY_TZ))
-    assert late.start.astimezone(timezone.utc).date() == date(2026, 10, 11)
+    assert late.start.astimezone(UTC).date() == date(2026, 10, 11)
     assert late.day == date(2026, 10, 11)
     early = make_match(start=datetime(2026, 10, 12, 0, 30, tzinfo=TURKEY_TZ))
-    assert early.start.astimezone(timezone.utc).date() == date(2026, 10, 11)
+    assert early.start.astimezone(UTC).date() == date(2026, 10, 11)
     assert early.day == date(2026, 10, 12)
 
 

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import base64
+import hashlib
 from datetime import datetime
 from html import escape
 
@@ -9,11 +11,12 @@ from .feeds import FEEDS
 from .models import MATCH_DURATION, SPORT_LABELS, TURKEY_TZ, Match
 
 UPCOMING_LIMIT = 10
+STALE_AFTER_HOURS = 36  # son kontrol bundan eskiyse sayfa "güncel olmayabilir" uyarısı gösterir
 WEEKDAYS = ("Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar")
 
 CSS = """
-:root{--bg:#fff;--fg:#111;--muted:#666;--line:#e3e3e3;--card:#f7f7f7;--btn-bg:#111;--btn-fg:#fff}
-@media (prefers-color-scheme:dark){:root{--bg:#0e0e0e;--fg:#f2f2f2;--muted:#a0a0a0;--line:#2a2a2a;--card:#171717;--btn-bg:#f2f2f2;--btn-fg:#111}}
+:root{--bg:#fff;--fg:#111;--muted:#666;--line:#e3e3e3;--card:#f7f7f7;--btn-bg:#111;--btn-fg:#fff;--warn:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#0e0e0e;--fg:#f2f2f2;--muted:#a0a0a0;--line:#2a2a2a;--card:#171717;--btn-bg:#f2f2f2;--btn-fg:#111;--warn:#ff8a80}}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
 main{max-width:760px;margin:0 auto;padding:32px 16px 48px}
 h1{font-size:1.8rem;margin:0 0 .4rem}
@@ -31,6 +34,7 @@ ul.matches{list-style:none;margin:0;padding:0}
 .when{font-weight:600}
 .teams{font-size:1.05rem}
 .meta,.muted{color:var(--muted);font-size:.9rem}
+.warn{margin:1rem 0;padding:10px 12px;border:1px solid var(--warn);border-radius:10px;color:var(--warn);font-weight:600}
 """
 
 SCRIPT = """
@@ -41,9 +45,23 @@ for (const a of document.querySelectorAll('[data-feed]')) {
 for (const c of document.querySelectorAll('[data-url]')) {
   c.textContent = new URL(c.dataset.url, location.href).href;
 }
-fetch('last_check.txt').then(r => r.ok ? r.text() : Promise.reject())
-  .then(t => { document.getElementById('checked').textContent = t.trim(); })
-  .catch(() => { document.getElementById('checked').textContent = 'bilinmiyor'; });
+const checked = document.getElementById('checked');
+fetch('last_check.txt', { cache: 'no-store' })
+  .then(r => (r.ok ? r.text() : Promise.reject(new Error(r.status))))
+  .then(text => {
+    checked.textContent = text.trim();
+    const m = /^(\\d{2})\\.(\\d{2})\\.(\\d{4}) (\\d{2}):(\\d{2})/.exec(text.trim());
+    if (!m) return;
+    const when = Date.UTC(+m[3], +m[2] - 1, +m[1], +m[4] - 3, +m[5]); // TSİ = UTC+3
+    const hours = (Date.now() - when) / 36e5;
+    if (hours > __STALE_AFTER_HOURS__) {
+      const warn = document.getElementById('stale');
+      warn.textContent = '\\u26a0 Son kontrol ' + Math.floor(hours / 24) + ' g\\u00fcn \\u00f6nce yap\\u0131ld\\u0131; ' +
+        'otomatik g\\u00fcncelleme \\u00e7al\\u0131\\u015fm\\u0131yor olabilir, takvim g\\u00fcncel olmayabilir.';
+      warn.hidden = false;
+    }
+  })
+  .catch(() => { checked.textContent = 'bilinmiyor'; });
 if (location.hostname.endsWith('.github.io')) {
   const owner = location.hostname.split('.')[0];
   const repo = location.pathname.split('/').filter(Boolean)[0];
@@ -53,7 +71,26 @@ if (location.hostname.endsWith('.github.io')) {
     link.hidden = false;
   }
 }
-"""
+""".replace("__STALE_AFTER_HOURS__", str(STALE_AFTER_HOURS))
+
+
+def _csp_hash(inline_source: str) -> str:
+    digest = hashlib.sha256(inline_source.encode("utf-8")).digest()
+    return "'sha256-" + base64.b64encode(digest).decode("ascii") + "'"
+
+
+# Satır içi betik ve stil yalnızca kendi özet değerleriyle çalışır; dışarıdan hiçbir şey yüklenmez.
+CONTENT_SECURITY_POLICY = "; ".join(
+    [
+        "default-src 'none'",
+        f"script-src {_csp_hash(SCRIPT)}",
+        f"style-src {_csp_hash(CSS)}",
+        "img-src data:",
+        "connect-src 'self'",
+        "base-uri 'none'",
+        "form-action 'none'",
+    ]
+)
 
 
 def upcoming(matches: list[Match], now: datetime) -> list[Match]:
@@ -61,10 +98,7 @@ def upcoming(matches: list[Match], now: datetime) -> list[Match]:
     today = now.astimezone(TURKEY_TZ).date()
     result = []
     for match in sorted(matches, key=lambda m: m.sort_key):
-        if match.time_confirmed:
-            over = match.start + MATCH_DURATION[match.sport] <= now
-        else:
-            over = match.day < today
+        over = match.start + MATCH_DURATION[match.sport] <= now if match.time_confirmed else match.day < today
         if not over:
             result.append(match)
     return result[:UPCOMING_LIMIT]
@@ -104,16 +138,20 @@ def render_index(matches: list[Match], now: datetime) -> str:
 <html lang="tr">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="{CONTENT_SECURITY_POLICY}">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>Beşiktaş Maç Takvimi</title>
 <meta name="description" content="Beşiktaş erkek futbol ve basketbol maçları için her gün otomatik güncellenen takvim aboneliği.">
+<link rel="icon" href="data:,">
 <style>{CSS}</style>
 </head>
 <body>
 <main>
 <h1>Beşiktaş Maç Takvimi</h1>
 <p>Erkek A takım futbol ve basketbol maçları. Takvim her gün otomatik güncellenir; bir kez abone olmanız yeterli.</p>
+<p id="stale" class="warn" role="alert" hidden></p>
 <h2>Takvime abone ol</h2>
 <p class="muted">Apple Takvim için düğmeyi kullanın. Google Takvim ve Outlook'ta "URL ile takvim ekle" seçeneğine aşağıdaki bağlantıyı yapıştırın.</p>
 {feeds}
@@ -123,7 +161,7 @@ def render_index(matches: list[Match], now: datetime) -> str:
 </ul>
 <p class="muted">Saati henüz açıklanmamış maçlar, yanlış bir gece yarısı saati yazılmasın diye tüm gün etkinliği olarak gösterilir; saat kesinleşince aynı etkinlik güncellenir.</p>
 <p class="muted">Son kontrol: <span id="checked">yükleniyor…</span></p>
-<p class="muted">Kaynaklar: TFF, UEFA, EuroLeague Basketball ve TBF. <a id="repo" hidden>Kaynak kod (GitHub)</a></p>
+<p class="muted">Kaynaklar: TFF, UEFA, EuroLeague Basketball ve TBF. <a id="repo" rel="noopener noreferrer" hidden>Kaynak kod (GitHub)</a></p>
 </main>
 <script>{SCRIPT}</script>
 </body>
