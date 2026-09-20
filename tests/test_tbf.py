@@ -63,11 +63,58 @@ def test_played_game_reports_the_score():
     assert tbf.parse_row(row).result == "78-84"
 
 
-def test_row_without_a_date_is_an_error():
+@pytest.mark.parametrize("bad_date", [None, "", "belirsiz"])
+def test_row_without_a_usable_date_is_skipped_with_a_warning(bad_date, capsys, monkeypatch):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     row = deepcopy(besiktas_row("1"))
-    row["matchDate"] = None
-    with pytest.raises(SourceError, match="tarihi yok"):
-        tbf.parse_row(row)
+    row["matchDate"] = bad_date
+    assert tbf.parse_row(row) is None
+    assert "tarihi yok" in capsys.readouterr().out
+
+
+def undated_route(base_route):
+    def route(url, params):
+        payload = base_route(url, params)
+        if url.endswith("get-all-matches-for-filter"):
+            payload = deepcopy(payload)
+            for row in payload["data"]:
+                row["matchDate"] = None
+        return payload
+
+    return route
+
+
+def test_an_undated_fixture_does_not_stop_the_other_matches(capsys, monkeypatch):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    base = route_factory()
+
+    def route(url, params):
+        payload = base(url, params)
+        if url.endswith("get-all-matches-for-filter") and params["WeekFilter"] == "1":
+            payload = deepcopy(payload)
+            for row in payload["data"]:
+                row["matchDate"] = None  # 1. hafta maçı ertelendi
+        return payload
+
+    matches = tbf.fetch_bsl(FakeSession(route), TODAY)
+
+    assert [m.round_label for m in matches] == ["6. Hafta"]
+    assert "UYARI" in capsys.readouterr().out
+
+
+def test_nothing_readable_at_all_means_the_source_format_changed():
+    weeks = {"data": [{"sezon_Hafta": str(n), "devre_ID": 1} for n in (1, 2, 3)]}
+    base = route_factory()
+
+    def route(url, params):
+        if url.endswith("get-league-weeks"):
+            return weeks
+        if url.endswith("get-all-matches-for-filter"):
+            return undated_route(base)(url, {**params, "WeekFilter": "1"})
+        return base(url, params)
+
+    with pytest.raises(SourceError, match="biçimi değişmiş"):
+        tbf.fetch_bsl(FakeSession(route), TODAY)
 
 
 def test_fetch_returns_only_besiktas_games_from_the_newest_season():

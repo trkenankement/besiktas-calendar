@@ -184,6 +184,10 @@ def render_index(matches: list[Match], now: datetime, stats: RepoStats | None = 
 <meta name="color-scheme" content="light dark">
 <title>Beşiktaş Maç Takvimi</title>
 <meta name="description" content="Beşiktaş erkek futbol ve basketbol maçları için her gün otomatik güncellenen takvim aboneliği.">
+<meta property="og:title" content="Beşiktaş Maç Takvimi">
+<meta property="og:description" content="Beşiktaş erkek futbol ve basketbol maçları için her gün otomatik güncellenen takvim aboneliği.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
 <link rel="icon" href="data:,">
 <style>{CSS}</style>
 </head>

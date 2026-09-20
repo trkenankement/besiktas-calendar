@@ -77,6 +77,15 @@ def test_index_without_upcoming_matches_says_so():
     assert "Yaklaşan maç bulunamadı." in html
 
 
+def test_index_has_social_preview_and_accessibility_basics():
+    html = render_index([], NOW)
+    assert '<meta property="og:title" content="Beşiktaş Maç Takvimi">' in html
+    assert '<meta property="og:locale" content="tr_TR">' in html
+    assert '<html lang="tr">' in html
+    assert html.count("<h1>") == 1  # tek ana başlık
+    assert '<meta name="viewport" content="width=device-width,initial-scale=1">' in html
+
+
 def test_index_is_deterministic_for_the_same_input():
     matches = [match(1, at(20, 20)), match(2, at(25, 20), sport=BASKETBALL)]
     assert render_index(matches, NOW) == render_index(matches, NOW)

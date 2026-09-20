@@ -7,9 +7,11 @@ from typing import Any
 
 import requests
 
+from ..console import warn
 from ..http import SourceError, get_json
 from ..models import BASKETBALL, TURKEY_TZ, Match
 from ..names import english_title
+from ._common import guard_skipped
 
 API_URL = "https://api-live.euroleague.net/v2/competitions"
 BESIKTAS_CODE = "BES"
@@ -30,8 +32,13 @@ def _round_label(game: dict[str, Any]) -> str:
     return game.get("roundName") or phase.get("name") or ""
 
 
-def parse_game(game: dict[str, Any], competition: str) -> Match:
-    kickoff = datetime.fromisoformat(game["utcDate"].replace("Z", "+00:00")).astimezone(TURKEY_TZ)
+def parse_game(game: dict[str, Any], competition: str) -> Match | None:
+    """Maçı ortak biçime çevirir; tarihi okunamıyorsa uyarı verip None döndürür."""
+    try:
+        kickoff = datetime.fromisoformat(game["utcDate"].replace("Z", "+00:00")).astimezone(TURKEY_TZ)
+    except (KeyError, AttributeError, TypeError, ValueError):
+        warn(f"EuroLeague: {game.get('identifier') or game.get('id')} maçının tarihi okunamadı; bu maç takvime eklenmedi")
+        return None
     confirmed = bool(game.get("confirmedDate")) and bool(game.get("confirmedHour"))
     local, road = game["local"], game["road"]
     result = f"{local.get('score')}-{road.get('score')}" if game.get("played") else ""
@@ -59,6 +66,7 @@ def _current_season(session: requests.Session, code: str, today: date) -> str | 
 
 def fetch(session: requests.Session, today: date) -> list[Match]:
     matches: list[Match] = []
+    skipped = 0
     for code, competition in COMPETITIONS:
         season = _current_season(session, code, today)
         if season is None:
@@ -66,5 +74,11 @@ def fetch(session: requests.Session, today: date) -> list[Match]:
         payload = get_json(session, f"{API_URL}/{code}/seasons/{season}/games", teamCode=BESIKTAS_CODE)
         if not isinstance(payload, dict):
             raise SourceError("EuroLeague beklenmeyen yanıt biçimi döndürdü")
-        matches += [parse_game(game, competition) for game in payload.get("data") or []]
+        for game in payload.get("data") or []:
+            match = parse_game(game, competition)
+            if match is None:
+                skipped += 1
+            else:
+                matches.append(match)
+    guard_skipped("EuroLeague", skipped, len(matches))
     return matches

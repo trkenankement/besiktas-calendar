@@ -60,10 +60,16 @@ def test_far_future_week_has_a_date_but_no_time():
     assert match.day == date(2027, 2, 7)
 
 
-def test_unreadable_date_of_a_besiktas_fixture_is_an_error_not_a_silent_skip():
+def test_a_fixture_with_an_unreadable_date_is_skipped_with_a_warning(capsys, monkeypatch):
+    """Ertelenmiş tek bir maç yüzünden bütün günlük güncelleme durmamalı."""
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     broken = fixture_text("tff_week_6.html").replace("20.09.2026", "belirsiz")
-    with pytest.raises(SourceError, match="tarihi okunamadı"):
-        tff.parse_week(broken)
+
+    assert tff.parse_week(broken) == []
+
+    warning = capsys.readouterr().out
+    assert "UYARI" in warning and "AMED SPORTİF FAALİYETLER - BEŞİKTAŞ A.Ş." in warning and "belirsiz" in warning
+    assert len(tff.parse_week(fixture_text("tff_week_7.html"))) == 1  # diğer haftalar etkilenmez
 
 
 def test_match_is_converted_to_the_common_model():
@@ -178,10 +184,11 @@ def test_cup_row_without_a_time_is_all_day():
     assert match.day == date(2026, 10, 7)
 
 
-def test_cup_row_with_an_unknown_month_is_an_error():
+def test_cup_row_with_an_unknown_month_is_skipped_with_a_warning(capsys, monkeypatch):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     html = fixture_text("tff_cup_with_besiktas.html").replace("07 Ekim 2026 20:30", "07 Foo 2026 20:30")
-    with pytest.raises(SourceError, match="tarihi okunamadı"):
-        tff.parse_cup(html)
+    assert tff.parse_cup(html) == []
+    assert "tarihi okunamadı" in capsys.readouterr().out
 
 
 def test_fetch_cup_adds_venue_for_upcoming_match():

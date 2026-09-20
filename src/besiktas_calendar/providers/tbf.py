@@ -9,9 +9,11 @@ from typing import Any
 
 import requests
 
+from ..console import warn
 from ..http import SourceError, get_json
 from ..models import BASKETBALL, Match, kickoff_or_day
 from ..names import display_name, is_besiktas, join_parts
+from ._common import guard_skipped
 
 API_URL = "https://miniappapi.tbf.org.tr/webapi-service/api"
 LEAGUE_PREFIX = "bsl"
@@ -33,11 +35,14 @@ def _competition_name(row: dict[str, Any]) -> str:
     return name or "Basketbol"
 
 
-def parse_row(row: dict[str, Any]) -> Match:
-    if not row.get("matchDate"):
-        raise SourceError(f"TBF: {row.get('matchId')} numaralı maçın tarihi yok")
-    moment = datetime.fromisoformat(row["matchDate"])  # Türkiye yerel saati, saat dilimsiz
+def parse_row(row: dict[str, Any]) -> Match | None:
+    """Maçı ortak biçime çevirir; tarihi yoksa (ör. ertelenmiş) uyarı verip None döndürür."""
     home, away = row["homeTeam"], row["awayTeam"]
+    try:
+        moment = datetime.fromisoformat(row["matchDate"])  # Türkiye yerel saati, saat dilimsiz
+    except (KeyError, TypeError, ValueError):
+        warn(f"TBF: '{home.get('name')} - {away.get('name')}' maçının tarihi yok ({row.get('matchDate')!r}); bu maç takvime eklenmedi")
+        return None
     home_score, away_score = _score(home), _score(away)
     return Match(
         source="tbf",
@@ -73,18 +78,23 @@ def _in_season(row: dict[str, Any], season_id: int) -> bool:
 
 def _besiktas_matches(session: requests.Session, league_id: int, season_id: int, weeks: list[dict[str, Any]]) -> list[Match]:
     matches: list[Match] = []
+    skipped = 0
     for week in weeks:
         params: dict[str, Any] = {"ActivityId": league_id, "WeekFilter": week["sezon_Hafta"], "Page": 1, "PageSize": -1}
         half = week.get("devre_Deger")
         if int(week.get("devre_ID") or 1) not in (1, 2) and half:
             params["HalfValue"] = half
         rows = get_json(session, f"{API_URL}/Match/get-all-matches-for-filter", **params).get("data") or []
-        matches += [
-            parse_row(row)
-            for row in rows
-            if _in_season(row, season_id)
-            and (is_besiktas((row.get("homeTeam") or {}).get("name", "")) or is_besiktas((row.get("awayTeam") or {}).get("name", "")))
-        ]
+        for row in rows:
+            teams = (row.get("homeTeam") or {}).get("name", ""), (row.get("awayTeam") or {}).get("name", "")
+            if not _in_season(row, season_id) or not any(is_besiktas(name) for name in teams):
+                continue
+            match = parse_row(row)
+            if match is None:
+                skipped += 1
+            else:
+                matches.append(match)
+    guard_skipped("TBF", skipped, len(matches))
     if len(weeks) == 1:  # tek turluk turnuvalarda "1. Hafta" etiketi anlamsız
         matches = [replace(m, round_label="") if _GENERIC_ROUND.fullmatch(m.round_label) else m for m in matches]
     return matches

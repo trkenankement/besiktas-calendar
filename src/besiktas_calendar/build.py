@@ -11,6 +11,7 @@ from pathlib import Path
 import requests
 
 from . import ics, site
+from .console import error, log, warn
 from .feeds import FEEDS
 from .http import SourceError, new_session
 from .models import BASKETBALL, FOOTBALL, SPORT_LABELS, TURKEY_TZ, Match
@@ -18,6 +19,7 @@ from .providers import PROVIDERS, Provider
 from .stats import load_stats
 
 MIN_MATCHES_PER_SPORT = 5  # bunun altı, kaynakların ciddi biçimde bozulduğu anlamına gelir
+MAX_DISTANCE_DAYS = 500  # bir sezonluk takvimde bugünden bundan uzak tarih, ayrıştırma hatası demektir
 
 
 @dataclass
@@ -25,22 +27,6 @@ class Outcome:
     provider: Provider
     matches: list[Match]
     error: str | None = None
-
-
-def _in_actions() -> bool:
-    return os.environ.get("GITHUB_ACTIONS") == "true"
-
-
-def log(message: str) -> None:
-    print(message, flush=True)
-
-
-def warn(message: str) -> None:
-    print(f"::warning::{message}" if _in_actions() else f"UYARI: {message}", flush=True)
-
-
-def error(message: str) -> None:
-    print(f"::error::{message}" if _in_actions() else f"HATA: {message}", flush=True)
 
 
 def collect(providers: Iterable[Provider], session: requests.Session, today: date) -> list[Outcome]:
@@ -74,6 +60,12 @@ def coverage_problems(matches: list[Match]) -> list[str]:
         if count < MIN_MATCHES_PER_SPORT:
             problems.append(f"{SPORT_LABELS[sport]} için yalnızca {count} maç bulundu (en az {MIN_MATCHES_PER_SPORT} bekleniyor)")
     return problems
+
+
+def date_problems(matches: list[Match], today: date) -> list[str]:
+    """Mantıksız tarihli maçlar (ör. yanlış okunmuş yıl) yayınlanmadan yakalanır."""
+    off = [m for m in matches if abs((m.day - today).days) > MAX_DISTANCE_DAYS]
+    return [f"{m.home} - {m.away} ({m.competition}) maçının tarihi mantıksız: {m.day:%d.%m.%Y}" for m in off[:5]]
 
 
 def write_outputs(out_dir: Path, matches: list[Match], now: datetime) -> dict[str, bool]:
@@ -122,7 +114,7 @@ def run(out_dir: Path, *, providers: Iterable[Provider] = PROVIDERS, session: re
             warn(f"{name} okunamadı, bu kaynak bu çalışmada atlandı: {outcome.error}")
 
     matches = unique(m for outcome in outcomes for m in outcome.matches)
-    errors += coverage_problems(matches)
+    errors += coverage_problems(matches) + date_problems(matches, now.date())
     write_step_summary(outcomes, matches)
 
     if errors:

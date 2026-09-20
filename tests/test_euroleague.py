@@ -94,6 +94,31 @@ def test_no_started_season_means_no_matches():
     assert euroleague.fetch(FakeSession(route_factory(seasons=seasons)), TODAY) == []
 
 
+@pytest.mark.parametrize("bad_date", [None, "", "yarın"])
+def test_game_without_a_readable_date_is_skipped_with_a_warning(bad_date, capsys, monkeypatch):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    game = deepcopy(fixture_json("euroleague_games.json")["data"][1])
+    game["utcDate"] = bad_date
+    assert euroleague.parse_game(game, "EuroLeague") is None
+    assert "tarihi okunamadı" in capsys.readouterr().out
+
+
+def test_a_missing_date_key_is_handled_like_any_other_unreadable_date(capsys, monkeypatch):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    game = deepcopy(fixture_json("euroleague_games.json")["data"][1])
+    del game["utcDate"]
+    assert euroleague.parse_game(game, "EuroLeague") is None
+
+
+def test_nothing_readable_at_all_means_the_source_format_changed():
+    games = fixture_json("euroleague_games.json")
+    undated = deepcopy(games["data"][0])
+    del undated["utcDate"]
+    payload = {"data": [dict(undated, identifier=f"E2026_{n}") for n in range(3)]}
+    with pytest.raises(SourceError, match="biçimi değişmiş"):
+        euroleague.fetch(FakeSession(route_factory(games=payload)), TODAY)
+
+
 def test_unexpected_response_shape_is_an_error():
     with pytest.raises(SourceError, match="beklenmeyen"):
         euroleague.fetch(FakeSession(route_factory(games=[1, 2, 3])), TODAY)

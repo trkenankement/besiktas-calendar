@@ -9,6 +9,7 @@ from datetime import date
 import requests
 from bs4 import BeautifulSoup, Tag
 
+from ..console import warn
 from ..http import SourceError, get_html
 from ..models import FOOTBALL, Match, kickoff_or_day
 from ..names import display_name, fold, is_besiktas, join_parts, tr_lower
@@ -107,8 +108,9 @@ def parse_week(html: str) -> list[Fixture]:
         date_text = _text(row.find("span", id=re.compile(r"lblTarih$")))
         time_text = _text(row.find("span", id=re.compile(r"lblSaat$")))
         day = _DATE.search(date_text)
-        if not day:
-            raise SourceError(f"TFF: '{home} - {away}' maçının tarihi okunamadı: {date_text!r}")
+        if not day:  # ör. ertelenmiş maç: tek bir maç yüzünden bütün güncelleme durmasın
+            warn(f"TFF: '{home} - {away}' maçının tarihi okunamadı ({date_text!r}); bu maç takvime eklenmedi")
+            continue
         clock = _TIME.search(time_text)  # saat henüz belli değilse boş gelir
         score_cell = row.select_one("td.haftaninMaclariSkor")
         fixtures.append(
@@ -184,7 +186,8 @@ def parse_cup(html: str) -> list[Match]:
         found = _CUP_DATE.search(_text(span))
         month = _TR_MONTHS.get(tr_lower(found.group(2))) if found else None
         if not found or month is None:
-            raise SourceError(f"TFF kupa: '{home} - {away}' maçının tarihi okunamadı: {_text(span)!r}")
+            warn(f"TFF kupa: '{home} - {away}' maçının tarihi okunamadı ({_text(span)!r}); bu maç takvime eklenmedi")
+            continue
         score_cell = row.find(id=re.compile(r"lblSkor$"))
         fixture = Fixture(
             mac_id=_mac_id(score_cell),

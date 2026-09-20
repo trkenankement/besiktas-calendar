@@ -1,3 +1,4 @@
+from dataclasses import replace
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
@@ -117,6 +118,23 @@ def test_each_sport_needs_a_minimum_number_of_matches(tmp_path, capsys, monkeypa
 
     assert build.run(tmp_path, providers=only_football, session=object(), now=NOW) == 1
     assert "Basketbol" in capsys.readouterr().out
+
+
+def test_implausible_dates_stop_the_publication(tmp_path, capsys, monkeypatch):
+    """Yanlış okunmuş bir yıl (ör. 1970) yayınlanmadan yakalanır."""
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    weird = replace(make_matches(FOOTBALL, 1, source="x", first_id=99)[0], start=datetime(1970, 1, 1, 12, 0, tzinfo=TURKEY_TZ))
+    providers = [*working_providers(), provider("bozuk-tarih", [weird])]
+
+    assert build.run(tmp_path, providers=providers, session=object(), now=NOW) == 1
+
+    assert "mantıksız" in capsys.readouterr().out
+    assert not (tmp_path / "besiktas-all.ics").exists()
+
+
+def test_dates_within_a_season_are_plausible():
+    matches = make_matches(FOOTBALL, 6)
+    assert build.date_problems(matches, NOW.date()) == []
 
 
 def test_the_same_match_from_two_sources_is_published_once(tmp_path):

@@ -95,6 +95,39 @@ def test_fetch_follows_pagination():
     assert len({m.uid for m in matches}) == 105
 
 
+def test_kickoff_with_only_a_date_becomes_an_all_day_match():
+    item = deepcopy(fixture_json("uefa_matches.json")[1])
+    item["kickOffTime"] = {"date": "2026-10-15"}
+    match = uefa.parse_match(item, COMPETITION)
+    assert not match.time_confirmed
+    assert match.day == date(2026, 10, 15)
+
+
+@pytest.mark.parametrize("kickoff", [{}, None, {"dateTime": "yarın"}, {"date": "15/10/2026"}])
+def test_match_without_a_readable_kickoff_is_skipped_with_a_warning(kickoff, capsys, monkeypatch):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    item = deepcopy(fixture_json("uefa_matches.json")[1])
+    item["kickOffTime"] = kickoff
+    assert uefa.parse_match(item, COMPETITION) is None
+    assert "tarihi okunamadı" in capsys.readouterr().out
+
+
+def test_a_few_undated_matches_do_not_fail_the_provider(capsys, monkeypatch):
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    items = fixture_json("uefa_matches.json") + [dict(fixture_json("uefa_matches.json")[0], id="9", kickOffTime={})]
+    matches = uefa.fetch(FakeSession(lambda url, params: items if params["competitionId"] == "14" else []), date(2026, 9, 20))
+    assert len(matches) == 3
+    assert "UYARI" in capsys.readouterr().out
+
+
+def test_nothing_readable_at_all_means_the_source_format_changed():
+    template = fixture_json("uefa_matches.json")[0]
+    items = [dict(template, id=str(i), kickOffTime={}) for i in range(3)]
+    session = FakeSession(lambda url, params: items if params["competitionId"] == "14" else [])
+    with pytest.raises(SourceError, match="biçimi değişmiş"):
+        uefa.fetch(session, date(2026, 9, 20))
+
+
 def test_unexpected_response_shape_is_an_error():
     with pytest.raises(SourceError, match="beklenmeyen"):
         uefa.fetch(FakeSession(lambda url, params: {"error": "nope"}), date(2026, 9, 20))

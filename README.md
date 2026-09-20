@@ -2,8 +2,8 @@
 
 [![Update calendars](https://github.com/trkenankement/besiktas-calendar/actions/workflows/update-calendar.yml/badge.svg)](https://github.com/trkenankement/besiktas-calendar/actions/workflows/update-calendar.yml)
 [![Lisans: MIT](https://img.shields.io/badge/lisans-MIT-blue.svg)](LICENSE)
-[![Takipçi](https://img.shields.io/github/watchers/trkenankement/besiktas-calendar?label=takip%C3%A7i&style=flat)](https://github.com/trkenankement/besiktas-calendar/watchers)
-[![Yıldız](https://img.shields.io/github/stars/trkenankement/besiktas-calendar?label=y%C4%B1ld%C4%B1z&style=flat)](https://github.com/trkenankement/besiktas-calendar/stargazers)
+[![Takipçi](https://img.shields.io/github/watchers/trkenankement/besiktas-calendar?label=takip%C3%A7i&style=flat)](https://github.com/trkenankement/besiktas-calendar)
+[![Yıldız](https://img.shields.io/github/stars/trkenankement/besiktas-calendar?label=y%C4%B1ld%C4%B1z&style=flat)](https://github.com/trkenankement/besiktas-calendar)
 
 Beşiktaş **erkek A takım futbol ve basketbol** maçlarını her gün otomatik güncellenen takvim
 aboneliklerine (ICS) dönüştürür. Bir kez abone olursunuz; yeni maçlar, saat değişiklikleri ve
@@ -66,6 +66,15 @@ editöryel kupa sayfaları (Türkiye Kupası ve Süper Kupa) isteğe bağlıdır
 müsabakalar yayınlanmaya devam eder. Web sayfası da son kontrol 36 saatten eskiyse ekranda "güncel olmayabilir"
 uyarısı gösterir.
 
+### Elle çalıştırma ve sorun giderme
+
+- Takvimi hemen yenilemek için GitHub'da **Actions → Update calendars → Run workflow**.
+- Bir çalışma kırmızıysa çalışmayı açın: **Update calendars** adımı hangi kaynağın neden başarısız olduğunu
+  yazar. Bu sürede site, son sağlam sürümle yayında kalır.
+- Kaynakta tek bir maçın tarihi okunamazsa (ör. ertelenmiş maç) o maç atlanır ve çalışmada sarı bir uyarı
+  görürsünüz; diğer maçlar etkilenmez. Kaynağın biçimi topluca bozulmuşsa çalışma yine başarısız olur.
+- Bir kaynağın verisi mantıksız bir tarihe (bugünden 500 günden uzak) işaret ediyorsa yayın durdurulur.
+
 ### Kapsam ve bilinen sınırlar
 
 - **Basketbol kupaları** (Cumhurbaşkanlığı, Türkiye ve Federasyon Kupası) TBF'den güncel sezonun turnuvası
@@ -104,9 +113,10 @@ besiktas-calendar --out cikti   # başka bir klasöre yaz
 src/besiktas_calendar/
   providers/                            tff.py · uefa.py · euroleague.py · tbf.py (her biri ortak Match modeli döndürür)
   models.py  names.py  http.py          veri modeli, Türkçe isim düzeltme, yeniden denemeli HTTP
-  ics.py  site.py  stats.py             ICS üretimi, web sayfası, GitHub takipçi/yıldız sayısı
-  build.py  cli.py                      doğrulama, çıktı yazma ve komut satırı
-tests/                                  testler (test_security.py güvenlik kuralları) ve tests/fixtures (gerçek yanıt örnekleri)
+  ics.py  site.py  stats.py  donate.py  ICS üretimi, web sayfası, GitHub takipçi/yıldız sayısı, bağış bilgileri
+  build.py  cli.py  console.py          doğrulama, çıktı yazma, komut satırı, konsol/Actions çıktısı
+tests/                                  testler ve tests/fixtures (gerçek yanıt örnekleri); test_security.py güvenlik
+                                        kuralları, test_workflow_scripts.py iş akışı betiklerini gerçekten çalıştırır
 docs/                                   yayınlanan site: ICS dosyaları + index.html (otomatik üretilir)
 SECURITY.md                             güvenlik politikası ve açık bildirme yolu
 ```

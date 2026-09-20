@@ -47,7 +47,7 @@ select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "C4"]
 ignore = ["E501"]  # uzun satırlar (ör. Türkçe metinler) sorun değil
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S101"]  # testlerde assert kullanılır
+"tests/*" = ["S101", "S603", "S607"]  # testlerde assert ve güvenilir argümanlarla git/bash çağrıları kullanılır
 
 [tool.bandit]
 exclude_dirs = ["tests"]
