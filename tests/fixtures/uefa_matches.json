@@ -1,0 +1,141 @@
+[
+ {
+  "id": "2048745",
+  "status": "FINISHED",
+  "kickOffTime": {
+   "date": "2026-07-23",
+   "dateTime": "2026-07-23T18:00:00Z",
+   "utcOffsetInHours": 3
+  },
+  "score": {
+   "aggregate": {
+    "away": 0,
+    "home": 3
+   },
+   "regular": {
+    "away": 0,
+    "home": 1
+   },
+   "total": {
+    "away": 0,
+    "home": 1
+   }
+  },
+  "round": {
+   "metaData": {
+    "name": "Second qualifying round",
+    "type": "SECOND_QUALIFYING"
+   }
+  },
+  "matchday": {
+   "sequenceNumber": "1",
+   "longName": "Matchday 1"
+  },
+  "homeTeam": {
+   "id": "50157",
+   "internationalName": "Beşiktaş"
+  },
+  "awayTeam": {
+   "id": "75795",
+   "internationalName": "Midtjylland"
+  },
+  "stadium": {
+   "translations": {
+    "name": {
+     "EN": "Beşiktaş Stadium"
+    }
+   },
+   "city": {
+    "translations": {
+     "name": {
+      "EN": "Istanbul"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "2050090",
+  "status": "UPCOMING",
+  "kickOffTime": {
+   "date": "2026-10-15",
+   "dateTime": "2026-10-15T19:00:00Z",
+   "utcOffsetInHours": 2
+  },
+  "score": null,
+  "round": {
+   "metaData": {
+    "name": "League Phase",
+    "type": "GROUP_STANDINGS"
+   }
+  },
+  "matchday": {
+   "sequenceNumber": "2",
+   "longName": "Matchday 2"
+  },
+  "homeTeam": {
+   "id": "2600431",
+   "internationalName": "Hoffenheim"
+  },
+  "awayTeam": {
+   "id": "50157",
+   "internationalName": "Beşiktaş"
+  },
+  "stadium": {
+   "translations": {
+    "name": {
+     "EN": "Rhein-Neckar-Arena"
+    }
+   },
+   "city": {
+    "translations": {
+     "name": {
+      "EN": "Sinsheim"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "2050107",
+  "status": "UPCOMING",
+  "kickOffTime": {
+   "date": "2026-10-22",
+   "dateTime": "2026-10-22T19:00:00Z",
+   "utcOffsetInHours": 3
+  },
+  "score": null,
+  "round": {
+   "metaData": {
+    "name": "League Phase",
+    "type": "GROUP_STANDINGS"
+   }
+  },
+  "matchday": {
+   "sequenceNumber": "3",
+   "longName": "Matchday 3"
+  },
+  "homeTeam": {
+   "id": "50157",
+   "internationalName": "Beşiktaş"
+  },
+  "awayTeam": {
+   "id": "52916",
+   "internationalName": "Crystal Palace"
+  },
+  "stadium": {
+   "translations": {
+    "name": {
+     "EN": "Beşiktaş Stadium"
+    }
+   },
+   "city": {
+    "translations": {
+     "name": {
+      "EN": "Istanbul"
+     }
+    }
+   }
+  }
+ }
+]

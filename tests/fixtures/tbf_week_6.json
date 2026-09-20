@@ -1,0 +1,42 @@
+{
+ "data": [
+  {
+   "matchId": 346314.0,
+   "activityDisplayName": "Türkiye Sigorta Basketbol Süper Ligi",
+   "matchDate": "2026-10-31T00:00:00",
+   "week": "6. Hafta",
+   "homeTeam": {
+    "id": 265993.0,
+    "name": "PİZZABULLS BORDO BANDIRMA",
+    "score": ""
+   },
+   "awayTeam": {
+    "id": 265991.0,
+    "name": "BAHÇEŞEHİR KOLEJİ",
+    "score": ""
+   },
+   "salonAdi": "Bandırma 17 Eylül Üniversitesi Spor Salonu",
+   "il": "BALIKESİR",
+   "broadcastChannel": ""
+  },
+  {
+   "matchId": 346320.0,
+   "activityDisplayName": "Türkiye Sigorta Basketbol Süper Ligi",
+   "matchDate": "2026-10-31T00:00:00",
+   "week": "6. Hafta",
+   "homeTeam": {
+    "id": 265992.0,
+    "name": "BEŞİKTAŞ",
+    "score": ""
+   },
+   "awayTeam": {
+    "id": 265994.0,
+    "name": "ÇAYIROVA BELEDİYESİ",
+    "score": ""
+   },
+   "salonAdi": "Turkcell Basketbol Gelişim Merkezi",
+   "il": "İSTANBUL",
+   "broadcastChannel": ""
+  }
+ ]
+}

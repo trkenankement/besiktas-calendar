@@ -1,0 +1,903 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//besiktas-calendar//TR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+NAME:Beşiktaş Basketbol Maçları
+X-WR-CALNAME:Beşiktaş Basketbol Maçları
+X-WR-CALDESC:Beşiktaş erkek basketbol takımının maçları
+X-WR-TIMEZONE:Europe/Istanbul
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:697a0390ef19e9b9a8b54cb9@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Valencia
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20260925T170000Z
+DTEND:20260925T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 1. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:4c1b3e5d1efa6751e4d3cccc@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Anadolu Efes - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART:20260927T173000Z
+DTEND:20260927T193000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 1. Hafta
+ \nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:14b5f69bb1f99ed2113bd416@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Maccabi - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20260930T180500Z
+DTEND:20260930T200500Z
+STATUS:CONFIRMED
+LOCATION:Aleksandar Nikolic Hall
+DESCRIPTION:Basketbol · EuroLeague · 2. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:f092cdd12399af67cf75e9e1@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - FC Barcelona
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261002T170000Z
+DTEND:20261002T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 3. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:a38e97bf79fb09c08ff8dbda@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Trabzonspor
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART:20261005T160000Z
+DTEND:20261005T180000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 2. Hafta
+ \nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:a185476933aeafa8928af935@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Baskonia - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261009T183000Z
+DTEND:20261009T203000Z
+STATUS:CONFIRMED
+LOCATION:Buesa Arena
+DESCRIPTION:Basketbol · EuroLeague · 4. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:e17729622cf50aff5dcf6335@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Türk Telekom - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART:20261011T150000Z
+DTEND:20261011T170000Z
+STATUS:CONFIRMED
+LOCATION:Ankara Spor Salonu\, Ankara
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 3. Hafta
+ \nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:fc357d772835b69f41739ce1@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Hapoel TLV - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261014T160000Z
+DTEND:20261014T180000Z
+STATUS:CONFIRMED
+LOCATION:Arena 8888 Sofia
+DESCRIPTION:Basketbol · EuroLeague · 5. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:4ca41693989c89963e973bb1@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Bayern Munich
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261016T170000Z
+DTEND:20261016T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 6. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:51ea79fd503501f397d2360a@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Galatasaray MCT Technic
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART:20261018T173000Z
+DTEND:20261018T193000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 4. Hafta
+ \nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:d4fb2e7d967f77fc9b4c761b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Anadolu Efes - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261022T173000Z
+DTEND:20261022T193000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 7. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:219ca2fe42265ee6f39cd31c@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Bahçeşehir Koleji - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART:20261024T173000Z
+DTEND:20261024T193000Z
+STATUS:CONFIRMED
+LOCATION:Sinan Erdem Spor Salonu\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 5. Hafta
+ \nKaynak: TBF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:2fcaf0a25dbee0469de2b6a4@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Olympiacos
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261028T183000Z
+DTEND:20261028T203000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 8. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:a926606586aca756c1d3ba7b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Virtus Bologna - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261030T193000Z
+DTEND:20261030T213000Z
+STATUS:CONFIRMED
+LOCATION:Paladozza
+DESCRIPTION:Basketbol · EuroLeague · 9. Hafta\nKaynak: EuroLeague Basketb
+ all
+END:VEVENT
+BEGIN:VEVENT
+UID:e754d52b29cf8467994cba0b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Çayırova Belediyesi
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20261031
+DTEND;VALUE=DATE:20261101
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 6. Hafta
+ \nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak 
+ görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: TB
+ F (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:57b4b5f2e25747d2c0636215@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Zalgiris
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261106T170000Z
+DTEND:20261106T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 10. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:3e329bafa99c57d890538304@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Karşıyaka - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20261107
+DTEND;VALUE=DATE:20261108
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Mustafa Kemal Atatürk Karşıyaka Spor Salonu\, İzmir
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 7. Hafta
+ \nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak 
+ görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: TB
+ F (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:9223746c6518fb3b243bf86c@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:LDLC ASVEL - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261113T193000Z
+DTEND:20261113T213000Z
+STATUS:CONFIRMED
+LOCATION:Ldlc Arena
+DESCRIPTION:Basketbol · EuroLeague · 11. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:79107d11ebeb7e18b1353a08@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Bursaspor Basketbol
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20261114
+DTEND;VALUE=DATE:20261115
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 8. Hafta
+ \nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak 
+ görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: TB
+ F (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:8ee08b7681d7bc77d757023e@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Real Madrid
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261118T170000Z
+DTEND:20261118T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 12. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:44ffa3e75fd119fd296e8c75@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Partizan - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261120T194500Z
+DTEND:20261120T214500Z
+STATUS:CONFIRMED
+LOCATION:Aleksandar Nikolic Hall
+DESCRIPTION:Basketbol · EuroLeague · 13. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:7b095859f5a4da272a2a18a8@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Fenerbahçe Tarfin
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20261121
+DTEND;VALUE=DATE:20261122
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 9. Hafta
+ \nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak 
+ görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: TB
+ F (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:b72e03c340bb8e1a0f6e4c80@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Paris
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261124T170000Z
+DTEND:20261124T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 14. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:eccc8b7353fce9f005dde446@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Panathinaikos
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261204T170000Z
+DTEND:20261204T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 15. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:2814cf31ef49bc156451bd0d@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Pizzabulls Bordo Bandırma - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20261205
+DTEND;VALUE=DATE:20261206
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Bandırma 17 Eylül Üniversitesi Spor Salonu\, Balıkesir
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 10. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:e3688e02e0fbcf910ade9b70@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Dubai - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261211T160000Z
+DTEND:20261211T180000Z
+STATUS:CONFIRMED
+LOCATION:Coca-Cola Arena
+DESCRIPTION:Basketbol · EuroLeague · 16. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:655ca16f27f597979c2cf341@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Yukatel Denizli Basket
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20261212
+DTEND;VALUE=DATE:20261213
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 11. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:466c5c361d50f6df496fd24e@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Milan
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261216T170000Z
+DTEND:20261216T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 17. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:1ce58206cd162a6916aa1e3f@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Crvena Zvezda - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261218T193000Z
+DTEND:20261218T213000Z
+STATUS:CONFIRMED
+LOCATION:Belgrade Arena
+DESCRIPTION:Basketbol · EuroLeague · 18. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:b81bc5e29f5861c82d95b07b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Esenler Erokspor - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20261219
+DTEND;VALUE=DATE:20261220
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Akatlar Spor Kompleksi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 12. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:22f114736ea8a7ce4ca43f73@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Fenerbahce
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261222T170000Z
+DTEND:20261222T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 19. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:7faaf10bcc487091f80febe8@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Biotekno Körfez Basket
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20261226
+DTEND;VALUE=DATE:20261227
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 13. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:ba4a38e65ad81d0e94e82817@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Bayern Munich - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20261230T190000Z
+DTEND:20261230T210000Z
+STATUS:CONFIRMED
+LOCATION:Sap Garden
+DESCRIPTION:Basketbol · EuroLeague · 20. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:d0ca0bc95cad4f2154d379de@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Aliağa Petkim Spor - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270102
+DTEND;VALUE=DATE:20270103
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Enka Spor Salonu\, İzmir
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 14. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:0c7656f69d592509b0e940d1@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:FC Barcelona - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270106T193000Z
+DTEND:20270106T213000Z
+STATUS:CONFIRMED
+LOCATION:Palau Blaugrana
+DESCRIPTION:Basketbol · EuroLeague · 21. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:983e77207aff5c6068c09edc@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Tofaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270109
+DTEND;VALUE=DATE:20270110
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 15. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:3000274e78ce4f0b2868866b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Partizan
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270113T170000Z
+DTEND:20270113T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 22. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:e3dab0509344a0e7102bdb1c@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Baskonia
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270115T170000Z
+DTEND:20270115T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 23. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:59bf23c12d1aaa4ae4cfec99@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Anadolu Efes
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270116
+DTEND;VALUE=DATE:20270117
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 16. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:8f4018e3c537f24525928eb2@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Fenerbahce - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270121T174500Z
+DTEND:20270121T194500Z
+STATUS:CONFIRMED
+LOCATION:Ulker Sports And Event Hall
+DESCRIPTION:Basketbol · EuroLeague · 24. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:39f7fad323e48a3e9ce4b1f3@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Trabzonspor - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270123
+DTEND;VALUE=DATE:20270124
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Hayri Gür Spor Salonu\, Trabzon
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 17. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:1d4289c72790d9f60753d24f@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Crvena Zvezda
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270128T170000Z
+DTEND:20270128T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 25. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:5012c35530fe84de7e9c7063@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Türk Telekom
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270130
+DTEND;VALUE=DATE:20270131
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 18. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:8f48f77955b67f4c9c572aec@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Paris - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270202T194500Z
+DTEND:20270202T214500Z
+STATUS:CONFIRMED
+LOCATION:Adidas Arena
+DESCRIPTION:Basketbol · EuroLeague · 26. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:7ae29de854167525d3530084@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Zalgiris - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270204T180000Z
+DTEND:20270204T200000Z
+STATUS:CONFIRMED
+LOCATION:Zalgirio Arena
+DESCRIPTION:Basketbol · EuroLeague · 27. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:98ff170eab3858d02f5fba5a@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Galatasaray MCT Technic - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270206
+DTEND;VALUE=DATE:20270207
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Sinan Erdem Spor Salonu\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 19. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:8af614b8cd2978ae8737f4a3@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Dubai
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270211T170000Z
+DTEND:20270211T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 28. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:57466fdd700bfe8b0affcfbb@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Bahçeşehir Koleji
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270213
+DTEND;VALUE=DATE:20270214
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 20. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:4980b992e216d6226c00c1d5@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Panathinaikos - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270304T191500Z
+DTEND:20270304T211500Z
+STATUS:CONFIRMED
+LOCATION:Telekom Center Athens
+DESCRIPTION:Basketbol · EuroLeague · 29. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:7a3a925cf468677762d5ea5b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Çayırova Belediyesi - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270306
+DTEND;VALUE=DATE:20270307
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Atanmadı
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 21. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:83f2eabd84fdf7e912f4e94c@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - LDLC ASVEL
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270309T170000Z
+DTEND:20270309T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 30. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:56ba9eaef1bed109c2cafa31@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Olympiacos - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270312T191500Z
+DTEND:20270312T211500Z
+STATUS:CONFIRMED
+LOCATION:Peace And Friendship Stadium
+DESCRIPTION:Basketbol · EuroLeague · 31. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:b91da15d031c6aa17c07be20@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Karşıyaka
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270313
+DTEND;VALUE=DATE:20270314
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 22. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:f531df13bf6f8b7855da57b7@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Anadolu Efes
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270319T170000Z
+DTEND:20270319T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 32. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:d12d7954d9eb1bfa94381453@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Bursaspor Basketbol - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270320
+DTEND;VALUE=DATE:20270321
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Tofaş Spor Salonu\, Bursa
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 23. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:bb47f8dac3afb5f541a5c5ff@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Valencia - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270324T193000Z
+DTEND:20270324T213000Z
+STATUS:CONFIRMED
+LOCATION:Roig Arena
+DESCRIPTION:Basketbol · EuroLeague · 33. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:0948abcde5aeeb9fea0ca8ba@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Real Madrid - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270326T194500Z
+DTEND:20270326T214500Z
+STATUS:CONFIRMED
+LOCATION:Movistar Arena
+DESCRIPTION:Basketbol · EuroLeague · 34. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:1581f3128bd471c324163cbf@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Fenerbahçe Tarfin - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270327
+DTEND;VALUE=DATE:20270328
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Ülker Spor ve Etkinlik Salonu\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 24. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:5b16e04124348894b3c1960f@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Milan - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270401T183000Z
+DTEND:20270401T203000Z
+STATUS:CONFIRMED
+LOCATION:Unipol Forum
+DESCRIPTION:Basketbol · EuroLeague · 35. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:10158f773ea1700067e49446@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Pizzabulls Bordo Bandırma
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270403
+DTEND;VALUE=DATE:20270404
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 25. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:430025c5f064fd86a0942903@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Hapoel TLV
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270406T170000Z
+DTEND:20270406T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 36. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:9e1ed043cd7c98cc933d5acb@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Maccabi
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270409T170000Z
+DTEND:20270409T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 37. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:8b24fc1cff8697bee3e153e2@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Yukatel Denizli Basket - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270410
+DTEND;VALUE=DATE:20270411
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Pamukkale Üniversitesi Spor Salonu\, Denizli
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 26. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:ad5ce1ed5bc45abae2f69ad6@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Virtus Bologna
+CATEGORIES:Beşiktaş,Basketbol,EuroLeague
+DTSTART:20270416T170000Z
+DTEND:20270416T190000Z
+STATUS:CONFIRMED
+LOCATION:Turkcell Basketball Development Center
+DESCRIPTION:Basketbol · EuroLeague · 38. Hafta\nKaynak: EuroLeague Basket
+ ball
+END:VEVENT
+BEGIN:VEVENT
+UID:290204b734ea643f5bbe973e@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Esenler Erokspor
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270417
+DTEND;VALUE=DATE:20270418
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 27. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:3bdf88e8bbd6a25d8d31af95@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Biotekno Körfez Basket - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270424
+DTEND;VALUE=DATE:20270425
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Şehit Polis Recep Topaloğlu Spor Salonu\, Kocaeli
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 28. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:56c0a30c7fd9404f246f002c@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Aliağa Petkim Spor
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270501
+DTEND;VALUE=DATE:20270502
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 29. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+BEGIN:VEVENT
+UID:b7df42536a7bbcba4d1156df@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Tofaş - Beşiktaş
+CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
+DTSTART;VALUE=DATE:20270508
+DTEND;VALUE=DATE:20270509
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Tofaş Spor Salonu\, Bursa
+DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 30. Haft
+ a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
+  görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
+ BF (Türkiye Basketbol Federasyonu)
+END:VEVENT
+END:VCALENDAR

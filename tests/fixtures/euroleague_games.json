@@ -1,0 +1,71 @@
+{
+ "data": [
+  {
+   "id": "7938efc9-5267-4b4f-a50e-85a6ee4ed3f1",
+   "identifier": "E2026_19",
+   "round": 2,
+   "roundName": "Round 2",
+   "phaseType": {
+    "code": "RS",
+    "name": "Regular Season"
+   },
+   "played": false,
+   "confirmedDate": true,
+   "confirmedHour": true,
+   "utcDate": "2026-09-30T18:05:00Z",
+   "local": {
+    "club": {
+     "code": "TEL",
+     "name": "Maccabi Rapyd Tel Aviv",
+     "abbreviatedName": "Maccabi"
+    },
+    "score": 0
+   },
+   "road": {
+    "club": {
+     "code": "BES",
+     "name": "Besiktas Istanbul",
+     "abbreviatedName": "Besiktas"
+    },
+    "score": 0
+   },
+   "venue": {
+    "name": "ALEKSANDAR NIKOLIC HALL"
+   }
+  },
+  {
+   "id": "f93b1870-ffa0-46a9-a6cd-3eb53f72281a",
+   "identifier": "E2026_8",
+   "round": 1,
+   "roundName": "Round 1",
+   "phaseType": {
+    "code": "RS",
+    "name": "Regular Season"
+   },
+   "played": false,
+   "confirmedDate": true,
+   "confirmedHour": true,
+   "utcDate": "2026-09-25T17:00:00Z",
+   "local": {
+    "club": {
+     "code": "BES",
+     "name": "Besiktas Istanbul",
+     "abbreviatedName": "Besiktas"
+    },
+    "score": 0
+   },
+   "road": {
+    "club": {
+     "code": "PAM",
+     "name": "Valencia Basket",
+     "abbreviatedName": "Valencia"
+    },
+    "score": 0
+   },
+   "venue": {
+    "name": "TURKCELL BASKETBALL DEVELOPMENT CENTER"
+   }
+  }
+ ],
+ "total": 38
+}

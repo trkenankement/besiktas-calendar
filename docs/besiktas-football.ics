@@ -1,0 +1,652 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//besiktas-calendar//TR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+NAME:Beşiktaş Futbol Maçları
+X-WR-CALNAME:Beşiktaş Futbol Maçları
+X-WR-CALDESC:Beşiktaş erkek futbol takımının maçları
+X-WR-TIMEZONE:Europe/Istanbul
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:c3ad07c17e6049b08654fa4d@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Midtjylland
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20260723T180000Z
+DTEND:20260723T201500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Stadium\, Istanbul
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · 2. Ön Eleme Turu\nSonuç: 1-0\nK
+ aynak: UEFA
+END:VEVENT
+BEGIN:VEVENT
+UID:43a9b6cfd4e9dfcf48d197d7@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Midtjylland - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20260730T170000Z
+DTEND:20260730T191500Z
+STATUS:CONFIRMED
+LOCATION:Arena Herning\, Herning
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · 2. Ön Eleme Turu\nSonuç: 0-2\nK
+ aynak: UEFA
+END:VEVENT
+BEGIN:VEVENT
+UID:d29b5db7d6b5fbd36837f8bd@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Hradec Králové - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20260806T170000Z
+DTEND:20260806T191500Z
+STATUS:CONFIRMED
+LOCATION:Malsovicka Arena\, Hradec Kralove
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · 3. Ön Eleme Turu\nSonuç: 0-1\nK
+ aynak: UEFA
+END:VEVENT
+BEGIN:VEVENT
+UID:a659c51956c5ba45ce58709a@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Hradec Králové
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20260813T170000Z
+DTEND:20260813T191500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Stadium\, Istanbul
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · 3. Ön Eleme Turu\nSonuç: 1-0\nK
+ aynak: UEFA
+END:VEVENT
+BEGIN:VEVENT
+UID:e1705287d917ba4dd8d76e1e@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Eyüpspor
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20260816T183000Z
+DTEND:20260816T204500Z
+STATUS:CONFIRMED
+DESCRIPTION:Futbol · Trendyol Süper Lig · 1. Hafta\nSonuç: 1-0\nKaynak:
+  TFF (Türkiye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pa
+ geId=29&macId=317791
+END:VEVENT
+BEGIN:VEVENT
+UID:c40fe5a55ac6eda030a88a16@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Kauno Žalgiris
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20260820T170000Z
+DTEND:20260820T191500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Stadium\, Istanbul
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Play-Off\nSonuç: 3-0\nKaynak: UE
+ FA
+END:VEVENT
+BEGIN:VEVENT
+UID:6bbc831c68f85f24f8d7868b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Corendon Alanyaspor - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20260823T183000Z
+DTEND:20260823T204500Z
+STATUS:CONFIRMED
+DESCRIPTION:Futbol · Trendyol Süper Lig · 2. Hafta\nSonuç: 1-0\nKaynak:
+  TFF (Türkiye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pa
+ geId=29&macId=317795
+END:VEVENT
+BEGIN:VEVENT
+UID:ffc957f11ef9b5e2dd3b2456@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Kauno Žalgiris - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20260827T170000Z
+DTEND:20260827T191500Z
+STATUS:CONFIRMED
+LOCATION:Dariaus ir Girėno Stadionas\, Kaunas
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Play-Off\nSonuç: 1-0\nKaynak: UE
+ FA
+END:VEVENT
+BEGIN:VEVENT
+UID:fcb9dd98158347ac1a0f14d4@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Arca Çorum FK
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20260831T183000Z
+DTEND:20260831T204500Z
+STATUS:CONFIRMED
+DESCRIPTION:Futbol · Trendyol Süper Lig · 3. Hafta\nSonuç: 6-2\nKaynak:
+  TFF (Türkiye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pa
+ geId=29&macId=317809
+END:VEVENT
+BEGIN:VEVENT
+UID:343d4056343a9bd499d64b83@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Fenerbahçe - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20260905T170000Z
+DTEND:20260905T191500Z
+STATUS:CONFIRMED
+DESCRIPTION:Futbol · Trendyol Süper Lig · 4. Hafta\nSonuç: 1-2\nKaynak:
+  TFF (Türkiye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pa
+ geId=29&macId=317817
+END:VEVENT
+BEGIN:VEVENT
+UID:2520aacc7bc2ae1de5cc1465@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Erzurumspor FK
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20260911T170000Z
+DTEND:20260911T191500Z
+STATUS:CONFIRMED
+DESCRIPTION:Futbol · Trendyol Süper Lig · 5. Hafta\nSonuç: 3-0\nKaynak:
+  TFF (Türkiye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pa
+ geId=29&macId=317827
+END:VEVENT
+BEGIN:VEVENT
+UID:6c4027411e91783a81cf8203@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Marseille
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20260917T190000Z
+DTEND:20260917T211500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Stadium\, Istanbul
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Lig Aşaması 1. Hafta\nSonuç: 4
+ -1\nKaynak: UEFA
+END:VEVENT
+BEGIN:VEVENT
+UID:55582dc6846100811ef196c4@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Amed Sportif Faaliyetler - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20260920T170000Z
+DTEND:20260920T191500Z
+STATUS:CONFIRMED
+LOCATION:Diyarbakır Stadyumu\, Diyarbakır
+DESCRIPTION:Futbol · Trendyol Süper Lig · 6. Hafta\nKaynak: TFF (Türkiy
+ e Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId
+ =317832
+END:VEVENT
+BEGIN:VEVENT
+UID:da422377c6f5549e9ba84c43@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Kocaelispor
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261011T160000Z
+DTEND:20261011T181500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 7. Hafta\nKaynak: TFF (Türkiy
+ e Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId
+ =317845
+END:VEVENT
+BEGIN:VEVENT
+UID:3b43eaa89fee3f87ab7b62f3@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Hoffenheim - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20261015T190000Z
+DTEND:20261015T211500Z
+STATUS:CONFIRMED
+LOCATION:Rhein-Neckar-Arena\, Sinsheim
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Lig Aşaması 2. Hafta\nKaynak: U
+ EFA
+END:VEVENT
+BEGIN:VEVENT
+UID:edf054283518f019a23789d5@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Trabzonspor - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261019T170000Z
+DTEND:20261019T191500Z
+STATUS:CONFIRMED
+LOCATION:Papara Park\, Trabzon
+DESCRIPTION:Futbol · Trendyol Süper Lig · 8. Hafta\nKaynak: TFF (Türkiy
+ e Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId
+ =317847
+END:VEVENT
+BEGIN:VEVENT
+UID:bebbb9975a9232bc2e3f22db@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Crystal Palace
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20261022T190000Z
+DTEND:20261022T211500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Stadium\, Istanbul
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Lig Aşaması 3. Hafta\nKaynak: U
+ EFA
+END:VEVENT
+BEGIN:VEVENT
+UID:6490c1b44efec6a4c68e0124@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - İstanbul Başakşehir FK
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261026T160000Z
+DTEND:20261026T181500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 9. Hafta\nKaynak: TFF (Türkiy
+ e Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId
+ =317863
+END:VEVENT
+BEGIN:VEVENT
+UID:501514cd4f1317e9bed0f21f@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Kasımpaşa - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261101T160000Z
+DTEND:20261101T181500Z
+STATUS:CONFIRMED
+LOCATION:Recep Tayyip Erdoğan Stadyumu
+DESCRIPTION:Futbol · Trendyol Süper Lig · 10. Hafta\nKaynak: TFF (Türki
+ ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
+ d=317866
+END:VEVENT
+BEGIN:VEVENT
+UID:3f4d35a926541242eb4d22eb@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Celtic - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20261105T200000Z
+DTEND:20261105T221500Z
+STATUS:CONFIRMED
+LOCATION:Celtic Park\, Glasgow
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Lig Aşaması 4. Hafta\nKaynak: U
+ EFA
+END:VEVENT
+BEGIN:VEVENT
+UID:6e776253a814db9f3dc621d9@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Gençlerbirliği
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261108T180000Z
+DTEND:20261108T201500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 11. Hafta\nKaynak: TFF (Türki
+ ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
+ d=317881
+END:VEVENT
+BEGIN:VEVENT
+UID:1635159b73df39219e15767e@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Tümosan Konyaspor - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261122T130000Z
+DTEND:20261122T151500Z
+STATUS:CONFIRMED
+LOCATION:Medaş Konya Büyükşehir Stadyumu\, Konya
+DESCRIPTION:Futbol · Trendyol Süper Lig · 12. Hafta\nKaynak: TFF (Türki
+ ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
+ d=317888
+END:VEVENT
+BEGIN:VEVENT
+UID:9ba2ffb8e0435db4de69b9b6@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - H. Beer-Sheva
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20261126T174500Z
+DTEND:20261126T200000Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Stadium\, Istanbul
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Lig Aşaması 5. Hafta\nKaynak: U
+ EFA
+END:VEVENT
+BEGIN:VEVENT
+UID:d29bc510166ad08333ae9859@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Galatasaray
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261130T180000Z
+DTEND:20261130T201500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 13. Hafta\nKaynak: TFF (Türki
+ ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
+ d=317899
+END:VEVENT
+BEGIN:VEVENT
+UID:ae6cf4535944aec8963efee7@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Samsunspor
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261206T130000Z
+DTEND:20261206T151500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 14. Hafta\nKaynak: TFF (Türki
+ ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
+ d=317908
+END:VEVENT
+BEGIN:VEVENT
+UID:98b4cbe7334f765deeed2079@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Leverkusen - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20261210T200000Z
+DTEND:20261210T221500Z
+STATUS:CONFIRMED
+LOCATION:BayArena\, Leverkusen
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Lig Aşaması 6. Hafta\nKaynak: U
+ EFA
+END:VEVENT
+BEGIN:VEVENT
+UID:5bb220c86487a21917380795@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Gaziantep Futbol Kulübü - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261214T170000Z
+DTEND:20261214T191500Z
+STATUS:CONFIRMED
+LOCATION:Gaziantep Stadyumu\, Gaziantep
+DESCRIPTION:Futbol · Trendyol Süper Lig · 15. Hafta\nKaynak: TFF (Türki
+ ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
+ d=317910
+END:VEVENT
+BEGIN:VEVENT
+UID:4305901bf56deae5dc7c40e2@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Çaykur Rizespor
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART:20261220T160000Z
+DTEND:20261220T181500Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 16. Hafta\nKaynak: TFF (Türki
+ ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
+ d=317926
+END:VEVENT
+BEGIN:VEVENT
+UID:1528efde1bddd0746c02a66a@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Göztepe - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270117
+DTEND;VALUE=DATE:20270118
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Isonem Park Gürsel Aksel Spor Ve Sağlıklı Yaşam M.
+DESCRIPTION:Futbol · Trendyol Süper Lig · 17. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=317932
+END:VEVENT
+BEGIN:VEVENT
+UID:300e6a6ffde2b2fba14de874@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Union SG
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20270121T174500Z
+DTEND:20270121T200000Z
+STATUS:CONFIRMED
+LOCATION:Beşiktaş Stadium\, Istanbul
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Lig Aşaması 7. Hafta\nKaynak: U
+ EFA
+END:VEVENT
+BEGIN:VEVENT
+UID:64dd637f3dfa56e122cc90ce@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Eyüpspor - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270124
+DTEND;VALUE=DATE:20270125
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+DESCRIPTION:Futbol · Trendyol Süper Lig · 18. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=317944
+END:VEVENT
+BEGIN:VEVENT
+UID:821a5cf3613548417b635ef6@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Omonia - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,UEFA Avrupa Ligi
+DTSTART:20270128T200000Z
+DTEND:20270128T221500Z
+STATUS:CONFIRMED
+LOCATION:GSP\, Nicosia
+DESCRIPTION:Futbol · UEFA Avrupa Ligi · Lig Aşaması 8. Hafta\nKaynak: U
+ EFA
+END:VEVENT
+BEGIN:VEVENT
+UID:4c4dc01763f68763bc6d32c0@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Corendon Alanyaspor
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270131
+DTEND;VALUE=DATE:20270201
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 19. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=317948
+END:VEVENT
+BEGIN:VEVENT
+UID:1f2550dd3e6b8cfce682f1c0@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Arca Çorum FK - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270207
+DTEND;VALUE=DATE:20270208
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Çorum Şehir Stadyumu
+DESCRIPTION:Futbol · Trendyol Süper Lig · 20. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=317962
+END:VEVENT
+BEGIN:VEVENT
+UID:179bfdd3d24fda81a56e00f6@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Fenerbahçe
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270214
+DTEND;VALUE=DATE:20270215
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 21. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=317970
+END:VEVENT
+BEGIN:VEVENT
+UID:18cc0e55e31b033c92d3400b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Erzurumspor FK - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270221
+DTEND;VALUE=DATE:20270222
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Erzurum Kazım Karabekir
+DESCRIPTION:Futbol · Trendyol Süper Lig · 22. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=317980
+END:VEVENT
+BEGIN:VEVENT
+UID:678df17bedcee5dcb4555a27@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Amed Sportif Faaliyetler
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270228
+DTEND;VALUE=DATE:20270301
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 23. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=317985
+END:VEVENT
+BEGIN:VEVENT
+UID:27370c86c833f631d892b74d@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Kocaelispor - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270307
+DTEND;VALUE=DATE:20270308
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Kocaeli Stadyumu\, Kocaeli
+DESCRIPTION:Futbol · Trendyol Süper Lig · 24. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=317998
+END:VEVENT
+BEGIN:VEVENT
+UID:9a082da30570eccdc0117c09@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Trabzonspor
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270314
+DTEND;VALUE=DATE:20270315
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 25. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318000
+END:VEVENT
+BEGIN:VEVENT
+UID:0da23164565fbdcda0a25257@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:İstanbul Başakşehir FK - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270321
+DTEND;VALUE=DATE:20270322
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Başakşehir Fatih Terim\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 26. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318016
+END:VEVENT
+BEGIN:VEVENT
+UID:e31944120eac5d16960b25a8@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Kasımpaşa
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270404
+DTEND;VALUE=DATE:20270405
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 27. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318019
+END:VEVENT
+BEGIN:VEVENT
+UID:93901f45022d42a94e45451e@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Gençlerbirliği - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270411
+DTEND;VALUE=DATE:20270412
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Eryaman Stadyumu
+DESCRIPTION:Futbol · Trendyol Süper Lig · 28. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318034
+END:VEVENT
+BEGIN:VEVENT
+UID:681f582a1f4a947dd5bedce0@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Tümosan Konyaspor
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270418
+DTEND;VALUE=DATE:20270419
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 29. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318041
+END:VEVENT
+BEGIN:VEVENT
+UID:1fe0bad07adfc4c9726c64f4@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Galatasaray - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270425
+DTEND;VALUE=DATE:20270426
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Ali Sami Yen Spor Kompleksi Rams Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 30. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318052
+END:VEVENT
+BEGIN:VEVENT
+UID:58e2521c0cb57473debab37b@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Samsunspor - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270502
+DTEND;VALUE=DATE:20270503
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Samsun Yeni 19 Mayıs\, Samsun
+DESCRIPTION:Futbol · Trendyol Süper Lig · 31. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318061
+END:VEVENT
+BEGIN:VEVENT
+UID:05fbeb3a3bd1ec3a98720b37@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Gaziantep Futbol Kulübü
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270509
+DTEND;VALUE=DATE:20270510
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 32. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318063
+END:VEVENT
+BEGIN:VEVENT
+UID:81839c5e3c9ec0d34db77452@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Çaykur Rizespor - Beşiktaş
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270516
+DTEND;VALUE=DATE:20270517
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Çaykur Didi
+DESCRIPTION:Futbol · Trendyol Süper Lig · 33. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318079
+END:VEVENT
+BEGIN:VEVENT
+UID:4252cde5be2ed24d23a23267@besiktas-calendar
+DTSTAMP:20260920T121634Z
+SUMMARY:Beşiktaş - Göztepe
+CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
+DTSTART;VALUE=DATE:20270523
+DTEND;VALUE=DATE:20270524
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+LOCATION:Beşiktaş Park\, İstanbul
+DESCRIPTION:Futbol · Trendyol Süper Lig · 34. Hafta\nMaç saati henüz a
+ çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
+ nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
+ derasyonu) — https://www.tff.org/Default.aspx?pageId=29&macId=318085
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,8 @@
+# Depoda satır sonları LF; Windows'ta çalışma klasöründe de LF olarak çıkar.
+* text=auto eol=lf
+
+# ICS dosyaları RFC 5545 gereği CRLF ile biter; git satır sonlarına dokunmasın.
+*.ics -text linguist-generated
+
+# Otomatik üretilen dosyalar GitHub dil istatistiklerini ve diff'leri kalabalıklaştırmasın.
+docs/index.html linguist-generated

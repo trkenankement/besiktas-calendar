@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "besiktas-calendar"
+version = "1.0.0"
+description = "Beşiktaş erkek futbol ve basketbol maçlarını ICS takvim akışlarına dönüştürür."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.32,<3",
+    "beautifulsoup4>=4.12,<5",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "icalendar>=6",
+]
+
+[project.scripts]
+besiktas-calendar = "besiktas_calendar.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

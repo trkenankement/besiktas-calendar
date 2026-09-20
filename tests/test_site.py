@@ -1,0 +1,82 @@
+from datetime import date, datetime, timedelta
+
+from besiktas_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match
+from besiktas_calendar.site import UPCOMING_LIMIT, format_when, render_index, upcoming
+
+NOW = datetime(2026, 9, 20, 15, 0, tzinfo=TURKEY_TZ)
+
+
+def match(source_id, start, *, sport=FOOTBALL, home="Beşiktaş", away="Rakip", **extra):
+    return Match(
+        source="tff",
+        source_id=str(source_id),
+        sport=sport,
+        competition="Trendyol Süper Lig",
+        round_label="7. Hafta",
+        start=start,
+        home=home,
+        away=away,
+        **extra,
+    )
+
+
+def at(day, hour, minute=0):
+    return datetime(2026, 9, day, hour, minute, tzinfo=TURKEY_TZ)
+
+
+def test_upcoming_drops_finished_matches_but_keeps_unfinished_and_all_day_ones():
+    finished = match(1, at(20, 12))  # 14:15'te bitti
+    tonight = match(2, at(20, 20))
+    all_day_today = match(3, date(2026, 9, 20))
+    all_day_yesterday = match(4, date(2026, 9, 19))
+    tomorrow = match(5, at(21, 19))
+
+    result = upcoming([tomorrow, finished, all_day_yesterday, tonight, all_day_today], NOW)
+
+    assert [m.source_id for m in result] == ["3", "2", "5"]
+
+
+def test_a_match_in_progress_still_counts_as_upcoming():
+    in_progress = match(1, at(20, 14))  # 16:15'e kadar sürer
+    assert upcoming([in_progress], NOW) == [in_progress]
+
+
+def test_upcoming_is_limited():
+    matches = [match(i, at(21, 12) + timedelta(days=i)) for i in range(UPCOMING_LIMIT + 5)]
+    result = upcoming(matches, NOW)
+    assert len(result) == UPCOMING_LIMIT
+    assert result == sorted(result, key=lambda m: m.sort_key)
+
+
+def test_format_when_uses_turkish_weekdays_and_flags_unknown_times():
+    assert format_when(match(1, at(20, 20))) == "Pazar 20.09.2026 · 20:00"
+    assert format_when(match(2, date(2026, 10, 31))) == "Cumartesi 31.10.2026 · saat belli değil"
+
+
+def test_index_lists_feeds_matches_and_source_information():
+    html = render_index(
+        [match(1, at(20, 20), home="Amed Sportif Faaliyetler", away="Beşiktaş", venue="Diyarbakır Stadyumu, Diyarbakır")],
+        NOW,
+    )
+    for filename in ("besiktas-all.ics", "besiktas-football.ics", "besiktas-basketball.ics"):
+        assert f'data-feed="{filename}"' in html
+    assert "Amed Sportif Faaliyetler - Beşiktaş" in html
+    assert "Diyarbakır Stadyumu, Diyarbakır" in html
+    assert "last_check.txt" in html
+    assert '<html lang="tr">' in html
+
+
+def test_index_escapes_team_names():
+    html = render_index([match(1, at(20, 20), away="<script>alert(1)</script>")], NOW)
+    assert "<script>alert(1)</script>" not in html
+    assert "&lt;script&gt;alert(1)&lt;/script&gt;" in html
+
+
+def test_index_without_upcoming_matches_says_so():
+    html = render_index([match(1, at(1, 20))], NOW)
+    assert "Yaklaşan maç bulunamadı." in html
+
+
+def test_index_is_deterministic_for_the_same_input():
+    matches = [match(1, at(20, 20)), match(2, at(25, 20), sport=BASKETBALL)]
+    assert render_index(matches, NOW) == render_index(matches, NOW)

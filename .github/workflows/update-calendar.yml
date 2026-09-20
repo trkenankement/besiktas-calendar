@@ -1,0 +1,87 @@
+name: Update calendars
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 3 * * *" # her gün 06:17 (Türkiye saati)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Aynı anda tek çalışma: yarım kalmış bir yayın başka bir çalışmayla çakışmasın.
+concurrency:
+  group: update-calendar
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write # docs/ değişirse commit atmak için
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run tests
+        run: python -m pytest
+
+      # Kaynaklardan biri hata verirse bu adım başarısız olur; böylece eksik veri yayınlanmaz
+      # ve bir önceki sağlam site yayında kalır.
+      - name: Update calendars
+        run: python -m besiktas_calendar
+
+      - name: Commit changes
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs
+          if git diff --cached --quiet; then
+            echo "Takvimlerde değişiklik yok; commit atılmadı."
+            # GitHub, 60 gün etkinlik olmayan depolarda zamanlanmış çalışmaları kapatır.
+            # Son commit 45 günden eskiyse çalışmanın devam etmesi için boş bir commit at.
+            last_commit=$(git log -1 --format=%ct)
+            if [ $(( $(date +%s) - last_commit )) -gt $(( 45 * 24 * 3600 )) ]; then
+              git commit --allow-empty -m "chore: keep scheduled workflow active"
+              git push || { git pull --rebase origin main && git push; }
+            fi
+          else
+            git commit -m "chore: update calendars"
+            git push || { git pull --rebase origin main && git push; }
+          fi
+
+      - name: Upload site
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: docs
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write # Pages'e yayınlamak için
+      id-token: write # yayının doğru kaynaktan geldiğini doğrulamak için
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
