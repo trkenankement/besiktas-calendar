@@ -17,7 +17,8 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # ubuntu-latest 19 Ekim 2026'da Ubuntu 26'ya geçecek; günlük iş doğrulanmış imajda kalsın.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: write # docs/ değişirse commit atmak için
@@ -73,7 +74,7 @@ jobs:
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       pages: write # Pages'e yayınlamak için
       id-token: write # yayının doğru kaynaktan geldiğini doğrulamak için
