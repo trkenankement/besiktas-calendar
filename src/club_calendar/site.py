@@ -29,7 +29,11 @@ a{color:inherit}
 .feed{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px 16px;margin:10px 0}
 .feed p{margin:.15rem 0 .7rem;color:var(--muted)}
 .btn{display:inline-block;padding:9px 14px;border-radius:10px;background:var(--btn-bg);color:var(--btn-fg);text-decoration:none;font-weight:600}
-.dl{margin-left:12px}
+.actions{display:flex;flex-wrap:wrap;gap:8px 12px}
+.actions .btn{flex:1 1 200px;text-align:center}
+.dl{display:inline-block;margin-top:.7rem}
+ul.how{margin:.2rem 0 .6rem;padding-left:1.2rem}
+.how li{margin:.35rem 0}
 a:focus-visible{outline:3px solid #888;outline-offset:2px}
 code{display:block;margin-top:.7rem;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:.85rem;word-break:break-all}
 ul.matches{list-style:none;margin:0;padding:0}
@@ -49,6 +53,10 @@ SCRIPT = """
 for (const a of document.querySelectorAll('[data-feed]')) {
   const url = new URL(a.dataset.feed, location.href);
   a.href = 'webcal://' + url.host + url.pathname;
+}
+for (const a of document.querySelectorAll('[data-google]')) {
+  const url = new URL(a.dataset.google, location.href);
+  a.href = 'https://calendar.google.com/calendar/r?cid=webcal://' + url.host + url.pathname;
 }
 for (const c of document.querySelectorAll('[data-url]')) {
   c.textContent = new URL(c.dataset.url, location.href).href;
@@ -140,12 +148,25 @@ def _match_item(match: Match) -> str:
 
 
 def _feed_card(feed) -> str:
+    # Betik çalışmazsa iki düğme de dosyanın kendisine gider (indirme/açma); betik adresleri abonelik bağlantısına çevirir.
     return (
         f'<section class="feed"><h3>{escape(feed.label)}</h3><p>{escape(feed.description)}</p>'
-        f'<a class="btn" data-feed="{feed.filename}" href="{feed.filename}">Takvime abone ol</a>'
+        '<div class="actions">'
+        f'<a class="btn" data-feed="{feed.filename}" href="{feed.filename}">Apple Takvim\'e abone ol</a>'
+        f'<a class="btn" data-google="{feed.filename}" href="{feed.filename}" target="_blank" rel="noopener noreferrer">Google Takvim\'e abone ol</a>'
+        '</div>'
         f'<a class="dl" href="{feed.filename}" download>.ics indir</a>'
         f'<code data-url="{feed.filename}">{feed.filename}</code></section>'
     )
+
+
+def _how_to_subscribe() -> str:
+    return """<ul class="how muted">
+<li><strong>iPhone, iPad, Mac:</strong> Apple Takvim düğmesi takvimi doğrudan ekler.</li>
+<li><strong>Android:</strong> Google Takvim uygulaması telefonda URL ile abone olmayı desteklemez; düğme, ekleme onayının yapıldığı Google Takvim web sayfasını açar. Telefonda açılmazsa tarayıcı menüsünden "Masaüstü sitesi"ni seçin ya da sayfayı bilgisayarda açın. Eklenen takvim telefonunuza kendiliğinden gelir.</li>
+<li><strong>Outlook ve diğerleri:</strong> "URL ile takvim ekle" seçeneğine aşağıdaki bağlantıyı yapıştırın.</li>
+<li><strong>.ics indir:</strong> maçları yalnızca bir kez ekler, sonradan güncellenmez.</li>
+</ul>"""
 
 
 def _donate_section() -> str:
@@ -206,7 +227,7 @@ def render_index(matches: list[Match], now: datetime, club: Club, stats: RepoSta
 <p>Erkek A takım futbol ve basketbol maçları. Takvim her gün otomatik güncellenir; bir kez abone olmanız yeterli.</p>
 {_stats_line(stats)}<p id="stale" class="warn" role="alert" hidden></p>
 <h2>Takvime abone ol</h2>
-<p class="muted">Apple Takvim için düğmeyi kullanın. Google Takvim ve Outlook'ta "URL ile takvim ekle" seçeneğine aşağıdaki bağlantıyı yapıştırın.</p>
+{_how_to_subscribe()}
 {feeds}
 <h2>Sıradaki maçlar</h2>
 <ul class="matches">

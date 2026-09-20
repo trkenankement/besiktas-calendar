@@ -153,6 +153,27 @@ def test_external_link_cannot_leak_the_opener_or_referrer():
     assert '<meta name="referrer" content="no-referrer">' in page
 
 
+def test_every_link_that_opens_another_tab_carries_noopener_noreferrer():
+    parsed = _parse(render_index([match_with("Rakip")], NOW, BESIKTAS))
+    new_tab_links = [attrs for tag, attrs in parsed.elements if tag == "a" and "target" in attrs]
+    assert new_tab_links, "Google Takvim düğmeleri yeni sekmede açılmalı"
+    assert all(attrs["target"] == "_blank" and attrs["rel"] == "noopener noreferrer" for attrs in new_tab_links)
+
+
+def test_subscription_links_are_built_only_from_our_own_file_names():
+    """Betik `data-feed`/`data-google` değerini adrese ekler; bu değerler yalnızca düz dosya adı olabilir."""
+    parsed = _parse(render_index([match_with("Rakip")], NOW, BESIKTAS))
+    values = [attrs[name] for _, attrs in parsed.elements for name in ("data-feed", "data-google", "data-url") if name in attrs]
+    assert len(values) == 9  # 3 akış x (Apple, Google, adres kutusu)
+    assert all(re.fullmatch(r"[a-z0-9]+-[a-z]+\.ics", value) for value in values)
+
+
+def test_script_only_adds_a_fixed_https_prefix_and_never_evaluates_text():
+    assert "'https://calendar.google.com/calendar/r?cid=webcal://' + url.host + url.pathname" in SCRIPT
+    for forbidden in ("eval(", "Function(", "document.write", "innerHTML", "insertAdjacentHTML", "setAttribute('on"):
+        assert forbidden not in SCRIPT
+
+
 # --- Girdi dayanıklılığı -----------------------------------------------------------------------
 
 

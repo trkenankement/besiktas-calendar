@@ -1,3 +1,4 @@
+import re
 from datetime import date, datetime, timedelta
 
 from helpers import BESIKTAS
@@ -67,6 +68,24 @@ def test_index_lists_feeds_matches_and_source_information():
     assert "Diyarbakır Stadyumu, Diyarbakır" in html
     assert "last_check.txt" in html
     assert '<html lang="tr">' in html
+
+
+def test_each_feed_has_an_apple_button_a_google_button_and_a_separate_download_link():
+    html = render_index([], NOW, BESIKTAS)
+    cards = re.findall(r'<section class="feed"><h3>.*?</section>', html, re.DOTALL)
+    assert len(cards) == 3  # bağış bölümü <h3> ile başlamaz
+    for card, kind in zip(cards, ("all", "football", "basketball"), strict=True):
+        filename = f"besiktas-{kind}.ics"
+        assert f'data-feed="{filename}"' in card and "Apple Takvim'e abone ol" in card
+        assert f'data-google="{filename}"' in card and "Google Takvim'e abone ol" in card
+        assert f'<a class="dl" href="{filename}" download>.ics indir</a>' in card
+
+
+def test_page_explains_why_android_goes_through_google_calendars_web_page():
+    html = render_index([], NOW, BESIKTAS)
+    assert "Google Takvim uygulaması telefonda URL ile abone olmayı desteklemez" in html
+    assert "Masaüstü sitesi" in html
+    assert "yalnızca bir kez ekler" in html  # .ics indirmek abonelik değildir
 
 
 def test_index_escapes_team_names():
