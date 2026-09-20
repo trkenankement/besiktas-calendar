@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lgsBiW1UW0Vuhj5JsHd6MVSN8gRwBA8wp5U32dcraDs='; style-src 'sha256-2cGtWJUHfOMXky/Yu1h6l7NDpqMVa0MyklhgPs5H+Fs='; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-izqXYivUUaNnt8qNOpwSgAXUFEW5BUcr3dYUCgVLAv4='; style-src 'sha256-8EF39lDmtwVvw3x/6dVajplKdEhImrlFGG618hwKEZg='; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
@@ -25,7 +25,11 @@ a{color:inherit}
 .feed{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px 16px;margin:10px 0}
 .feed p{margin:.15rem 0 .7rem;color:var(--muted)}
 .btn{display:inline-block;padding:9px 14px;border-radius:10px;background:var(--btn-bg);color:var(--btn-fg);text-decoration:none;font-weight:600}
-.dl{margin-left:12px}
+.actions{display:flex;flex-wrap:wrap;gap:8px 12px}
+.actions .btn{flex:1 1 200px;text-align:center}
+.dl{display:inline-block;margin-top:.7rem}
+ul.how{margin:.2rem 0 .6rem;padding-left:1.2rem}
+.how li{margin:.35rem 0}
 a:focus-visible{outline:3px solid #888;outline-offset:2px}
 code{display:block;margin-top:.7rem;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line);font-size:.85rem;word-break:break-all}
 ul.matches{list-style:none;margin:0;padding:0}
@@ -48,10 +52,15 @@ button.btn{border:0;font:inherit;font-weight:600;cursor:pointer;margin-top:.7rem
 <p class="muted" id="stats">GitHub'da <strong>0</strong> takipçi · <strong>1</strong> yıldız</p>
 <p id="stale" class="warn" role="alert" hidden></p>
 <h2>Takvime abone ol</h2>
-<p class="muted">Apple Takvim için düğmeyi kullanın. Google Takvim ve Outlook'ta "URL ile takvim ekle" seçeneğine aşağıdaki bağlantıyı yapıştırın.</p>
-<section class="feed"><h3>Tüm maçlar</h3><p>Beşiktaş erkek futbol ve basketbol takımlarının maçları</p><a class="btn" data-feed="besiktas-all.ics" href="besiktas-all.ics">Takvime abone ol</a><a class="dl" href="besiktas-all.ics" download>.ics indir</a><code data-url="besiktas-all.ics">besiktas-all.ics</code></section>
-<section class="feed"><h3>Futbol</h3><p>Beşiktaş erkek futbol takımının maçları</p><a class="btn" data-feed="besiktas-football.ics" href="besiktas-football.ics">Takvime abone ol</a><a class="dl" href="besiktas-football.ics" download>.ics indir</a><code data-url="besiktas-football.ics">besiktas-football.ics</code></section>
-<section class="feed"><h3>Basketbol</h3><p>Beşiktaş erkek basketbol takımının maçları</p><a class="btn" data-feed="besiktas-basketball.ics" href="besiktas-basketball.ics">Takvime abone ol</a><a class="dl" href="besiktas-basketball.ics" download>.ics indir</a><code data-url="besiktas-basketball.ics">besiktas-basketball.ics</code></section>
+<ul class="how muted">
+<li><strong>iPhone, iPad, Mac:</strong> Apple Takvim düğmesi takvimi doğrudan ekler.</li>
+<li><strong>Android:</strong> Google Takvim uygulaması telefonda URL ile abone olmayı desteklemez; düğme, ekleme onayının yapıldığı Google Takvim web sayfasını açar. Telefonda açılmazsa tarayıcı menüsünden "Masaüstü sitesi"ni seçin ya da sayfayı bilgisayarda açın. Eklenen takvim telefonunuza kendiliğinden gelir.</li>
+<li><strong>Outlook ve diğerleri:</strong> "URL ile takvim ekle" seçeneğine aşağıdaki bağlantıyı yapıştırın.</li>
+<li><strong>.ics indir:</strong> maçları yalnızca bir kez ekler, sonradan güncellenmez.</li>
+</ul>
+<section class="feed"><h3>Tüm maçlar</h3><p>Beşiktaş erkek futbol ve basketbol takımlarının maçları</p><div class="actions"><a class="btn" data-feed="besiktas-all.ics" href="besiktas-all.ics">Apple Takvim'e abone ol</a><a class="btn" data-google="besiktas-all.ics" href="besiktas-all.ics" target="_blank" rel="noopener noreferrer">Google Takvim'e abone ol</a></div><a class="dl" href="besiktas-all.ics" download>.ics indir</a><code data-url="besiktas-all.ics">besiktas-all.ics</code></section>
+<section class="feed"><h3>Futbol</h3><p>Beşiktaş erkek futbol takımının maçları</p><div class="actions"><a class="btn" data-feed="besiktas-football.ics" href="besiktas-football.ics">Apple Takvim'e abone ol</a><a class="btn" data-google="besiktas-football.ics" href="besiktas-football.ics" target="_blank" rel="noopener noreferrer">Google Takvim'e abone ol</a></div><a class="dl" href="besiktas-football.ics" download>.ics indir</a><code data-url="besiktas-football.ics">besiktas-football.ics</code></section>
+<section class="feed"><h3>Basketbol</h3><p>Beşiktaş erkek basketbol takımının maçları</p><div class="actions"><a class="btn" data-feed="besiktas-basketball.ics" href="besiktas-basketball.ics">Apple Takvim'e abone ol</a><a class="btn" data-google="besiktas-basketball.ics" href="besiktas-basketball.ics" target="_blank" rel="noopener noreferrer">Google Takvim'e abone ol</a></div><a class="dl" href="besiktas-basketball.ics" download>.ics indir</a><code data-url="besiktas-basketball.ics">besiktas-basketball.ics</code></section>
 <h2>Sıradaki maçlar</h2>
 <ul class="matches">
 <li><div class="when">Pazar 20.09.2026 · 20:00</div><div class="teams">Amed Sportif Faaliyetler - Beşiktaş</div><div class="meta">Futbol · Trendyol Süper Lig · 6. Hafta · Diyarbakır Stadyumu, Diyarbakır</div></li>
@@ -86,6 +95,10 @@ button.btn{border:0;font:inherit;font-weight:600;cursor:pointer;margin-top:.7rem
 for (const a of document.querySelectorAll('[data-feed]')) {
   const url = new URL(a.dataset.feed, location.href);
   a.href = 'webcal://' + url.host + url.pathname;
+}
+for (const a of document.querySelectorAll('[data-google]')) {
+  const url = new URL(a.dataset.google, location.href);
+  a.href = 'https://calendar.google.com/calendar/r?cid=webcal://' + url.host + url.pathname;
 }
 for (const c of document.querySelectorAll('[data-url]')) {
   c.textContent = new URL(c.dataset.url, location.href).href;
