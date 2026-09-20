@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5v+b6IQ6N4i6dpzUQgcUft927W/vbNDnfmP1Hw+IwAE='; style-src 'sha256-ziYUUqBLv74WY8gkwSwo4qLzOC2j5iS44y9Ji25mOHM='; img-src data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-lgsBiW1UW0Vuhj5JsHd6MVSN8gRwBA8wp5U32dcraDs='; style-src 'sha256-2cGtWJUHfOMXky/Yu1h6l7NDpqMVa0MyklhgPs5H+Fs='; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
@@ -30,6 +30,11 @@ ul.matches{list-style:none;margin:0;padding:0}
 .teams{font-size:1.05rem}
 .meta,.muted{color:var(--muted);font-size:.9rem}
 .warn{margin:1rem 0;padding:10px 12px;border:1px solid var(--warn);border-radius:10px;color:var(--warn);font-weight:600}
+.donate-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.donate-row img{width:176px;height:176px;background:#fff;border-radius:8px}
+.donate-row div{flex:1;min-width:220px}
+button.btn{border:0;font:inherit;font-weight:600;cursor:pointer;margin-top:.7rem}
+.feed .note{margin:1rem 0 0;font-size:.9rem}
 </style>
 </head>
 <body>
@@ -57,6 +62,19 @@ ul.matches{list-style:none;margin:0;padding:0}
 <li><div class="when">Pazar 11.10.2026 · 19:00</div><div class="teams">Beşiktaş - Kocaelispor</div><div class="meta">Futbol · Trendyol Süper Lig · 7. Hafta · Beşiktaş Park, İstanbul</div></li>
 </ul>
 <p class="muted">Saati henüz açıklanmamış maçlar, yanlış bir gece yarısı saati yazılmasın diye tüm gün etkinliği olarak gösterilir; saat kesinleşince aynı etkinlik güncellenir.</p>
+<h2 id="bagis">Projeyi destekle</h2>
+<p class="muted">Takvim ücretsizdir ve öyle kalacak. Beğendiyseniz isteğe bağlı olarak USDT (Tether) ile destek olabilirsiniz; herhangi bir borsa ya da cüzdandan gönderebilirsiniz.</p>
+<section class="feed">
+<div class="donate-row">
+<img src="usdt-bsc.svg" alt="USDT (BSC) adresi için QR kod" width="176" height="176">
+<div>
+<p><strong>Coin:</strong> USDT (Tether)<br><strong>Ağ:</strong> BNB Smart Chain (BSC / BEP-20)</p>
+<code id="usdt-address">0x315f79cb95f784c18387c3009798d1a617dac8b2</code>
+<button type="button" class="btn" id="copy-address">Adresi kopyala</button>
+</div>
+</div>
+<p class="note">⚠ Yalnızca USDT'yi ve yalnızca <strong>BSC (BEP-20)</strong> ağı üzerinden gönderin. Başka bir ağdan ya da başka bir coin ile gönderilen tutarlar geri alınamaz.</p>
+</section>
 <p class="muted">Son kontrol: <span id="checked">yükleniyor…</span></p>
 <p class="muted">Kaynaklar: TFF, UEFA, EuroLeague Basketball ve TBF. <a id="repo" rel="noopener noreferrer" hidden>Kaynak kod (GitHub)</a></p>
 </main>
@@ -85,6 +103,16 @@ fetch('last_check.txt', { cache: 'no-store' })
     }
   })
   .catch(() => { checked.textContent = 'bilinmiyor'; });
+const copyButton = document.getElementById('copy-address');
+if (copyButton) {
+  copyButton.addEventListener('click', () => {
+    const address = document.getElementById('usdt-address').textContent.trim();
+    navigator.clipboard.writeText(address).then(
+      () => { copyButton.textContent = 'Kopyaland\u0131'; },
+      () => { copyButton.textContent = 'Kopyalanamad\u0131; adresi se\u00e7ip kopyalay\u0131n'; }
+    );
+  });
+}
 if (location.hostname.endsWith('.github.io')) {
   const owner = location.hostname.split('.')[0];
   const repo = location.pathname.split('/').filter(Boolean)[0];
