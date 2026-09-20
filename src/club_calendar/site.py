@@ -157,7 +157,7 @@ def _feed_card(feed) -> str:
     # Betik cihazı tanır: iPhone/iPad/Mac'te yalnızca Apple, Android'de yalnızca Google düğmesi kalır ("Takvime abone ol");
     # bilgisayarda ikisi de görünür. Betik çalışmazsa iki düğme de dosyanın kendisine gider (indirme/açma).
     return (
-        f'<section class="feed"><h3>{escape(feed.label)}</h3><p>{escape(feed.description)}</p>'
+        f'<section class="feed" id="{feed.slug}"><h3>{escape(feed.label)}</h3><p>{escape(feed.description)}</p>'
         '<div class="actions">'
         f'<a class="btn for-apple" data-feed="{feed.filename}" href="{feed.filename}">Apple Takvim\'e abone ol</a>'
         f'<a class="btn for-google" data-google="{feed.filename}" href="{feed.filename}" target="_blank" rel="noopener noreferrer">Google Takvim\'e abone ol</a>'

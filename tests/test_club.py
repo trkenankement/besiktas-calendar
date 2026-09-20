@@ -154,6 +154,11 @@ def test_feeds_are_named_after_the_club(club):
 
 
 @every_club
+def test_feed_slugs_name_the_page_sections(club):
+    assert [feed.slug for feed in feeds_for(club)] == ["all", "football", "basketball"]
+
+
+@every_club
 def test_calendar_events_carry_the_club_identity(club):
     text = render_calendar([sample(club)], f"{club.name} Tüm Maçlar", "açıklama", club, stamp=STAMP)
     calendar = Calendar.from_ical(text.encode("utf-8"))

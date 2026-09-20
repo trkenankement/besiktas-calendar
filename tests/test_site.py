@@ -72,9 +72,10 @@ def test_index_lists_feeds_matches_and_source_information():
 
 def test_each_feed_has_an_apple_button_a_google_button_and_a_separate_download_link():
     html = render_index([], NOW, BESIKTAS)
-    cards = re.findall(r'<section class="feed"><h3>.*?</section>', html, re.DOTALL)
-    assert len(cards) == 3  # bağış bölümü <h3> ile başlamaz
+    cards = re.findall(r'<section class="feed" id="[a-z]+"><h3>.*?</section>', html, re.DOTALL)
+    assert len(cards) == 3  # bağış bölümünün kimliği ve <h3>'ü yok
     for card, kind in zip(cards, ("all", "football", "basketball"), strict=True):
+        assert f'<section class="feed" id="{kind}">' in card  # README düğmeleri bu bölümlere bağlanır
         filename = f"besiktas-{kind}.ics"
         assert f'data-feed="{filename}"' in card and "Apple Takvim'e abone ol" in card
         assert f'data-google="{filename}"' in card and "Google Takvim'e abone ol" in card

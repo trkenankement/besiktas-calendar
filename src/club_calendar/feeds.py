@@ -16,6 +16,11 @@ class Feed:
     description: str
     sports: frozenset[str]
 
+    @property
+    def slug(self) -> str:
+        """Sayfadaki bölümün bağlantı kimliği: `<kulüp>-football.ics` -> `football` (README düğmeleri `#football`a gider)."""
+        return self.filename.removesuffix(".ics").split("-", 1)[1]
+
     def select(self, matches: list[Match]) -> list[Match]:
         return [m for m in matches if m.sport in self.sports]
 

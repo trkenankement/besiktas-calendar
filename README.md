@@ -16,30 +16,11 @@ sonuçlar takviminize kendiliğinden yansır.
 
 Web sayfası: **<https://trkenankement.github.io/besiktas-calendar/>**
 
-Sayfadaki **Takvime abone ol** düğmesi cihazınıza göre çalışır: iPhone, iPad ve Mac'te Apple Takvim'e,
-Android'de Google Takvim'e ekler; bilgisayarda ikisi de görünür. Ayrı bir **.ics indir** bağlantısı da vardır.
-iPhone, iPad ve Mac için sayfadaki düğmeyi kullanın (GitHub `webcal://` bağlantılarını tıklanabilir
-göstermediği için buraya konmadı).
+- **Tüm maçlar** <a href="https://trkenankement.github.io/besiktas-calendar/#all"><img src="https://img.shields.io/static/v1?label=&message=Takvime%20abone%20ol&color=2ea44f" alt="Takvime abone ol" height="28"></a> <a href="https://trkenankement.github.io/besiktas-calendar/besiktas-all.ics"><img src="https://img.shields.io/static/v1?label=&message=.ics%20indir&color=555555" alt=".ics indir" height="28"></a>
+- **Futbol** <a href="https://trkenankement.github.io/besiktas-calendar/#football"><img src="https://img.shields.io/static/v1?label=&message=Takvime%20abone%20ol&color=2ea44f" alt="Takvime abone ol" height="28"></a> <a href="https://trkenankement.github.io/besiktas-calendar/besiktas-football.ics"><img src="https://img.shields.io/static/v1?label=&message=.ics%20indir&color=555555" alt=".ics indir" height="28"></a>
+- **Basketbol** <a href="https://trkenankement.github.io/besiktas-calendar/#basketball"><img src="https://img.shields.io/static/v1?label=&message=Takvime%20abone%20ol&color=2ea44f" alt="Takvime abone ol" height="28"></a> <a href="https://trkenankement.github.io/besiktas-calendar/besiktas-basketball.ics"><img src="https://img.shields.io/static/v1?label=&message=.ics%20indir&color=555555" alt=".ics indir" height="28"></a>
 
-| Takvim | Google Takvim | Adres (Outlook ve diğerleri için) |
-| --- | --- | --- |
-| Tüm maçlar | [Google Takvim'e ekle](https://calendar.google.com/calendar/r?cid=webcal://trkenankement.github.io/besiktas-calendar/besiktas-all.ics) | `https://trkenankement.github.io/besiktas-calendar/besiktas-all.ics` |
-| Futbol | [Google Takvim'e ekle](https://calendar.google.com/calendar/r?cid=webcal://trkenankement.github.io/besiktas-calendar/besiktas-football.ics) | `https://trkenankement.github.io/besiktas-calendar/besiktas-football.ics` |
-| Basketbol | [Google Takvim'e ekle](https://calendar.google.com/calendar/r?cid=webcal://trkenankement.github.io/besiktas-calendar/besiktas-basketball.ics) | `https://trkenankement.github.io/besiktas-calendar/besiktas-basketball.ics` |
-
-Adresi Outlook ve diğer uygulamalarda "URL ile takvim ekle" seçeneğine yapıştırın.
-
-> **Android:** Google Takvim uygulaması telefonda URL ile abone olmayı desteklemez. Bu yüzden düğme, ekleme
-> onayının yapıldığı Google Takvim web sayfasını açar; telefonda açılmazsa tarayıcıda "Masaüstü sitesi"ni seçin
-> ya da bağlantıyı bilgisayarda açın. Eklenen takvim telefona kendiliğinden gelir. Yalnızca telefonla tek
-> dokunuşta abone olmak isteyenler için açık kaynaklı [ICSx⁵](https://icsx5.bitfire.at/) uygulaması
-> `webcal://` bağlantılarını açabilir (F-Droid'de ücretsiz, Google Play'de küçük bir ücretle).
->
-> **.ics indir:** dosyayı indirip açarsanız maçlar yalnızca bir kez eklenir, sonradan güncellenmez.
-
-> Veriler günde bir kez, gece 00:07'de (Türkiye saati) kaynaklardan okunur. Takvim uygulamaları yayınlanan
-> dosyayı kendi aralığında (Google genellikle 12–24 saat, Apple için akışta 12 saat önerilir) yeniden indirir;
-> bu, kaynak sitelere gitmez, yalnızca hazır dosyayı okur.
+Düğmeler siteye götürür; oradaki düğme cihazınıza göre Apple Takvim'e ya da Google Takvim'e ekler.
 
 **Abone sayısı neden yok?** Takvim abonelikleri anonimdir: Google, Apple ve Outlook takvimi kendi
 sunucularından çeker ve GitHub Pages erişim kaydı vermez; bu yüzden gerçek abone sayısı ölçülemez. Yukarıdaki
@@ -47,53 +28,7 @@ rozetler ve web sayfasındaki sayı, GitHub'da projeyi **takip eden** ve **yıld
 iş akışıyla kendiliğinden güncellenir. (Tahmini abone sayısı için takvim adresinin önüne sayaçlı bir ara
 katman koymak gerekir; bu, adresi değiştirdiği ve bir dış hizmet gerektirdiği için şimdilik yapılmadı.)
 
-## Nasıl çalışır?
-
-GitHub Actions her gün gece 00:07'de (Türkiye saati) ve `main` dalına her gönderimde (yani kodu
-değiştirdiğinizde) şunları yapar:
-
-1. Testleri çalıştırır.
-2. Aşağıdaki resmi kaynaklardan Beşiktaş maçlarını okur.
-3. `docs/` klasöründeki ICS dosyalarını ve web sayfasını üretir; **yalnızca gerçekten değişen** dosyaları
-   commit eder (her gün anlamsız commit oluşmaz).
-4. Siteyi GitHub Pages'e yayınlar.
-
-| Müsabaka | Kaynak |
-| --- | --- |
-| Trendyol Süper Lig | [TFF](https://www.tff.org/) fikstür sayfaları |
-| Ziraat Türkiye Kupası, Süper Kupa | [TFF](https://www.tff.org/) kupa fikstürü ve Süper Kupa arşivi |
-| UEFA Şampiyonlar / Avrupa / Konferans Ligi | [UEFA](https://www.uefa.com/) maç verisi |
-| EuroLeague (ve EuroCup) | [EuroLeague Basketball](https://www.euroleaguebasketball.net/) resmi API'si |
-| Basketbol Süper Ligi, Cumhurbaşkanlığı / Türkiye / Federasyon Kupası | [TBF](https://www.tbf.org.tr/) web API'si |
-
-Beşiktaş'ın resmi sitesi (bjk.com.tr) otomatik istemcilere Cloudflare doğrulaması uyguladığı için
-kaynak olarak kullanılmaz; koruma aşılmaya çalışılmaz.
-
-### Saat kesin değilse
-
-Federasyonlar maç saatlerini genellikle 1–2 hafta önceden açıklar. Saati henüz belli olmayan (kaynakta
-boş ya da `00:00` yer tutucusu olan) maçlar yanlış bir gece yarısı saati yazılmasın diye **tüm gün /
-taslak** etkinlik olarak yayınlanır. Saat açıklanınca aynı etkinlik (aynı UID) güncellenir; takviminizde
-çoğalmaz.
-
-### Bir kaynak bozulursa
-
-Kaynaklardan biri yanıt vermezse ya da sayfa yapısı değişirse çalışma **başarısız olur** ve GitHub sizi
-bilgilendirir. Eksik veri yayınlanmaz; site bir önceki sağlam sürümle yayında kalır. Yalnızca TFF'nin
-editöryel kupa sayfaları (Türkiye Kupası ve Süper Kupa) isteğe bağlıdır: bozulurlarsa uyarı verilir, diğer
-müsabakalar yayınlanmaya devam eder. Web sayfası da son kontrol 36 saatten eskiyse ekranda "güncel olmayabilir"
-uyarısı gösterir.
-
-### Elle çalıştırma ve sorun giderme
-
-- Takvimi hemen yenilemek için GitHub'da **Actions → Update calendars → Run workflow**.
-- Bir çalışma kırmızıysa çalışmayı açın: **Update calendars** adımı hangi kaynağın neden başarısız olduğunu
-  yazar. Bu sürede site, son sağlam sürümle yayında kalır.
-- Kaynakta tek bir maçın tarihi okunamazsa (ör. ertelenmiş maç) o maç atlanır ve çalışmada sarı bir uyarı
-  görürsünüz; diğer maçlar etkilenmez. Kaynağın biçimi topluca bozulmuşsa çalışma yine başarısız olur.
-- Bir kaynağın verisi mantıksız bir tarihe (bugünden 500 günden uzak) işaret ediyorsa yayın durdurulur.
-
-### Kapsam ve bilinen sınırlar
+## Kapsam ve bilinen sınırlar
 
 - **Basketbol kupaları** (Cumhurbaşkanlığı, Türkiye ve Federasyon Kupası) TBF'den güncel sezonun turnuvası
   oluşturulur oluşturulmaz otomatik eklenir; henüz oluşturulmamış olanlar atlanır.
@@ -111,41 +46,6 @@ Actions tam commit numarasına sabitlidir ve depo belirteci yalnızca güvenilir
 (paket kurulumu, testler ve üretici kod onu hiç görmez). Bu kurallar
 `tests/test_security.py` ile her çalışmada denetlenir. Bir açık bulursanız lütfen herkese açık issue yerine
 [özel bildirim](https://github.com/trkenankement/besiktas-calendar/security/advisories/new) gönderin.
-
-## Geliştirme
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
-pip install -e ".[dev,lint]"
-
-pytest                          # çevrimdışı testler (gerçek yanıtlardan küçültülmüş örnekler)
-ruff check src tests            # stil ve olası hatalar
-bandit -r src -c pyproject.toml # güvenlik taraması
-club-calendar                   # canlı kaynaklardan docs/ klasörünü üretir (python -m club_calendar de olur)
-club-calendar --out cikti       # başka bir klasöre yaz
-```
-
-Hangi kulübün takip edildiğini kökteki `club.toml` belirler (`club = "besiktas"`); kulüp tanımları
-`src/club_calendar/club.py` içindedir. `--club fenerbahce` gibi bir seçenek `club.toml`'u geçici olarak geçersiz kılar.
-
-```text
-.github/workflows/update-calendar.yml   test → üret → gerekirse commit → Pages'e yayınla
-club.toml                               takip edilen kulüp
-src/club_calendar/
-  club.py  feeds.py                     kulüp profilleri (ad, UEFA/EuroLeague kimliği), yayınlanan takvim akışları
-  providers/                            tff.py · uefa.py · euroleague.py · tbf.py (her biri ortak Match modeli döndürür)
-  models.py  names.py  http.py          veri modeli, Türkçe isim düzeltme, yeniden denemeli HTTP
-  ics.py  site.py  stats.py  donate.py  ICS üretimi, web sayfası, GitHub takipçi/yıldız sayısı, bağış bilgileri
-  build.py  cli.py  console.py          doğrulama, çıktı yazma, komut satırı, konsol/Actions çıktısı
-tests/                                  testler ve tests/fixtures (gerçek yanıt örnekleri); test_security.py güvenlik
-                                        kuralları, test_workflow_scripts.py iş akışı betiklerini gerçekten çalıştırır
-docs/                                   yayınlanan site: ICS dosyaları + index.html (otomatik üretilir)
-SECURITY.md                             güvenlik politikası ve açık bildirme yolu
-```
-
-Yeni bir müsabaka eklemek için `providers/` altına kulübün maçlarını `Match` listesi olarak döndüren
-bir işlev yazıp `providers/__init__.py` içindeki `providers_for` işlevine eklemek yeterlidir.
 
 ## Projeyi destekle
 
