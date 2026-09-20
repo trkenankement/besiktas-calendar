@@ -1,0 +1,76 @@
+{
+ "data": [
+  {
+   "matchId": 304612.0,
+   "activityId": 22098.0,
+   "activityName": "Erkekler Cumhurbaşkanlığı Kupası 2025-2026",
+   "activityDisplayName": "",
+   "activityCode": "cbek",
+   "seasonId": 172.0,
+   "season": "2025-2026",
+   "matchDate": "2025-09-24T20:30:00",
+   "week": "1. Hafta",
+   "homeTeam": {
+    "id": 253694.0,
+    "name": "FENERBAHÇE BEKO",
+    "score": "85"
+   },
+   "awayTeam": {
+    "id": 253697.0,
+    "name": "BEŞİKTAŞ GAİN",
+    "score": "83"
+   },
+   "salonAdi": "Sinan Erdem Spor Salonu",
+   "il": "İSTANBUL",
+   "broadcastChannel": ""
+  },
+  {
+   "matchId": 346272.0,
+   "activityId": 23538.0,
+   "activityName": "Erkekler Cumhurbaşkanlığı Kupası 2026-2027",
+   "activityDisplayName": "",
+   "activityCode": "cbek",
+   "seasonId": 174.0,
+   "season": "2026-2027",
+   "matchDate": "2026-09-22T20:00:00",
+   "week": "1. Hafta",
+   "homeTeam": {
+    "id": 269203.0,
+    "name": "FENERBAHÇE TARFİN",
+    "score": ""
+   },
+   "awayTeam": {
+    "id": 269204.0,
+    "name": "BEŞİKTAŞ",
+    "score": ""
+   },
+   "salonAdi": "Sinan Erdem Spor Salonu",
+   "il": "İSTANBUL",
+   "broadcastChannel": ""
+  },
+  {
+   "matchId": 235700.0,
+   "activityId": 20603.0,
+   "activityName": "Erkekler Cumhurbaşkanlığı Kupası 2024-2025",
+   "activityDisplayName": "",
+   "activityCode": "cbek",
+   "seasonId": 170.0,
+   "season": "2024-2025",
+   "matchDate": "2024-09-29T18:00:00",
+   "week": "1. Hafta",
+   "homeTeam": {
+    "id": 180817.0,
+    "name": "FENERBAHÇE BEKO",
+    "score": "82"
+   },
+   "awayTeam": {
+    "id": 180818.0,
+    "name": "ANADOLU EFES",
+    "score": "83"
+   },
+   "salonAdi": "Basketbol Gelişim Merkezi",
+   "il": "İSTANBUL",
+   "broadcastChannel": ""
+  }
+ ]
+}

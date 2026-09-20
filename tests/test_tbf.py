@@ -101,6 +101,74 @@ def test_empty_season_list_is_an_error():
         tbf.fetch_bsl(session, TODAY)
 
 
+# --- Kupalar ----------------------------------------------------------------------------------
+
+CUP_LEAGUE = 23538  # Erkekler Cumhurbaşkanlığı Kupası 2026-2027
+ETK_OLD_LEAGUE = 22157  # Erkekler Türkiye Kupası 2025-2026 (2026-2027 turnuvası henüz oluşturulmamış)
+
+
+def cup_route(weeks=None):
+    def route(url, params):
+        if url.endswith("get-leagues-and-seasons-by-prefix"):
+            return {
+                "bsl": fixture_json("tbf_seasons.json"),
+                "cbek": fixture_json("tbf_cup_seasons.json"),
+                "etk": fixture_json("tbf_etk_seasons.json"),
+            }.get(params["prefix"], {"data": []})
+        if url.endswith("get-league-weeks"):
+            if params["leagueId"] == CUP_LEAGUE:
+                return weeks if weeks is not None else fixture_json("tbf_cup_weeks.json")
+            return fixture_json("tbf_weeks.json")
+        if url.endswith("get-all-matches-for-filter"):
+            if params["ActivityId"] == CUP_LEAGUE:
+                return fixture_json("tbf_cup_week_1.json") if params["WeekFilter"] == "1" else {"data": []}
+            return {"data": []}
+        return None
+
+    return route
+
+
+def test_cup_match_of_the_current_edition_is_read_and_older_editions_are_ignored():
+    session = FakeSession(cup_route())
+    (match,) = tbf.fetch_cups(session, TODAY)
+
+    # Sorgu önceki yılların maçlarını da döndürür (2025'te "Fenerbahçe Beko - Beşiktaş Gain" gibi)
+    assert (match.home, match.away) == ("Fenerbahçe Tarfin", "Beşiktaş")
+    assert match.start == datetime(2026, 9, 22, 20, 0, tzinfo=TURKEY_TZ)
+    assert match.competition == "Cumhurbaşkanlığı Kupası"
+    assert match.round_label == ""  # tek turluk turnuvada "1. Hafta" anlamsız
+    assert match.venue == "Sinan Erdem Spor Salonu, İstanbul"
+    assert match.source == "tbf" and match.source_id == "346272"
+
+
+def test_cup_without_an_edition_for_the_current_season_is_skipped():
+    session = FakeSession(cup_route())
+    tbf.fetch_cups(session, TODAY)
+    league_ids = {p.get("leagueId") or p.get("ActivityId") for _, p in session.requests}
+    assert ETK_OLD_LEAGUE not in league_ids  # geçen sezonun Türkiye Kupası'na bakılmaz
+
+
+def test_round_labels_are_kept_for_cups_with_several_rounds():
+    weeks = {"data": [{"sezon_Hafta": "1", "devre_ID": 1}, {"sezon_Hafta": "2", "devre_ID": 1}]}
+    (match,) = tbf.fetch_cups(FakeSession(cup_route(weeks=weeks)), TODAY)
+    assert match.round_label == "1. Hafta"
+
+
+def test_competition_name_drops_gender_prefix_and_season_suffix():
+    row = deepcopy(fixture_json("tbf_cup_week_1.json")["data"][1])
+    assert tbf.parse_row(row).competition == "Cumhurbaşkanlığı Kupası"
+    row["activityName"] = "Erkekler Türkiye Kupası 2026-2027"
+    assert tbf.parse_row(row).competition == "Türkiye Kupası"
+    row["activityDisplayName"] = "Türkiye Sigorta Basketbol Süper Ligi"
+    assert tbf.parse_row(row).competition == "Türkiye Sigorta Basketbol Süper Ligi"
+
+
+def test_rows_without_season_information_are_trusted():
+    assert tbf._in_season({"seasonId": 174.0}, 174)
+    assert not tbf._in_season({"seasonId": 172.0}, 174)
+    assert tbf._in_season({}, 174)
+
+
 def test_half_value_is_sent_for_phases_other_than_the_two_regular_halves():
     def route(url, params):
         if url.endswith("get-league-weeks"):

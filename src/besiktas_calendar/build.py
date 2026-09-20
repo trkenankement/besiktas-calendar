@@ -15,6 +15,7 @@ from .feeds import FEEDS
 from .http import SourceError, new_session
 from .models import BASKETBALL, FOOTBALL, SPORT_LABELS, TURKEY_TZ, Match
 from .providers import PROVIDERS, Provider
+from .stats import load_stats
 
 MIN_MATCHES_PER_SPORT = 5  # bunun altı, kaynakların ciddi biçimde bozulduğu anlamına gelir
 
@@ -84,7 +85,8 @@ def write_outputs(out_dir: Path, matches: list[Match], now: datetime) -> dict[st
             feed.select(matches), feed.calendar_name, feed.description, stamp=now.astimezone(UTC)
         )
         changed[feed.filename] = ics.write_if_changed(out_dir / feed.filename, content)
-    changed["index.html"] = ics.write_if_changed(out_dir / "index.html", site.render_index(matches, now), ignore_prefixes=())
+    page = site.render_index(matches, now, load_stats(out_dir / "stats.json"))
+    changed["index.html"] = ics.write_if_changed(out_dir / "index.html", page, ignore_prefixes=())
     # Son kontrol zamanı her çalışmada değişir; bu yüzden git'te izlenmez (.gitignore) ama siteye girer.
     (out_dir / "last_check.txt").write_text(now.strftime("%d.%m.%Y %H:%M (TSİ)") + "\n", encoding="utf-8")
     return changed

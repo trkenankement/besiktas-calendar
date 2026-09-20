@@ -1,0 +1,11 @@
+{
+ "data": [
+  {
+   "sezon_Hafta": "1",
+   "devre_ID": 1.0,
+   "devre_Deger": null,
+   "display_Text": "Hafta 1",
+   "isCurrentWeek": false
+  }
+ ]
+}

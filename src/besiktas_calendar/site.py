@@ -9,6 +9,7 @@ from html import escape
 
 from .feeds import FEEDS
 from .models import MATCH_DURATION, SPORT_LABELS, TURKEY_TZ, Match
+from .stats import RepoStats
 
 UPCOMING_LIMIT = 10
 STALE_AFTER_HOURS = 36  # son kontrol bundan eskiyse sayfa "güncel olmayabilir" uyarısı gösterir
@@ -130,7 +131,13 @@ def _feed_card(feed) -> str:
     )
 
 
-def render_index(matches: list[Match], now: datetime) -> str:
+def _stats_line(stats: RepoStats | None) -> str:
+    if stats is None:
+        return ""
+    return f'<p class="muted" id="stats">GitHub\'da <strong>{stats.watchers}</strong> takipçi · <strong>{stats.stars}</strong> yıldız</p>\n'
+
+
+def render_index(matches: list[Match], now: datetime, stats: RepoStats | None = None) -> str:
     feeds = "\n".join(_feed_card(feed) for feed in FEEDS)
     coming = upcoming(matches, now)
     items = "\n".join(_match_item(m) for m in coming) or "<li>Yaklaşan maç bulunamadı.</li>"
@@ -151,7 +158,7 @@ def render_index(matches: list[Match], now: datetime) -> str:
 <main>
 <h1>Beşiktaş Maç Takvimi</h1>
 <p>Erkek A takım futbol ve basketbol maçları. Takvim her gün otomatik güncellenir; bir kez abone olmanız yeterli.</p>
-<p id="stale" class="warn" role="alert" hidden></p>
+{_stats_line(stats)}<p id="stale" class="warn" role="alert" hidden></p>
 <h2>Takvime abone ol</h2>
 <p class="muted">Apple Takvim için düğmeyi kullanın. Google Takvim ve Outlook'ta "URL ile takvim ekle" seçeneğine aşağıdaki bağlantıyı yapıştırın.</p>
 {feeds}

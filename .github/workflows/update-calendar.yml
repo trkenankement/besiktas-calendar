@@ -4,7 +4,9 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "17 3 * * *" # her gün 06:17 (Türkiye saati)
+    # Günde bir kez, gece 00:07 (Türkiye saati = 21:07 UTC). Tam :00 yerine :07 seçildi: GitHub yoğun
+    # saat başlarında zamanlanmış işleri geciktirebilir ya da düşürebilir.
+    - cron: "7 21 * * *"
   workflow_dispatch:
 
 permissions:
@@ -46,6 +48,19 @@ jobs:
 
       - name: Run tests
         run: python -m pytest
+
+      # Sayfada gösterilen GitHub takipçi ve yıldız sayısı. Alınamazsa önceki docs/stats.json korunur.
+      # Belirteç yalnızca güvenilir `gh` komutuna verilir; proje kodu bu adımda çalışmaz.
+      - name: Fetch repository stats
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${GITHUB_REPOSITORY}" --jq '{stars: .stargazers_count, watchers: .subscribers_count}' > stats.tmp; then
+            mv stats.tmp docs/stats.json
+          else
+            echo "::warning::Depo istatistikleri alınamadı; önceki değerler korunuyor."
+            rm -f stats.tmp
+          fi
 
       # Kaynaklardan biri hata verirse bu adım başarısız olur; böylece eksik veri yayınlanmaz
       # ve bir önceki sağlam site yayında kalır.

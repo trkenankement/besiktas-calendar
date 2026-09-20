@@ -21,7 +21,8 @@ Bu proje herkese açık müsabaka verilerini okuyup statik dosyalar (ICS takviml
   dinamik alanlar HTML kaçışından geçer ve sayfa, yalnızca kendi satır içi kodunun özet değerine izin
   veren sıkı bir içerik güvenlik politikasıyla (CSP) yayınlanır.
 - **İş akışı (GitHub Actions):** En az yetkiyle çalışır; kullanılan tüm eylemler tam commit numarasına
-  sabitlidir; depo belirteci (token) diskte bırakılmaz ve yalnızca commit adımına verilir; iş akışı
+  sabitlidir; depo belirteci (token) diskte bırakılmaz ve yalnızca güvenilir `gh`/`git` adımlarına verilir
+  (paket kurulumu, testler ve üretici kod onu görmez); iş akışı
   yalnızca `main` dalına gönderimde, zamanlanmış ve elle tetiklemede çalışır (`pull_request_target`
   yok). Bu kurallar `tests/test_security.py` ile her çalışmada denetlenir.
 - **Depo ayarları:** Gizli anahtar taraması ve push koruması, bağımlılık uyarıları ve otomatik

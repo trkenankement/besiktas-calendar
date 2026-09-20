@@ -1,3 +1,4 @@
+import re
 from datetime import date, datetime
 
 import pytest
@@ -108,6 +109,49 @@ def test_a_failed_venue_lookup_does_not_lose_the_match():
 def test_a_missing_week_page_fails_the_provider():
     with pytest.raises(SourceError):
         tff.fetch_super_lig(FakeSession(league_route(missing_weeks={3})), TODAY)
+
+
+# --- Süper Kupa -------------------------------------------------------------------------------
+
+
+def test_season_start_is_july_first():
+    assert tff.season_start(date(2026, 9, 20)) == date(2026, 7, 1)
+    assert tff.season_start(date(2027, 1, 10)) == date(2026, 7, 1)
+    assert tff.season_start(date(2027, 7, 1)) == date(2027, 7, 1)
+
+
+def test_super_cup_archive_yields_only_besiktas_matches_of_the_current_season():
+    (match,) = tff.parse_super_cup(fixture_text("tff_super_cup.html"), since=date(2024, 7, 1))
+    assert (match.home, match.away) == ("Galatasaray", "Beşiktaş")
+    assert match.competition == "Süper Kupa"
+    assert match.day == date(2024, 8, 3)
+    assert not match.time_confirmed  # arşiv tablosunda saat yoktur
+    assert match.result == "0-5"
+    assert match.venue == "Atatürk Olimpiyat"
+    assert match.source == "tff" and match.source_id == "264343"
+
+
+def test_super_cup_shootout_is_reported_and_other_clubs_are_ignored():
+    matches = tff.parse_super_cup(fixture_text("tff_super_cup.html"), since=date(2021, 7, 1))
+    assert [m.day for m in matches] == [date(2024, 8, 3), date(2022, 1, 5)]  # 10.01.2026 Galatasaray-Fenerbahçe yok
+    assert matches[1].result == "1-1 (pen. 4-2)"
+
+
+def test_super_cup_matches_of_earlier_seasons_are_not_published():
+    assert tff.parse_super_cup(fixture_text("tff_super_cup.html"), since=date(2025, 7, 1)) == []
+
+
+def test_super_cup_row_without_a_match_page_still_gets_a_stable_id():
+    html = re.sub(r'href="[^"]*macID=264343"', "", fixture_text("tff_super_cup.html"))
+    (match,) = tff.parse_super_cup(html, since=date(2024, 7, 1))
+    assert match.source_id == "super-kupa-2024-galatasaray-besiktas"
+    assert match.info_url == ""
+
+
+def test_fetch_super_cup_uses_the_current_football_season():
+    session = FakeSession(lambda url, params: fixture_text("tff_super_cup.html") if params.get("pageID") == 329 else None)
+    (match,) = tff.fetch_super_cup(session, date(2024, 9, 1))
+    assert match.day == date(2024, 8, 3)
 
 
 # --- Ziraat Türkiye Kupası --------------------------------------------------------------------

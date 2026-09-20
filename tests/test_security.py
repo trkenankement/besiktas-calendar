@@ -184,11 +184,21 @@ def test_checkout_does_not_persist_the_token():
     assert checkout["with"]["persist-credentials"] is False
 
 
-def test_token_is_given_only_to_the_commit_step():
+def test_token_is_given_only_to_the_trusted_gh_and_git_steps():
+    """Proje kodunu ve paket kurulumunu çalıştıran adımlar belirteci hiç görmez."""
+    trusted = {"Fetch repository stats", "Commit changes"}
     for job in _workflow()["jobs"].values():
         for step in job["steps"]:
             has_token = "github.token" in str(step.get("env", {})) or "GITHUB_TOKEN" in str(step.get("with", {}))
-            assert has_token == (step["name"] == "Commit changes"), step["name"]
+            assert has_token == (step["name"] in trusted), step["name"]
+
+
+def test_token_steps_run_no_project_code():
+    for job in _workflow()["jobs"].values():
+        for step in job["steps"]:
+            if "github.token" in str(step.get("env", {})):
+                script = step["run"]
+                assert not re.search(r"\b(python|pip|pytest|besiktas-calendar)\b", script), step["name"]
 
 
 def test_permissions_follow_least_privilege():
@@ -211,6 +221,17 @@ def test_shell_scripts_do_not_interpolate_github_expressions():
     for job in _workflow()["jobs"].values():
         for step in job["steps"]:
             assert "${{" not in step.get("run", ""), step["name"]
+
+
+def test_data_is_refreshed_once_a_day_shortly_after_midnight_turkey_time():
+    """Türkiye UTC+3'tür: 21:xx UTC = gece 00:xx. Saatlik ya da sık bir zamanlama yanlışlıkla eklenemez."""
+    workflow = _workflow()
+    schedule = workflow.get("on", workflow.get(True))["schedule"]
+    assert len(schedule) == 1
+    minute, hour, day, month, weekday = schedule[0]["cron"].split()
+    assert (day, month, weekday) == ("*", "*", "*")  # her gün
+    assert hour == "21"  # 00:xx Türkiye saati
+    assert minute.isdigit() and minute != "0"  # tam :00 yoğun; GitHub o dakikadaki işleri geciktirebilir ya da düşürebilir
 
 
 def test_runners_are_pinned_to_a_specific_image():

@@ -1,4 +1,4 @@
-"""TFF (Türkiye Futbol Federasyonu): Trendyol Süper Lig ve Ziraat Türkiye Kupası."""
+"""TFF (Türkiye Futbol Federasyonu): Trendyol Süper Lig, Ziraat Türkiye Kupası ve Süper Kupa."""
 
 from __future__ import annotations
 
@@ -17,11 +17,14 @@ BASE_URL = "https://www.tff.org/Default.aspx"
 ENCODING = "windows-1254"  # TFF sayfaları Windows-1254 ile yayınlanır
 LEAGUE_PAGE = 198  # lig fikstürü; "Haftanın Maçları" bileşeni ?hafta=N ile değişir
 CUP_PAGE = 598  # Türkiye Kupası fikstürü
+SUPER_CUP_PAGE = 329  # Süper Kupa arşivi (yeni maç belli olunca aynı tabloya eklenir)
 MATCH_PAGE = 29  # maç detayı (stadyum burada)
 DEFAULT_LEAGUE_NAME = "Trendyol Süper Lig"
 CUP_NAME = "Ziraat Türkiye Kupası"
+SUPER_CUP_NAME = "Süper Kupa"  # sponsor adı her yıl değişir; sponsorsuz ad kullanılır
 
 _DATE = re.compile(r"(\d{2})\.(\d{2})\.(\d{4})")
+_PENALTIES = re.compile(r"\((\d+)\s*-\s*(\d+)\s*P\.?\)", re.IGNORECASE)
 _TIME = re.compile(r"(\d{1,2}):(\d{2})")
 _MAC_ID = re.compile(r"macId=(\d+)", re.IGNORECASE)
 _SCORE = re.compile(r"(\d+)\s*-\s*(\d+)")
@@ -199,3 +202,46 @@ def parse_cup(html: str) -> list[Match]:
 def fetch_cup(session: requests.Session, today: date) -> list[Match]:
     html = get_html(session, BASE_URL, encoding=ENCODING, pageID=CUP_PAGE)
     return _with_venues(session, parse_cup(html))
+
+
+# --- Süper Kupa ------------------------------------------------------------------------------
+
+
+def season_start(today: date) -> date:
+    """Futbol sezonu temmuzda başlar."""
+    return date(today.year if today.month >= 7 else today.year - 1, 7, 1)
+
+
+def parse_super_cup(html: str, since: date) -> list[Match]:
+    """Arşiv tablosundan (tarih | stat | 1. takım | skor | 2. takım) güncel sezondaki Beşiktaş maçlarını çıkarır.
+
+    Tabloda saat yoktur; maç tüm gün etkinliği olarak yayınlanır. Eski sezonlar takvime girmez.
+    """
+    matches: list[Match] = []
+    for row in BeautifulSoup(html, "html.parser").find_all("tr"):
+        cells = row.find_all("td")
+        if len(cells) != 5:
+            continue
+        day = _DATE.fullmatch(_text(cells[0]))
+        home, away = _text(cells[2]), _text(cells[4])
+        if not day or not (is_besiktas(home) or is_besiktas(away)):
+            continue
+        played = date(int(day.group(3)), int(day.group(2)), int(day.group(1)))
+        if played < since:
+            continue
+        score_text = _text(cells[3])
+        result = _score(score_text)
+        shootout = _PENALTIES.search(score_text)
+        if result and shootout:
+            result += f" (pen. {shootout.group(1)}-{shootout.group(2)})"
+        fixture = Fixture(mac_id=_mac_id(cells[3]), day=played, hour=None, minute=None, home=home, away=away, score=result)
+        match = _to_match(fixture, SUPER_CUP_NAME, "")
+        if not fixture.mac_id:  # henüz maç sayfası yoksa kimlik sezondan ve takımlardan türetilir
+            match = replace(match, source_id=f"super-kupa-{since.year}-{fold(home)}-{fold(away)}")
+        matches.append(replace(match, venue=display_name(_text(cells[1]))))
+    return matches
+
+
+def fetch_super_cup(session: requests.Session, today: date) -> list[Match]:
+    html = get_html(session, BASE_URL, encoding=ENCODING, pageID=SUPER_CUP_PAGE)
+    return parse_super_cup(html, season_start(today))
