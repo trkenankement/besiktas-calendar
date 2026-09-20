@@ -7,6 +7,7 @@ import hashlib
 from datetime import datetime
 from html import escape
 
+from .donate import ANCHOR, NETWORK_NAME, QR_FILENAME, USDT_ADDRESS
 from .feeds import FEEDS
 from .models import MATCH_DURATION, SPORT_LABELS, TURKEY_TZ, Match
 from .stats import RepoStats
@@ -36,6 +37,11 @@ ul.matches{list-style:none;margin:0;padding:0}
 .teams{font-size:1.05rem}
 .meta,.muted{color:var(--muted);font-size:.9rem}
 .warn{margin:1rem 0;padding:10px 12px;border:1px solid var(--warn);border-radius:10px;color:var(--warn);font-weight:600}
+.donate-row{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.donate-row img{width:176px;height:176px;background:#fff;border-radius:8px}
+.donate-row div{flex:1;min-width:220px}
+button.btn{border:0;font:inherit;font-weight:600;cursor:pointer;margin-top:.7rem}
+.feed .note{margin:1rem 0 0;font-size:.9rem}
 """
 
 SCRIPT = """
@@ -63,6 +69,16 @@ fetch('last_check.txt', { cache: 'no-store' })
     }
   })
   .catch(() => { checked.textContent = 'bilinmiyor'; });
+const copyButton = document.getElementById('copy-address');
+if (copyButton) {
+  copyButton.addEventListener('click', () => {
+    const address = document.getElementById('usdt-address').textContent.trim();
+    navigator.clipboard.writeText(address).then(
+      () => { copyButton.textContent = 'Kopyaland\\u0131'; },
+      () => { copyButton.textContent = 'Kopyalanamad\\u0131; adresi se\\u00e7ip kopyalay\\u0131n'; }
+    );
+  });
+}
 if (location.hostname.endsWith('.github.io')) {
   const owner = location.hostname.split('.')[0];
   const repo = location.pathname.split('/').filter(Boolean)[0];
@@ -86,7 +102,7 @@ CONTENT_SECURITY_POLICY = "; ".join(
         "default-src 'none'",
         f"script-src {_csp_hash(SCRIPT)}",
         f"style-src {_csp_hash(CSS)}",
-        "img-src data:",
+        "img-src 'self' data:",
         "connect-src 'self'",
         "base-uri 'none'",
         "form-action 'none'",
@@ -131,6 +147,23 @@ def _feed_card(feed) -> str:
     )
 
 
+def _donate_section() -> str:
+    return f"""<h2 id="{ANCHOR}">Projeyi destekle</h2>
+<p class="muted">Takvim ücretsizdir ve öyle kalacak. Beğendiyseniz isteğe bağlı olarak USDT (Tether) ile destek olabilirsiniz; herhangi bir borsa ya da cüzdandan gönderebilirsiniz.</p>
+<section class="feed">
+<div class="donate-row">
+<img src="{QR_FILENAME}" alt="USDT (BSC) adresi için QR kod" width="176" height="176">
+<div>
+<p><strong>Coin:</strong> USDT (Tether)<br><strong>Ağ:</strong> {escape(NETWORK_NAME)}</p>
+<code id="usdt-address">{USDT_ADDRESS}</code>
+<button type="button" class="btn" id="copy-address">Adresi kopyala</button>
+</div>
+</div>
+<p class="note">⚠ Yalnızca USDT'yi ve yalnızca <strong>BSC (BEP-20)</strong> ağı üzerinden gönderin. Başka bir ağdan ya da başka bir coin ile gönderilen tutarlar geri alınamaz.</p>
+</section>
+"""
+
+
 def _stats_line(stats: RepoStats | None) -> str:
     if stats is None:
         return ""
@@ -167,7 +200,7 @@ def render_index(matches: list[Match], now: datetime, stats: RepoStats | None = 
 {items}
 </ul>
 <p class="muted">Saati henüz açıklanmamış maçlar, yanlış bir gece yarısı saati yazılmasın diye tüm gün etkinliği olarak gösterilir; saat kesinleşince aynı etkinlik güncellenir.</p>
-<p class="muted">Son kontrol: <span id="checked">yükleniyor…</span></p>
+{_donate_section()}<p class="muted">Son kontrol: <span id="checked">yükleniyor…</span></p>
 <p class="muted">Kaynaklar: TFF, UEFA, EuroLeague Basketball ve TBF. <a id="repo" rel="noopener noreferrer" hidden>Kaynak kod (GitHub)</a></p>
 </main>
 <script>{SCRIPT}</script>

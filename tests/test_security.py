@@ -83,10 +83,12 @@ class _TagCollector(HTMLParser):
         super().__init__()
         self.tags = []
         self.attributes = []
+        self.elements = []  # (etiket, {öznitelik: değer})
 
     def handle_starttag(self, tag, attrs):
         self.tags.append(tag)
         self.attributes += [name for name, _ in attrs]
+        self.elements.append((tag, dict(attrs)))
 
 
 def _parse(html: str) -> _TagCollector:
@@ -98,16 +100,18 @@ def _parse(html: str) -> _TagCollector:
 def test_page_escapes_every_dynamic_field():
     page = render_index([match_with(HTML_PAYLOAD)], NOW)
     parsed = _parse(page)
-    assert "img" not in parsed.tags
+    assert parsed.tags.count("img") == 1  # yalnızca bağış QR'ı; kaynak verisinden gelen bir <img> yok
     assert parsed.tags.count("script") == 1  # yalnızca kendi betiğimiz
     assert "&lt;img src=x onerror=alert(1)&gt;" in page
 
 
 def test_page_has_no_inline_event_handlers_or_external_resources():
-    parsed = _parse(render_index([match_with("Rakip")], NOW))
-    assert not [a for a in parsed.attributes if a.startswith("on")]
-    assert not {"iframe", "object", "embed", "img", "form", "input"} & set(parsed.tags)
     page = render_index([match_with("Rakip")], NOW)
+    parsed = _parse(page)
+    assert not [a for a in parsed.attributes if a.startswith("on")]
+    assert not {"iframe", "object", "embed", "form", "input"} & set(parsed.tags)
+    (image,) = [attrs for tag, attrs in parsed.elements if tag == "img"]
+    assert "://" not in image["src"] and not image["src"].startswith("//")  # yalnızca aynı siteden
     assert "<script src" not in page
     assert 'rel="stylesheet"' not in page
 
@@ -131,7 +135,8 @@ def test_csp_is_restrictive():
     assert "unsafe-eval" not in CONTENT_SECURITY_POLICY
     assert "base-uri 'none'" in CONTENT_SECURITY_POLICY
     assert "form-action 'none'" in CONTENT_SECURITY_POLICY
-    assert "connect-src 'self'" in CONTENT_SECURITY_POLICY  # yalnızca last_check.txt
+    assert "connect-src 'self'" in CONTENT_SECURITY_POLICY  # yalnızca last_check.txt ve stats
+    assert "img-src 'self' data:" in CONTENT_SECURITY_POLICY  # yalnızca aynı siteden görsel (bağış QR'ı)
 
 
 def test_page_warns_when_the_last_check_is_stale():

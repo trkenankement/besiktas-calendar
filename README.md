@@ -114,6 +114,22 @@ SECURITY.md                             güvenlik politikası ve açık bildirme
 Yeni bir müsabaka eklemek için `providers/` altına Beşiktaş maçlarını `Match` listesi olarak döndüren
 bir işlev yazıp `providers/__init__.py` içindeki `PROVIDERS` listesine eklemek yeterlidir.
 
+## Projeyi destekle
+
+Takvim ücretsizdir ve öyle kalacak. Beğendiyseniz isteğe bağlı olarak **USDT (Tether)** ile destek
+olabilirsiniz; herhangi bir borsa ya da cüzdandan gönderebilirsiniz.
+
+| | |
+| --- | --- |
+| Coin | USDT (Tether) |
+| Ağ | **BNB Smart Chain (BSC / BEP-20)** |
+| Adres | `0x315f79cb95f784c18387c3009798d1a617dac8b2` |
+
+<img src="docs/usdt-bsc.svg" alt="USDT (BSC) adresi için QR kod" width="180">
+
+> ⚠ Yalnızca USDT'yi ve yalnızca **BSC (BEP-20)** ağı üzerinden gönderin. Başka bir ağdan ya da başka bir
+> coin ile gönderilen tutarlar geri alınamaz.
+
 ## Lisans
 
 [MIT](LICENSE)
