@@ -4,7 +4,7 @@ from datetime import date, datetime, timedelta
 from helpers import BESIKTAS
 
 from club_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match
-from club_calendar.site import UPCOMING_LIMIT, format_when, render_index, upcoming
+from club_calendar.site import CSS, SCRIPT, UPCOMING_LIMIT, format_when, render_index, upcoming
 
 NOW = datetime(2026, 9, 20, 15, 0, tzinfo=TURKEY_TZ)
 
@@ -79,6 +79,23 @@ def test_each_feed_has_an_apple_button_a_google_button_and_a_separate_download_l
         assert f'data-feed="{filename}"' in card and "Apple Takvim'e abone ol" in card
         assert f'data-google="{filename}"' in card and "Google Takvim'e abone ol" in card
         assert f'<a class="dl" href="{filename}" download>.ics indir</a>' in card
+
+
+def test_apple_and_google_parts_are_tagged_so_each_device_sees_only_its_own():
+    html = render_index([], NOW, BESIKTAS)
+    assert html.count('class="btn for-apple" data-feed=') == 3
+    assert html.count('class="btn for-google" data-google=') == 3
+    assert html.count('<li class="for-apple">') == 1 and html.count('<li class="for-google">') == 1
+    assert '[data-platform="android"] .for-apple,[data-platform="apple"] .for-google{display:none}' in CSS
+    # indirme bağlantısı ve adres kutusu her cihazda görünür kalır
+    assert html.count('<a class="dl" href=') == 3 and html.count("<code data-url=") == 3
+
+
+def test_script_detects_apple_and_android_and_leaves_both_buttons_on_computers():
+    assert "/iPhone|iPad|iPod/.test(ua)" in SCRIPT and "/Android/.test(ua)" in SCRIPT
+    assert "navigator.maxTouchPoints > 1" in SCRIPT  # iPadOS masaüstü tarayıcı kimliğiyle gelir
+    assert "document.documentElement.dataset.platform = platform" in SCRIPT
+    assert "if (platform !== 'other')" in SCRIPT and "a.textContent = 'Takvime abone ol'" in SCRIPT
 
 
 def test_page_explains_why_android_goes_through_google_calendars_web_page():

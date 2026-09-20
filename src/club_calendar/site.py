@@ -29,9 +29,8 @@ a{color:inherit}
 .feed{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:14px 16px;margin:10px 0}
 .feed p{margin:.15rem 0 .7rem;color:var(--muted)}
 .btn{display:inline-block;padding:9px 14px;border-radius:10px;background:var(--btn-bg);color:var(--btn-fg);text-decoration:none;font-weight:600}
-.actions{display:flex;flex-wrap:wrap;gap:8px 12px}
-.actions .btn{flex:1 1 200px;text-align:center}
-.dl{display:inline-block;margin-top:.7rem}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+[data-platform="android"] .for-apple,[data-platform="apple"] .for-google{display:none}
 ul.how{margin:.2rem 0 .6rem;padding-left:1.2rem}
 .how li{margin:.35rem 0}
 a:focus-visible{outline:3px solid #888;outline-offset:2px}
@@ -50,6 +49,13 @@ button.btn{border:0;font:inherit;font-weight:600;cursor:pointer;margin-top:.7rem
 """
 
 SCRIPT = """
+const ua = navigator.userAgent;
+const platform = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ? 'apple'
+  : /Android/.test(ua) ? 'android' : 'other';
+document.documentElement.dataset.platform = platform;
+if (platform !== 'other') {
+  for (const a of document.querySelectorAll('[data-feed], [data-google]')) a.textContent = 'Takvime abone ol';
+}
 for (const a of document.querySelectorAll('[data-feed]')) {
   const url = new URL(a.dataset.feed, location.href);
   a.href = 'webcal://' + url.host + url.pathname;
@@ -148,22 +154,23 @@ def _match_item(match: Match) -> str:
 
 
 def _feed_card(feed) -> str:
-    # Betik çalışmazsa iki düğme de dosyanın kendisine gider (indirme/açma); betik adresleri abonelik bağlantısına çevirir.
+    # Betik cihazı tanır: iPhone/iPad/Mac'te yalnızca Apple, Android'de yalnızca Google düğmesi kalır ("Takvime abone ol");
+    # bilgisayarda ikisi de görünür. Betik çalışmazsa iki düğme de dosyanın kendisine gider (indirme/açma).
     return (
         f'<section class="feed"><h3>{escape(feed.label)}</h3><p>{escape(feed.description)}</p>'
         '<div class="actions">'
-        f'<a class="btn" data-feed="{feed.filename}" href="{feed.filename}">Apple Takvim\'e abone ol</a>'
-        f'<a class="btn" data-google="{feed.filename}" href="{feed.filename}" target="_blank" rel="noopener noreferrer">Google Takvim\'e abone ol</a>'
-        '</div>'
+        f'<a class="btn for-apple" data-feed="{feed.filename}" href="{feed.filename}">Apple Takvim\'e abone ol</a>'
+        f'<a class="btn for-google" data-google="{feed.filename}" href="{feed.filename}" target="_blank" rel="noopener noreferrer">Google Takvim\'e abone ol</a>'
         f'<a class="dl" href="{feed.filename}" download>.ics indir</a>'
+        '</div>'
         f'<code data-url="{feed.filename}">{feed.filename}</code></section>'
     )
 
 
 def _how_to_subscribe() -> str:
     return """<ul class="how muted">
-<li><strong>iPhone, iPad, Mac:</strong> Apple Takvim düğmesi takvimi doğrudan ekler.</li>
-<li><strong>Android:</strong> Google Takvim uygulaması telefonda URL ile abone olmayı desteklemez; düğme, ekleme onayının yapıldığı Google Takvim web sayfasını açar. Telefonda açılmazsa tarayıcı menüsünden "Masaüstü sitesi"ni seçin ya da sayfayı bilgisayarda açın. Eklenen takvim telefonunuza kendiliğinden gelir.</li>
+<li class="for-apple"><strong>iPhone, iPad, Mac:</strong> düğme takvimi Apple Takvim'e doğrudan ekler.</li>
+<li class="for-google"><strong>Android:</strong> Google Takvim uygulaması telefonda URL ile abone olmayı desteklemez; düğme, ekleme onayının yapıldığı Google Takvim web sayfasını açar. Telefonda açılmazsa tarayıcı menüsünden "Masaüstü sitesi"ni seçin ya da sayfayı bilgisayarda açın. Eklenen takvim telefonunuza kendiliğinden gelir.</li>
 <li><strong>Outlook ve diğerleri:</strong> "URL ile takvim ekle" seçeneğine aşağıdaki bağlantıyı yapıştırın.</li>
 <li><strong>.ics indir:</strong> maçları yalnızca bir kez ekler, sonradan güncellenmez.</li>
 </ul>"""
