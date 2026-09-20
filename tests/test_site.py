@@ -1,7 +1,9 @@
 from datetime import date, datetime, timedelta
 
-from besiktas_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match
-from besiktas_calendar.site import UPCOMING_LIMIT, format_when, render_index, upcoming
+from helpers import BESIKTAS
+
+from club_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match
+from club_calendar.site import UPCOMING_LIMIT, format_when, render_index, upcoming
 
 NOW = datetime(2026, 9, 20, 15, 0, tzinfo=TURKEY_TZ)
 
@@ -57,6 +59,7 @@ def test_index_lists_feeds_matches_and_source_information():
     html = render_index(
         [match(1, at(20, 20), home="Amed Sportif Faaliyetler", away="Beşiktaş", venue="Diyarbakır Stadyumu, Diyarbakır")],
         NOW,
+        BESIKTAS,
     )
     for filename in ("besiktas-all.ics", "besiktas-football.ics", "besiktas-basketball.ics"):
         assert f'data-feed="{filename}"' in html
@@ -67,18 +70,18 @@ def test_index_lists_feeds_matches_and_source_information():
 
 
 def test_index_escapes_team_names():
-    html = render_index([match(1, at(20, 20), away="<script>alert(1)</script>")], NOW)
+    html = render_index([match(1, at(20, 20), away="<script>alert(1)</script>")], NOW, BESIKTAS)
     assert "<script>alert(1)</script>" not in html
     assert "&lt;script&gt;alert(1)&lt;/script&gt;" in html
 
 
 def test_index_without_upcoming_matches_says_so():
-    html = render_index([match(1, at(1, 20))], NOW)
+    html = render_index([match(1, at(1, 20))], NOW, BESIKTAS)
     assert "Yaklaşan maç bulunamadı." in html
 
 
 def test_index_has_social_preview_and_accessibility_basics():
-    html = render_index([], NOW)
+    html = render_index([], NOW, BESIKTAS)
     assert '<meta property="og:title" content="Beşiktaş Maç Takvimi">' in html
     assert '<meta property="og:locale" content="tr_TR">' in html
     assert '<html lang="tr">' in html
@@ -88,4 +91,4 @@ def test_index_has_social_preview_and_accessibility_basics():
 
 def test_index_is_deterministic_for_the_same_input():
     matches = [match(1, at(20, 20)), match(2, at(25, 20), sport=BASKETBALL)]
-    assert render_index(matches, NOW) == render_index(matches, NOW)
+    assert render_index(matches, NOW, BESIKTAS) == render_index(matches, NOW, BESIKTAS)

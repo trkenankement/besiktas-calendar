@@ -1,7 +1,7 @@
 import pytest
 
-from besiktas_calendar.http import SourceError
-from besiktas_calendar.providers._common import guard_skipped
+from club_calendar.http import SourceError
+from club_calendar.providers._common import guard_skipped
 
 
 def test_a_couple_of_skipped_matches_are_fine():

@@ -1,0 +1,112 @@
+[
+ {
+  "id": "2048725",
+  "status": "FINISHED",
+  "kickOffTime": {
+   "date": "2026-07-21",
+   "dateTime": "2026-07-21T18:00:00Z",
+   "utcOffsetInHours": 3
+  },
+  "score": {
+   "aggregate": {
+    "away": 1,
+    "home": 2
+   },
+   "regular": {
+    "away": 0,
+    "home": 1
+   },
+   "total": {
+    "away": 0,
+    "home": 1
+   }
+  },
+  "round": {
+   "metaData": {
+    "name": "Second qualifying round",
+    "type": "SECOND_QUALIFYING"
+   }
+  },
+  "matchday": {
+   "sequenceNumber": "1",
+   "longName": "Matchday 1"
+  },
+  "homeTeam": {
+   "id": "52692",
+   "internationalName": "Fenerbahçe"
+  },
+  "awayTeam": {
+   "id": "50063",
+   "internationalName": "Górnik Zabrze"
+  },
+  "stadium": {
+   "translations": {
+    "name": {
+     "EN": "Fenerbahçe Şükrü Saracoğlu Spor Kompleksi"
+    }
+   },
+   "city": {
+    "translations": {
+     "name": {
+      "EN": "Istanbul"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "2048739",
+  "status": "FINISHED",
+  "kickOffTime": {
+   "date": "2026-07-29",
+   "dateTime": "2026-07-29T18:00:00Z",
+   "utcOffsetInHours": 2
+  },
+  "score": {
+   "aggregate": {
+    "away": 2,
+    "home": 1
+   },
+   "regular": {
+    "away": 1,
+    "home": 1
+   },
+   "total": {
+    "away": 1,
+    "home": 1
+   }
+  },
+  "round": {
+   "metaData": {
+    "name": "Second qualifying round",
+    "type": "SECOND_QUALIFYING"
+   }
+  },
+  "matchday": {
+   "sequenceNumber": "2",
+   "longName": "Matchday 2"
+  },
+  "homeTeam": {
+   "id": "50063",
+   "internationalName": "Górnik Zabrze"
+  },
+  "awayTeam": {
+   "id": "52692",
+   "internationalName": "Fenerbahçe"
+  },
+  "stadium": {
+   "translations": {
+    "name": {
+     "EN": "Arena Zabrze"
+    }
+   },
+   "city": {
+    "translations": {
+     "name": {
+      "EN": "Zabrze"
+     }
+    }
+   }
+  }
+ }
+]

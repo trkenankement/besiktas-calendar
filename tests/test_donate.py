@@ -6,14 +6,15 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
+from helpers import BESIKTAS
 
-from besiktas_calendar import donate
-from besiktas_calendar.site import render_index
+from club_calendar import donate
+from club_calendar.site import render_index
 
 ROOT = Path(__file__).resolve().parents[1]
 README = (ROOT / "README.md").read_text(encoding="utf-8")
 QR_FILE = ROOT / "docs" / donate.QR_FILENAME
-PAGE = render_index([], datetime(2026, 9, 20, 15, 0, tzinfo=UTC))
+PAGE = render_index([], datetime(2026, 9, 20, 15, 0, tzinfo=UTC), BESIKTAS)
 
 # Adres ve QR bilerek burada da sabitlenir: değiştirmek için üç yeri (adres, QR dosyası, bu özet) elle güncellemek gerekir.
 EXPECTED_ADDRESS = "0x315f79cb95f784c18387c3009798d1a617dac8b2"

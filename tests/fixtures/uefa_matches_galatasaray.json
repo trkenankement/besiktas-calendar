@@ -1,0 +1,95 @@
+[
+ {
+  "id": "2049562",
+  "status": "FINISHED",
+  "kickOffTime": {
+   "date": "2026-09-09",
+   "dateTime": "2026-09-09T19:00:00Z",
+   "utcOffsetInHours": 1
+  },
+  "score": {
+   "regular": {
+    "away": 1,
+    "home": 3
+   },
+   "total": {
+    "away": 1,
+    "home": 3
+   }
+  },
+  "round": {
+   "metaData": {
+    "name": "League Phase",
+    "type": "GROUP_STANDINGS"
+   }
+  },
+  "matchday": {
+   "sequenceNumber": "1",
+   "longName": "Matchday 1"
+  },
+  "homeTeam": {
+   "id": "50149",
+   "internationalName": "Sporting CP"
+  },
+  "awayTeam": {
+   "id": "50067",
+   "internationalName": "Galatasaray"
+  },
+  "stadium": {
+   "translations": {
+    "name": {
+     "EN": "Estádio José Alvalade"
+    }
+   },
+   "city": {
+    "translations": {
+     "name": {
+      "EN": "Lisbon"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "2049576",
+  "status": "UPCOMING",
+  "kickOffTime": {
+   "date": "2026-10-13",
+   "dateTime": "2026-10-13T19:00:00Z",
+   "utcOffsetInHours": 3
+  },
+  "score": null,
+  "round": {
+   "metaData": {
+    "name": "League Phase",
+    "type": "GROUP_STANDINGS"
+   }
+  },
+  "matchday": {
+   "sequenceNumber": "2",
+   "longName": "Matchday 2"
+  },
+  "homeTeam": {
+   "id": "50067",
+   "internationalName": "Galatasaray"
+  },
+  "awayTeam": {
+   "id": "50080",
+   "internationalName": "Barcelona"
+  },
+  "stadium": {
+   "translations": {
+    "name": {
+     "EN": "Ali Sami Yen Spor Kompleksi"
+    }
+   },
+   "city": {
+    "translations": {
+     "name": {
+      "EN": "Istanbul"
+     }
+    }
+   }
+  }
+ }
+]

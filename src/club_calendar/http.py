@@ -21,7 +21,7 @@ class SourceError(RuntimeError):
 def user_agent() -> str:
     repository = os.environ.get("GITHUB_REPOSITORY")
     contact = f"; +https://github.com/{repository}" if repository else ""
-    return f"besiktas-calendar/1.0 (fan-made match calendar, one run per day{contact})"
+    return f"club-calendar/1.0 (fan-made match calendar, one run per day{contact})"
 
 
 def new_session() -> requests.Session:

@@ -65,7 +65,7 @@ jobs:
       # Kaynaklardan biri hata verirse bu adım başarısız olur; böylece eksik veri yayınlanmaz
       # ve bir önceki sağlam site yayında kalır.
       - name: Update calendars
-        run: python -m besiktas_calendar
+        run: python -m club_calendar
 
       - name: Commit changes
         if: github.ref == 'refs/heads/main'

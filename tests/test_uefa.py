@@ -2,11 +2,11 @@ from copy import deepcopy
 from datetime import date, datetime
 
 import pytest
-from helpers import FakeSession, fixture_json
+from helpers import BESIKTAS, FakeSession, fixture_json
 
-from besiktas_calendar.http import SourceError
-from besiktas_calendar.models import FOOTBALL, TURKEY_TZ
-from besiktas_calendar.providers import uefa
+from club_calendar.http import SourceError
+from club_calendar.models import FOOTBALL, TURKEY_TZ
+from club_calendar.providers import uefa
 
 COMPETITION = "UEFA Avrupa Ligi"
 
@@ -27,7 +27,7 @@ def test_season_year_follows_the_uefa_naming(today, season):
 
 
 def test_finished_qualifier_has_time_result_venue_and_turkish_round_name():
-    finished = uefa.parse_match(fixture_json("uefa_matches.json")[0], COMPETITION)
+    finished = uefa.parse_match(fixture_json("uefa_matches.json")[0], COMPETITION, BESIKTAS)
     assert finished.sport == FOOTBALL
     assert (finished.home, finished.away) == ("Beşiktaş", "Midtjylland")
     assert finished.start == datetime(2026, 7, 23, 21, 0, tzinfo=TURKEY_TZ)  # 18:00 UTC
@@ -38,7 +38,7 @@ def test_finished_qualifier_has_time_result_venue_and_turkish_round_name():
 
 
 def test_league_phase_match_is_labelled_with_its_matchday():
-    away = uefa.parse_match(fixture_json("uefa_matches.json")[1], COMPETITION)
+    away = uefa.parse_match(fixture_json("uefa_matches.json")[1], COMPETITION, BESIKTAS)
     assert (away.home, away.away) == ("Hoffenheim", "Beşiktaş")
     assert away.start == datetime(2026, 10, 15, 22, 0, tzinfo=TURKEY_TZ)
     assert away.round_label == "Lig Aşaması 2. Hafta"
@@ -49,19 +49,19 @@ def test_league_phase_match_is_labelled_with_its_matchday():
 def test_penalty_shootout_is_added_to_the_result():
     item = deepcopy(fixture_json("uefa_matches.json")[0])
     item["score"]["penalty"] = {"home": 4, "away": 3}
-    assert uefa.parse_match(item, COMPETITION).result == "1-0 (pen. 4-3)"
+    assert uefa.parse_match(item, COMPETITION, BESIKTAS).result == "1-0 (pen. 4-3)"
 
 
 def test_unfinished_match_has_no_result_even_if_a_score_object_exists():
     item = deepcopy(fixture_json("uefa_matches.json")[0])
     item["status"] = "UPCOMING"
-    assert uefa.parse_match(item, COMPETITION).result == ""
+    assert uefa.parse_match(item, COMPETITION, BESIKTAS).result == ""
 
 
 def test_unknown_round_names_fall_back_to_the_original_text():
     item = deepcopy(fixture_json("uefa_matches.json")[0])
     item["round"]["metaData"]["name"] = "Some new round"
-    assert uefa.parse_match(item, COMPETITION).round_label == "Some new round"
+    assert uefa.parse_match(item, COMPETITION, BESIKTAS).round_label == "Some new round"
 
 
 def test_fetch_queries_every_competition_for_besiktas_only():
@@ -71,7 +71,7 @@ def test_fetch_queries_every_competition_for_besiktas_only():
         return items if params["competitionId"] == "14" else []
 
     session = FakeSession(route)
-    matches = uefa.fetch(session, date(2026, 9, 20))
+    matches = uefa.fetch(session, date(2026, 9, 20), BESIKTAS)
 
     assert len(matches) == 3
     assert {m.competition for m in matches} == {COMPETITION}
@@ -90,7 +90,7 @@ def test_fetch_follows_pagination():
             return []
         return numbered(0, 100) if params["offset"] == 0 else numbered(100, 5)
 
-    matches = uefa.fetch(FakeSession(route), date(2026, 9, 20))
+    matches = uefa.fetch(FakeSession(route), date(2026, 9, 20), BESIKTAS)
     assert len(matches) == 105
     assert len({m.uid for m in matches}) == 105
 
@@ -98,7 +98,7 @@ def test_fetch_follows_pagination():
 def test_kickoff_with_only_a_date_becomes_an_all_day_match():
     item = deepcopy(fixture_json("uefa_matches.json")[1])
     item["kickOffTime"] = {"date": "2026-10-15"}
-    match = uefa.parse_match(item, COMPETITION)
+    match = uefa.parse_match(item, COMPETITION, BESIKTAS)
     assert not match.time_confirmed
     assert match.day == date(2026, 10, 15)
 
@@ -108,14 +108,14 @@ def test_match_without_a_readable_kickoff_is_skipped_with_a_warning(kickoff, cap
     monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     item = deepcopy(fixture_json("uefa_matches.json")[1])
     item["kickOffTime"] = kickoff
-    assert uefa.parse_match(item, COMPETITION) is None
+    assert uefa.parse_match(item, COMPETITION, BESIKTAS) is None
     assert "tarihi okunamadı" in capsys.readouterr().out
 
 
 def test_a_few_undated_matches_do_not_fail_the_provider(capsys, monkeypatch):
     monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     items = fixture_json("uefa_matches.json") + [dict(fixture_json("uefa_matches.json")[0], id="9", kickOffTime={})]
-    matches = uefa.fetch(FakeSession(lambda url, params: items if params["competitionId"] == "14" else []), date(2026, 9, 20))
+    matches = uefa.fetch(FakeSession(lambda url, params: items if params["competitionId"] == "14" else []), date(2026, 9, 20), BESIKTAS)
     assert len(matches) == 3
     assert "UYARI" in capsys.readouterr().out
 
@@ -125,9 +125,9 @@ def test_nothing_readable_at_all_means_the_source_format_changed():
     items = [dict(template, id=str(i), kickOffTime={}) for i in range(3)]
     session = FakeSession(lambda url, params: items if params["competitionId"] == "14" else [])
     with pytest.raises(SourceError, match="biçimi değişmiş"):
-        uefa.fetch(session, date(2026, 9, 20))
+        uefa.fetch(session, date(2026, 9, 20), BESIKTAS)
 
 
 def test_unexpected_response_shape_is_an_error():
     with pytest.raises(SourceError, match="beklenmeyen"):
-        uefa.fetch(FakeSession(lambda url, params: {"error": "nope"}), date(2026, 9, 20))
+        uefa.fetch(FakeSession(lambda url, params: {"error": "nope"}), date(2026, 9, 20), BESIKTAS)

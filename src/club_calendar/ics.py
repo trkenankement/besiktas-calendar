@@ -7,9 +7,9 @@ from collections.abc import Iterable
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
+from .club import Club
 from .models import MATCH_DURATION, SOURCE_LABELS, SPORT_LABELS, Match
 
-PRODID = "-//besiktas-calendar//TR"
 TIMEZONE_ID = "Europe/Istanbul"
 CRLF = "\r\n"
 # RFC 5545 TEXT içinde yasak olan denetim karakterleri (sekme ve satır sonları hariç).
@@ -67,11 +67,11 @@ def _description(match: Match) -> str:
     return "\n".join(lines)
 
 
-def event_lines(match: Match, stamp: str) -> list[str]:
-    categories = ",".join(escape_text(c) for c in ("Beşiktaş", SPORT_LABELS[match.sport], match.competition))
+def event_lines(match: Match, stamp: str, club: Club) -> list[str]:
+    categories = ",".join(escape_text(c) for c in (club.name, SPORT_LABELS[match.sport], match.competition))
     lines = [
         "BEGIN:VEVENT",
-        f"UID:{match.uid}",
+        f"UID:{match.uid}@{club.uid_domain}",
         f"DTSTAMP:{stamp}",
         f"SUMMARY:{escape_text(f'{match.home} - {match.away}')}",
         f"CATEGORIES:{categories}",
@@ -98,12 +98,14 @@ def event_lines(match: Match, stamp: str) -> list[str]:
     return lines
 
 
-def render_calendar(matches: Iterable[Match], name: str, description: str, *, stamp: datetime | None = None) -> str:
+def render_calendar(
+    matches: Iterable[Match], name: str, description: str, club: Club, *, stamp: datetime | None = None
+) -> str:
     stamp_text = _utc(stamp or datetime.now(UTC))
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        f"PRODID:{PRODID}",
+        f"PRODID:-//{club.uid_domain}//TR",
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
         f"NAME:{escape_text(name)}",
@@ -114,7 +116,7 @@ def render_calendar(matches: Iterable[Match], name: str, description: str, *, st
         "X-PUBLISHED-TTL:PT12H",
     ]
     for match in sorted(matches, key=lambda m: m.sort_key):
-        lines += event_lines(match, stamp_text)
+        lines += event_lines(match, stamp_text, club)
     lines.append("END:VCALENDAR")
     return CRLF.join(fold_line(line) for line in lines) + CRLF
 

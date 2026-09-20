@@ -11,11 +11,12 @@ from pathlib import Path
 import requests
 
 from . import ics, site
+from .club import Club
 from .console import error, log, warn
-from .feeds import FEEDS
+from .feeds import feeds_for
 from .http import SourceError, new_session
 from .models import BASKETBALL, FOOTBALL, SPORT_LABELS, TURKEY_TZ, Match
-from .providers import PROVIDERS, Provider
+from .providers import Provider, providers_for
 from .stats import load_stats
 
 MIN_MATCHES_PER_SPORT = 5  # bunun altı, kaynakların ciddi biçimde bozulduğu anlamına gelir
@@ -29,11 +30,11 @@ class Outcome:
     error: str | None = None
 
 
-def collect(providers: Iterable[Provider], session: requests.Session, today: date) -> list[Outcome]:
+def collect(providers: Iterable[Provider], session: requests.Session, today: date, club: Club) -> list[Outcome]:
     outcomes: list[Outcome] = []
     for provider in providers:
         try:
-            matches = provider.fetch(session, today)
+            matches = provider.fetch(session, today, club)
             if len(matches) < provider.min_matches:
                 raise SourceError(
                     f"beklenenden az maç bulundu ({len(matches)} < {provider.min_matches}); "
@@ -68,27 +69,27 @@ def date_problems(matches: list[Match], today: date) -> list[str]:
     return [f"{m.home} - {m.away} ({m.competition}) maçının tarihi mantıksız: {m.day:%d.%m.%Y}" for m in off[:5]]
 
 
-def write_outputs(out_dir: Path, matches: list[Match], now: datetime) -> dict[str, bool]:
+def write_outputs(out_dir: Path, matches: list[Match], now: datetime, club: Club) -> dict[str, bool]:
     """Dosyaları yazar; yalnızca gerçekten değişenler için True döndürür."""
     out_dir.mkdir(parents=True, exist_ok=True)
     changed: dict[str, bool] = {}
-    for feed in FEEDS:
+    for feed in feeds_for(club):
         content = ics.render_calendar(
-            feed.select(matches), feed.calendar_name, feed.description, stamp=now.astimezone(UTC)
+            feed.select(matches), feed.calendar_name, feed.description, club, stamp=now.astimezone(UTC)
         )
         changed[feed.filename] = ics.write_if_changed(out_dir / feed.filename, content)
-    page = site.render_index(matches, now, load_stats(out_dir / "stats.json"))
+    page = site.render_index(matches, now, club, load_stats(out_dir / "stats.json"))
     changed["index.html"] = ics.write_if_changed(out_dir / "index.html", page, ignore_prefixes=())
     # Son kontrol zamanı her çalışmada değişir; bu yüzden git'te izlenmez (.gitignore) ama siteye girer.
     (out_dir / "last_check.txt").write_text(now.strftime("%d.%m.%Y %H:%M (TSİ)") + "\n", encoding="utf-8")
     return changed
 
 
-def write_step_summary(outcomes: list[Outcome], matches: list[Match]) -> None:
+def write_step_summary(outcomes: list[Outcome], matches: list[Match], club: Club) -> None:
     path = os.environ.get("GITHUB_STEP_SUMMARY")
     if not path:
         return
-    lines = ["### Beşiktaş takvimi", "", "| Kaynak | Durum | Maç |", "| --- | --- | ---: |"]
+    lines = [f"### {club.name} takvimi", "", "| Kaynak | Durum | Maç |", "| --- | --- | ---: |"]
     for outcome in outcomes:
         status = "✅" if outcome.error is None else ("❌" if outcome.provider.required else "⚠️")
         lines.append(f"| {outcome.provider.name} | {status} | {len(outcome.matches)} |")
@@ -98,9 +99,17 @@ def write_step_summary(outcomes: list[Outcome], matches: list[Match]) -> None:
         handle.write("\n".join(lines) + "\n")
 
 
-def run(out_dir: Path, *, providers: Iterable[Provider] = PROVIDERS, session: requests.Session | None = None, now: datetime | None = None) -> int:
+def run(
+    out_dir: Path,
+    club: Club,
+    *,
+    providers: Iterable[Provider] | None = None,
+    session: requests.Session | None = None,
+    now: datetime | None = None,
+) -> int:
     now = now or datetime.now(TURKEY_TZ)
-    outcomes = collect(providers, session or new_session(), now.date())
+    providers = providers_for(club) if providers is None else providers
+    outcomes = collect(providers, session or new_session(), now.date(), club)
 
     errors: list[str] = []
     for outcome in outcomes:
@@ -115,7 +124,7 @@ def run(out_dir: Path, *, providers: Iterable[Provider] = PROVIDERS, session: re
 
     matches = unique(m for outcome in outcomes for m in outcome.matches)
     errors += coverage_problems(matches) + date_problems(matches, now.date())
-    write_step_summary(outcomes, matches)
+    write_step_summary(outcomes, matches, club)
 
     if errors:
         for message in errors:
@@ -123,7 +132,7 @@ def run(out_dir: Path, *, providers: Iterable[Provider] = PROVIDERS, session: re
         error("Takvimler güncellenmedi; yayındaki son sağlam sürüm korunuyor.")
         return 1
 
-    changed = write_outputs(out_dir, matches, now)
+    changed = write_outputs(out_dir, matches, now, club)
     football = sum(1 for m in matches if m.sport == FOOTBALL)
     log(f"Toplam {football} futbol + {len(matches) - football} basketbol maçı.")
     for filename, did_change in changed.items():

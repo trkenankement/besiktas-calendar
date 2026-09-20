@@ -1,0 +1,2 @@
+# Bu depo hangi kulübün maçlarını takip ediyor? Seçenekler: src/club_calendar/club.py içindeki CLUBS.
+club = "besiktas"

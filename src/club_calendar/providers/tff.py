@@ -9,10 +9,11 @@ from datetime import date
 import requests
 from bs4 import BeautifulSoup, Tag
 
+from ..club import Club
 from ..console import warn
 from ..http import SourceError, get_html
 from ..models import FOOTBALL, Match, kickoff_or_day
-from ..names import display_name, fold, is_besiktas, join_parts, tr_lower
+from ..names import display_name, fold, join_parts, tr_lower
 
 BASE_URL = "https://www.tff.org/Default.aspx"
 ENCODING = "windows-1254"  # TFF sayfaları Windows-1254 ile yayınlanır
@@ -66,7 +67,7 @@ def _mac_id(node: Tag | None) -> str:
     return found.group(1) if found else ""
 
 
-def _to_match(fixture: Fixture, competition: str, round_label: str) -> Match:
+def _to_match(fixture: Fixture, competition: str, round_label: str, club: Club) -> Match:
     source_id = fixture.mac_id or f"{competition}-{round_label}-{fold(fixture.home)}-{fold(fixture.away)}"
     return Match(
         source="tff",
@@ -75,8 +76,8 @@ def _to_match(fixture: Fixture, competition: str, round_label: str) -> Match:
         competition=competition,
         round_label=round_label,
         start=kickoff_or_day(fixture.day, fixture.hour, fixture.minute),
-        home=display_name(fixture.home),
-        away=display_name(fixture.away),
+        home=club.team_name(fixture.home),
+        away=club.team_name(fixture.away),
         result=fixture.score,
         info_url=f"{BASE_URL}?pageId={MATCH_PAGE}&macId={fixture.mac_id}" if fixture.mac_id else "",
     )
@@ -96,14 +97,14 @@ def parse_league_overview(html: str) -> tuple[str, int]:
     return name, len(weeks)
 
 
-def parse_week(html: str) -> list[Fixture]:
-    """"Haftanın Maçları" bileşeninden yalnızca Beşiktaş'ın maçlarını çıkarır."""
+def parse_week(html: str, club: Club) -> list[Fixture]:
+    """"Haftanın Maçları" bileşeninden yalnızca kulübün maçlarını çıkarır."""
     soup = BeautifulSoup(html, "html.parser")
     fixtures: list[Fixture] = []
     for row in soup.select("tr.haftaninMaclariTr"):
         home = _text(row.select_one("td.haftaninMaclariEv"))
         away = _text(row.select_one("td.haftaninMaclariDeplasman"))
-        if not (is_besiktas(home) or is_besiktas(away)):
+        if not (club.matches(home) or club.matches(away)):
             continue
         date_text = _text(row.find("span", id=re.compile(r"lblTarih$")))
         time_text = _text(row.find("span", id=re.compile(r"lblSaat$")))
@@ -149,13 +150,13 @@ def _with_venues(session: requests.Session, matches: list[Match]) -> list[Match]
     return enriched
 
 
-def fetch_super_lig(session: requests.Session, today: date) -> list[Match]:
+def fetch_super_lig(session: requests.Session, today: date, club: Club) -> list[Match]:
     overview = get_html(session, BASE_URL, encoding=ENCODING, pageID=LEAGUE_PAGE)
     competition, weeks = parse_league_overview(overview)
     matches: list[Match] = []
     for week in range(1, weeks + 1):
         html = get_html(session, BASE_URL, encoding=ENCODING, pageID=LEAGUE_PAGE, hafta=week)
-        matches += [_to_match(fixture, competition, f"{week}. Hafta") for fixture in parse_week(html)]
+        matches += [_to_match(fixture, competition, f"{week}. Hafta", club) for fixture in parse_week(html, club)]
     return _with_venues(session, matches)
 
 
@@ -167,8 +168,8 @@ def _cup_round(text: str) -> str:
     return re.sub(r"(\d)\.(?=\S)", r"\1. ", text).strip()
 
 
-def parse_cup(html: str) -> list[Match]:
-    """Kupa sayfasındaki güncel tur listesinden Beşiktaş maçlarını çıkarır."""
+def parse_cup(html: str, club: Club) -> list[Match]:
+    """Kupa sayfasındaki güncel tur listesinden kulübün maçlarını çıkarır."""
     soup = BeautifulSoup(html, "html.parser")
     matches: list[Match] = []
     round_label = ""
@@ -181,7 +182,7 @@ def parse_cup(html: str) -> list[Match]:
             continue
         home = _text(row.find(id=re.compile(r"lblTakim1$")))
         away = _text(row.find(id=re.compile(r"lblTakim2$")))
-        if not (is_besiktas(home) or is_besiktas(away)):
+        if not (club.matches(home) or club.matches(away)):
             continue
         found = _CUP_DATE.search(_text(span))
         month = _TR_MONTHS.get(tr_lower(found.group(2))) if found else None
@@ -198,13 +199,13 @@ def parse_cup(html: str) -> list[Match]:
             away=away,
             score=_score(_text(score_cell)),
         )
-        matches.append(_to_match(fixture, CUP_NAME, round_label))
+        matches.append(_to_match(fixture, CUP_NAME, round_label, club))
     return matches
 
 
-def fetch_cup(session: requests.Session, today: date) -> list[Match]:
+def fetch_cup(session: requests.Session, today: date, club: Club) -> list[Match]:
     html = get_html(session, BASE_URL, encoding=ENCODING, pageID=CUP_PAGE)
-    return _with_venues(session, parse_cup(html))
+    return _with_venues(session, parse_cup(html, club))
 
 
 # --- Süper Kupa ------------------------------------------------------------------------------
@@ -215,8 +216,8 @@ def season_start(today: date) -> date:
     return date(today.year if today.month >= 7 else today.year - 1, 7, 1)
 
 
-def parse_super_cup(html: str, since: date) -> list[Match]:
-    """Arşiv tablosundan (tarih | stat | 1. takım | skor | 2. takım) güncel sezondaki Beşiktaş maçlarını çıkarır.
+def parse_super_cup(html: str, since: date, club: Club) -> list[Match]:
+    """Arşiv tablosundan (tarih | stat | 1. takım | skor | 2. takım) güncel sezondaki kulüp maçlarını çıkarır.
 
     Tabloda saat yoktur; maç tüm gün etkinliği olarak yayınlanır. Eski sezonlar takvime girmez.
     """
@@ -227,7 +228,7 @@ def parse_super_cup(html: str, since: date) -> list[Match]:
             continue
         day = _DATE.fullmatch(_text(cells[0]))
         home, away = _text(cells[2]), _text(cells[4])
-        if not day or not (is_besiktas(home) or is_besiktas(away)):
+        if not day or not (club.matches(home) or club.matches(away)):
             continue
         played = date(int(day.group(3)), int(day.group(2)), int(day.group(1)))
         if played < since:
@@ -238,13 +239,13 @@ def parse_super_cup(html: str, since: date) -> list[Match]:
         if result and shootout:
             result += f" (pen. {shootout.group(1)}-{shootout.group(2)})"
         fixture = Fixture(mac_id=_mac_id(cells[3]), day=played, hour=None, minute=None, home=home, away=away, score=result)
-        match = _to_match(fixture, SUPER_CUP_NAME, "")
+        match = _to_match(fixture, SUPER_CUP_NAME, "", club)
         if not fixture.mac_id:  # henüz maç sayfası yoksa kimlik sezondan ve takımlardan türetilir
             match = replace(match, source_id=f"super-kupa-{since.year}-{fold(home)}-{fold(away)}")
         matches.append(replace(match, venue=display_name(_text(cells[1]))))
     return matches
 
 
-def fetch_super_cup(session: requests.Session, today: date) -> list[Match]:
+def fetch_super_cup(session: requests.Session, today: date, club: Club) -> list[Match]:
     html = get_html(session, BASE_URL, encoding=ENCODING, pageID=SUPER_CUP_PAGE)
-    return parse_super_cup(html, season_start(today))
+    return parse_super_cup(html, season_start(today), club)

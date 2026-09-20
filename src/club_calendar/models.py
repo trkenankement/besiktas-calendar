@@ -38,7 +38,7 @@ def kickoff_or_day(day: date, hour: int | None, minute: int | None) -> date | da
 
 @dataclass(frozen=True)
 class Match:
-    """Beşiktaş'ın tek bir maçı."""
+    """Takip edilen kulübün tek bir maçı."""
 
     source: str  # "tff", "uefa", "euroleague", "tbf"
     source_id: str  # maçın kaynak içindeki kalıcı kimliği (UID buradan türetilir)
@@ -65,11 +65,13 @@ class Match:
 
     @property
     def uid(self) -> str:
-        # Tarih/saat değişse bile aynı kalır; takvim uygulaması etkinliği güncelleyip çoğaltmaz.
-        # SHA1 burada yalnızca kararlı bir kimlik üretir, güvenlik amacıyla kullanılmaz.
+        """Etkinliğin kalıcı kimliği (24 onaltılık karakter); takvim dosyasında `@<kulüp>-calendar` ile tamamlanır.
+
+        Tarih/saat değişse bile aynı kalır; takvim uygulaması etkinliği güncelleyip çoğaltmaz.
+        SHA1 burada yalnızca kararlı bir kimlik üretir, güvenlik amacıyla kullanılmaz.
+        """
         key = f"{self.source}:{self.source_id}".encode()
-        digest = hashlib.sha1(key, usedforsecurity=False).hexdigest()[:24]
-        return f"{digest}@besiktas-calendar"
+        return hashlib.sha1(key, usedforsecurity=False).hexdigest()[:24]
 
     @property
     def sort_key(self) -> tuple:

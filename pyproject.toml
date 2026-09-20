@@ -29,7 +29,7 @@ Homepage = "https://trkenankement.github.io/besiktas-calendar/"
 Repository = "https://github.com/trkenankement/besiktas-calendar"
 
 [project.scripts]
-besiktas-calendar = "besiktas_calendar.cli:main"
+club-calendar = "club_calendar.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

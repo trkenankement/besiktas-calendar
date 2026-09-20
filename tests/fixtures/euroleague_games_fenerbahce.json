@@ -1,0 +1,71 @@
+{
+ "data": [
+  {
+   "id": "8936d7ce-9593-459a-ba90-a51d4068b0bb",
+   "identifier": "E2026_9",
+   "round": 1,
+   "roundName": "Round 1",
+   "phaseType": {
+    "code": "RS",
+    "name": "Regular Season"
+   },
+   "played": false,
+   "confirmedDate": true,
+   "confirmedHour": true,
+   "utcDate": "2026-09-25T17:45:00Z",
+   "local": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Tarfin Istanbul",
+     "abbreviatedName": "Fenerbahce"
+    },
+    "score": 0
+   },
+   "road": {
+    "club": {
+     "code": "VIR",
+     "name": "Virtus Bologna",
+     "abbreviatedName": "Virtus Bologna"
+    },
+    "score": 0
+   },
+   "venue": {
+    "name": "ULKER SPORTS AND EVENT HALL"
+   }
+  },
+  {
+   "id": "7a7a48b2-3461-46bc-9f1b-9e96ac2c6618",
+   "identifier": "E2026_36",
+   "round": 4,
+   "roundName": "Round 4",
+   "phaseType": {
+    "code": "RS",
+    "name": "Regular Season"
+   },
+   "played": false,
+   "confirmedDate": true,
+   "confirmedHour": true,
+   "utcDate": "2026-10-08T18:15:00Z",
+   "local": {
+    "club": {
+     "code": "PAN",
+     "name": "Panathinaikos AKTOR Athens",
+     "abbreviatedName": "Panathinaikos"
+    },
+    "score": 0
+   },
+   "road": {
+    "club": {
+     "code": "ULK",
+     "name": "Fenerbahce Tarfin Istanbul",
+     "abbreviatedName": "Fenerbahce"
+    },
+    "score": 0
+   },
+   "venue": {
+    "name": "TELEKOM CENTER ATHENS"
+   }
+  }
+ ],
+ "total": 38
+}

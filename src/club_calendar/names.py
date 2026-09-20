@@ -22,14 +22,10 @@ def tr_upper(text: str) -> str:
 
 
 def fold(text: str) -> str:
-    """Karşılaştırma için: küçük harf ve aksansız ASCII (Beşiktaş -> besiktas)."""
+    """Karşılaştırma için: küçük harf ve aksansız ASCII (Çaykur Rizespor -> caykur rizespor)."""
     lowered = tr_lower(text).replace("ı", "i")
     decomposed = unicodedata.normalize("NFKD", lowered)
     return "".join(ch for ch in decomposed if not unicodedata.combining(ch))
-
-
-def is_besiktas(name: str) -> bool:
-    return "besiktas" in fold(name or "")
 
 
 def _capitalize(word: str) -> str:
@@ -47,7 +43,7 @@ def _title_token(token: str) -> str:
 
 
 def display_name(raw: str) -> str:
-    """"BEŞİKTAŞ A.Ş." -> "Beşiktaş"; zaten karışık harfli adları olduğu gibi bırakır."""
+    """"KASIMPAŞA A.Ş." -> "Kasımpaşa"; zaten karışık harfli adları olduğu gibi bırakır."""
     text = _CORPORATE_SUFFIX.sub("", " ".join((raw or "").split()))
     if not text or text != tr_upper(text):
         return text

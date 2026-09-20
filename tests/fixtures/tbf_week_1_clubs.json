@@ -1,0 +1,61 @@
+{
+ "data": [
+  {
+   "matchId": 346279.0,
+   "activityDisplayName": "Türkiye Sigorta Basketbol Süper Ligi",
+   "matchDate": "2026-09-25T19:00:00",
+   "week": "1. Hafta",
+   "homeTeam": {
+    "id": 265995.0,
+    "name": "TOFAŞ",
+    "score": ""
+   },
+   "awayTeam": {
+    "id": 265993.0,
+    "name": "PİZZABULLS BORDO BANDIRMA",
+    "score": ""
+   },
+   "salonAdi": "Tofaş Spor Salonu",
+   "il": "BURSA",
+   "broadcastChannel": "beINSports"
+  },
+  {
+   "matchId": 346274.0,
+   "activityDisplayName": "Türkiye Sigorta Basketbol Süper Ligi",
+   "matchDate": "2026-09-27T18:00:00",
+   "week": "1. Hafta",
+   "homeTeam": {
+    "id": 265991.0,
+    "name": "BAHÇEŞEHİR KOLEJİ",
+    "score": ""
+   },
+   "awayTeam": {
+    "id": 266025.0,
+    "name": "FENERBAHÇE TARFİN",
+    "score": ""
+   },
+   "salonAdi": "Sinan Erdem Spor Salonu",
+   "il": "İSTANBUL",
+   "broadcastChannel": "beINSports"
+  },
+  {
+   "matchId": 346275.0,
+   "activityDisplayName": "Türkiye Sigorta Basketbol Süper Ligi",
+   "matchDate": "2026-09-26T18:00:00",
+   "week": "1. Hafta",
+   "homeTeam": {
+    "id": 266026.0,
+    "name": "GALATASARAY MCT TECHNIC",
+    "score": ""
+   },
+   "awayTeam": {
+    "id": 265994.0,
+    "name": "ÇAYIROVA BELEDİYESİ",
+    "score": ""
+   },
+   "salonAdi": "Sinan Erdem Spor Salonu",
+   "il": "İSTANBUL",
+   "broadcastChannel": "beINSports"
+  }
+ ]
+}

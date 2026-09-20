@@ -2,12 +2,13 @@ import json
 from datetime import datetime
 
 import pytest
+from helpers import BESIKTAS
 
-from besiktas_calendar import build
-from besiktas_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match
-from besiktas_calendar.providers import Provider
-from besiktas_calendar.site import render_index
-from besiktas_calendar.stats import RepoStats, load_stats
+from club_calendar import build
+from club_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match
+from club_calendar.providers import Provider
+from club_calendar.site import render_index
+from club_calendar.stats import RepoStats, load_stats
 
 NOW = datetime(2026, 9, 20, 15, 0, tzinfo=TURKEY_TZ)
 
@@ -50,15 +51,15 @@ def test_anything_but_plain_non_negative_integers_is_rejected(tmp_path, payload)
 
 
 def test_page_shows_the_counts_when_available():
-    page = render_index([], NOW, RepoStats(stars=3, watchers=2))
+    page = render_index([], NOW, BESIKTAS, RepoStats(stars=3, watchers=2))
     assert '<p class="muted" id="stats">' in page
     assert "<strong>2</strong> takipçi" in page
     assert "<strong>3</strong> yıldız" in page
 
 
 def test_page_without_stats_shows_no_stats_line():
-    assert 'id="stats"' not in render_index([], NOW)
-    assert 'id="stats"' not in render_index([], NOW, None)
+    assert 'id="stats"' not in render_index([], NOW, BESIKTAS)
+    assert 'id="stats"' not in render_index([], NOW, BESIKTAS, None)
 
 
 def _matches(sport, count, source):
@@ -80,11 +81,11 @@ def _matches(sport, count, source):
 def test_build_reads_stats_json_from_the_output_folder(tmp_path):
     write(tmp_path / "stats.json", {"stars": 7, "watchers": 4})
     providers = [
-        Provider("f", "futbol", lambda session, today: _matches(FOOTBALL, 6, "tff")),
-        Provider("b", "basketbol", lambda session, today: _matches(BASKETBALL, 6, "tbf")),
+        Provider("f", "futbol", lambda session, today, club: _matches(FOOTBALL, 6, "tff")),
+        Provider("b", "basketbol", lambda session, today, club: _matches(BASKETBALL, 6, "tbf")),
     ]
 
-    assert build.run(tmp_path, providers=providers, session=object(), now=NOW) == 0
+    assert build.run(tmp_path, BESIKTAS, providers=providers, session=object(), now=NOW) == 0
 
     page = (tmp_path / "index.html").read_text(encoding="utf-8")
     assert "<strong>4</strong> takipçi" in page and "<strong>7</strong> yıldız" in page
@@ -94,9 +95,9 @@ def test_build_reads_stats_json_from_the_output_folder(tmp_path):
 def test_a_broken_stats_file_never_breaks_the_build(tmp_path):
     write(tmp_path / "stats.json", "{bozuk")
     providers = [
-        Provider("f", "futbol", lambda session, today: _matches(FOOTBALL, 6, "tff")),
-        Provider("b", "basketbol", lambda session, today: _matches(BASKETBALL, 6, "tbf")),
+        Provider("f", "futbol", lambda session, today, club: _matches(FOOTBALL, 6, "tff")),
+        Provider("b", "basketbol", lambda session, today, club: _matches(BASKETBALL, 6, "tbf")),
     ]
 
-    assert build.run(tmp_path, providers=providers, session=object(), now=NOW) == 0
+    assert build.run(tmp_path, BESIKTAS, providers=providers, session=object(), now=NOW) == 0
     assert 'id="stats"' not in (tmp_path / "index.html").read_text(encoding="utf-8")

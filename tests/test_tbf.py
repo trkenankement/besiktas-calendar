@@ -2,11 +2,11 @@ from copy import deepcopy
 from datetime import date, datetime
 
 import pytest
-from helpers import FakeSession, fixture_json
+from helpers import BESIKTAS, FakeSession, fixture_json
 
-from besiktas_calendar.http import SourceError
-from besiktas_calendar.models import BASKETBALL, TURKEY_TZ
-from besiktas_calendar.providers import tbf
+from club_calendar.http import SourceError
+from club_calendar.models import BASKETBALL, TURKEY_TZ
+from club_calendar.providers import tbf
 
 TODAY = date(2026, 9, 20)
 NEW_LEAGUE, OLD_LEAGUE = 22214, 20728
@@ -38,7 +38,7 @@ def besiktas_row(week):
 
 
 def test_row_is_converted_with_normalised_names_venue_and_broadcast():
-    match = tbf.parse_row(besiktas_row("1"))
+    match = tbf.parse_row(besiktas_row("1"), BESIKTAS)
     assert match.sport == BASKETBALL
     assert (match.home, match.away) == ("Anadolu Efes", "Beşiktaş")
     assert match.start == datetime(2026, 9, 27, 20, 30, tzinfo=TURKEY_TZ)
@@ -51,7 +51,7 @@ def test_row_is_converted_with_normalised_names_venue_and_broadcast():
 
 
 def test_midnight_placeholder_means_the_time_is_not_announced_yet():
-    match = tbf.parse_row(besiktas_row("6"))
+    match = tbf.parse_row(besiktas_row("6"), BESIKTAS)
     assert (match.home, match.away) == ("Beşiktaş", "Çayırova Belediyesi")
     assert not match.time_confirmed
     assert match.day == date(2026, 10, 31)
@@ -60,7 +60,7 @@ def test_midnight_placeholder_means_the_time_is_not_announced_yet():
 def test_played_game_reports_the_score():
     row = deepcopy(besiktas_row("1"))
     row["homeTeam"]["score"], row["awayTeam"]["score"] = "78", "84"
-    assert tbf.parse_row(row).result == "78-84"
+    assert tbf.parse_row(row, BESIKTAS).result == "78-84"
 
 
 @pytest.mark.parametrize("bad_date", [None, "", "belirsiz"])
@@ -68,7 +68,7 @@ def test_row_without_a_usable_date_is_skipped_with_a_warning(bad_date, capsys, m
     monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
     row = deepcopy(besiktas_row("1"))
     row["matchDate"] = bad_date
-    assert tbf.parse_row(row) is None
+    assert tbf.parse_row(row, BESIKTAS) is None
     assert "tarihi yok" in capsys.readouterr().out
 
 
@@ -96,7 +96,7 @@ def test_an_undated_fixture_does_not_stop_the_other_matches(capsys, monkeypatch)
                 row["matchDate"] = None  # 1. hafta maçı ertelendi
         return payload
 
-    matches = tbf.fetch_bsl(FakeSession(route), TODAY)
+    matches = tbf.fetch_bsl(FakeSession(route), TODAY, BESIKTAS)
 
     assert [m.round_label for m in matches] == ["6. Hafta"]
     assert "UYARI" in capsys.readouterr().out
@@ -114,12 +114,12 @@ def test_nothing_readable_at_all_means_the_source_format_changed():
         return base(url, params)
 
     with pytest.raises(SourceError, match="biçimi değişmiş"):
-        tbf.fetch_bsl(FakeSession(route), TODAY)
+        tbf.fetch_bsl(FakeSession(route), TODAY, BESIKTAS)
 
 
 def test_fetch_returns_only_besiktas_games_from_the_newest_season():
     session = FakeSession(route_factory())
-    matches = tbf.fetch_bsl(session, TODAY)
+    matches = tbf.fetch_bsl(session, TODAY, BESIKTAS)
 
     assert [m.round_label for m in matches] == ["1. Hafta", "6. Hafta"]
     assert all("Beşiktaş" in (m.home, m.away) for m in matches)  # diğer takımların satırları elenir
@@ -131,7 +131,7 @@ def test_fetch_returns_only_besiktas_games_from_the_newest_season():
 
 def test_previous_season_is_used_while_the_new_fixture_list_is_not_published():
     session = FakeSession(route_factory(empty_leagues={NEW_LEAGUE}))
-    tbf.fetch_bsl(session, TODAY)
+    tbf.fetch_bsl(session, TODAY, BESIKTAS)
     match_requests = [p for url, p in session.requests if url.endswith("get-all-matches-for-filter")]
     assert match_requests and all(p["ActivityId"] == OLD_LEAGUE for p in match_requests)
 
@@ -139,13 +139,13 @@ def test_previous_season_is_used_while_the_new_fixture_list_is_not_published():
 def test_no_fixture_list_in_either_season_is_an_error():
     session = FakeSession(route_factory(empty_leagues={NEW_LEAGUE, OLD_LEAGUE}))
     with pytest.raises(SourceError, match="hafta listesi"):
-        tbf.fetch_bsl(session, TODAY)
+        tbf.fetch_bsl(session, TODAY, BESIKTAS)
 
 
 def test_empty_season_list_is_an_error():
     session = FakeSession(lambda url, params: {"data": []})
     with pytest.raises(SourceError, match="sezon listesi boş"):
-        tbf.fetch_bsl(session, TODAY)
+        tbf.fetch_bsl(session, TODAY, BESIKTAS)
 
 
 # --- Kupalar ----------------------------------------------------------------------------------
@@ -177,7 +177,7 @@ def cup_route(weeks=None):
 
 def test_cup_match_of_the_current_edition_is_read_and_older_editions_are_ignored():
     session = FakeSession(cup_route())
-    (match,) = tbf.fetch_cups(session, TODAY)
+    (match,) = tbf.fetch_cups(session, TODAY, BESIKTAS)
 
     # Sorgu önceki yılların maçlarını da döndürür (2025'te "Fenerbahçe Beko - Beşiktaş Gain" gibi)
     assert (match.home, match.away) == ("Fenerbahçe Tarfin", "Beşiktaş")
@@ -190,24 +190,24 @@ def test_cup_match_of_the_current_edition_is_read_and_older_editions_are_ignored
 
 def test_cup_without_an_edition_for_the_current_season_is_skipped():
     session = FakeSession(cup_route())
-    tbf.fetch_cups(session, TODAY)
+    tbf.fetch_cups(session, TODAY, BESIKTAS)
     league_ids = {p.get("leagueId") or p.get("ActivityId") for _, p in session.requests}
     assert ETK_OLD_LEAGUE not in league_ids  # geçen sezonun Türkiye Kupası'na bakılmaz
 
 
 def test_round_labels_are_kept_for_cups_with_several_rounds():
     weeks = {"data": [{"sezon_Hafta": "1", "devre_ID": 1}, {"sezon_Hafta": "2", "devre_ID": 1}]}
-    (match,) = tbf.fetch_cups(FakeSession(cup_route(weeks=weeks)), TODAY)
+    (match,) = tbf.fetch_cups(FakeSession(cup_route(weeks=weeks)), TODAY, BESIKTAS)
     assert match.round_label == "1. Hafta"
 
 
 def test_competition_name_drops_gender_prefix_and_season_suffix():
     row = deepcopy(fixture_json("tbf_cup_week_1.json")["data"][1])
-    assert tbf.parse_row(row).competition == "Cumhurbaşkanlığı Kupası"
+    assert tbf.parse_row(row, BESIKTAS).competition == "Cumhurbaşkanlığı Kupası"
     row["activityName"] = "Erkekler Türkiye Kupası 2026-2027"
-    assert tbf.parse_row(row).competition == "Türkiye Kupası"
+    assert tbf.parse_row(row, BESIKTAS).competition == "Türkiye Kupası"
     row["activityDisplayName"] = "Türkiye Sigorta Basketbol Süper Ligi"
-    assert tbf.parse_row(row).competition == "Türkiye Sigorta Basketbol Süper Ligi"
+    assert tbf.parse_row(row, BESIKTAS).competition == "Türkiye Sigorta Basketbol Süper Ligi"
 
 
 def test_rows_without_season_information_are_trusted():
@@ -225,6 +225,6 @@ def test_half_value_is_sent_for_phases_other_than_the_two_regular_halves():
         return fixture_json("tbf_seasons.json")
 
     session = FakeSession(route)
-    tbf.fetch_bsl(session, TODAY)
+    tbf.fetch_bsl(session, TODAY, BESIKTAS)
     (params,) = [p for url, p in session.requests if url.endswith("get-all-matches-for-filter")]
     assert params["HalfValue"] == "PO"

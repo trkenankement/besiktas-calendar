@@ -1,6 +1,6 @@
 import pytest
 
-from besiktas_calendar.names import display_name, english_title, fold, is_besiktas, join_parts
+from club_calendar.names import display_name, english_title, fold, join_parts
 
 
 @pytest.mark.parametrize(
@@ -29,14 +29,8 @@ def test_display_name_keeps_dotted_abbreviations():
     assert display_name("GAZİEMİR G.O.G. SPOR YAT. A.Ş.") == "Gaziemir G.O.G. Spor Yat."
 
 
-@pytest.mark.parametrize("name", ["BEŞİKTAŞ A.Ş.", "Beşiktaş", "Besiktas Istanbul", "BEŞİKTAŞ"])
-def test_is_besiktas_recognises_every_spelling(name):
-    assert is_besiktas(name)
 
 
-@pytest.mark.parametrize("name", ["Kasımpaşa", "FENERBAHÇE A.Ş.", "", None])
-def test_is_besiktas_rejects_other_clubs(name):
-    assert not is_besiktas(name)
 
 
 def test_fold_removes_turkish_accents():

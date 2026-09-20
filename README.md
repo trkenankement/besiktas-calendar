@@ -9,6 +9,9 @@ Beşiktaş **erkek A takım futbol ve basketbol** maçlarını her gün otomatik
 aboneliklerine (ICS) dönüştürür. Bir kez abone olursunuz; yeni maçlar, saat değişiklikleri ve
 sonuçlar takviminize kendiliğinden yansır.
 
+> Bağımsız bir projedir; Beşiktaş'ın, TFF'nin, UEFA'nın, EuroLeague'in ya da TBF'nin resmî bir ürünü değildir
+> ve onlarla bir bağlantısı yoktur. Veriler bu kuruluşların herkese açık sayfalarından okunur.
+
 ## Abone ol
 
 Web sayfası: **<https://trkenankement.github.io/besiktas-calendar/>**
@@ -104,13 +107,18 @@ pip install -e ".[dev,lint]"
 pytest                          # çevrimdışı testler (gerçek yanıtlardan küçültülmüş örnekler)
 ruff check src tests            # stil ve olası hatalar
 bandit -r src -c pyproject.toml # güvenlik taraması
-besiktas-calendar               # canlı kaynaklardan docs/ klasörünü üretir (python -m besiktas_calendar de olur)
-besiktas-calendar --out cikti   # başka bir klasöre yaz
+club-calendar                   # canlı kaynaklardan docs/ klasörünü üretir (python -m club_calendar de olur)
+club-calendar --out cikti       # başka bir klasöre yaz
 ```
+
+Hangi kulübün takip edildiğini kökteki `club.toml` belirler (`club = "besiktas"`); kulüp tanımları
+`src/club_calendar/club.py` içindedir. `--club fenerbahce` gibi bir seçenek `club.toml`'u geçici olarak geçersiz kılar.
 
 ```text
 .github/workflows/update-calendar.yml   test → üret → gerekirse commit → Pages'e yayınla
-src/besiktas_calendar/
+club.toml                               takip edilen kulüp
+src/club_calendar/
+  club.py  feeds.py                     kulüp profilleri (ad, UEFA/EuroLeague kimliği), yayınlanan takvim akışları
   providers/                            tff.py · uefa.py · euroleague.py · tbf.py (her biri ortak Match modeli döndürür)
   models.py  names.py  http.py          veri modeli, Türkçe isim düzeltme, yeniden denemeli HTTP
   ics.py  site.py  stats.py  donate.py  ICS üretimi, web sayfası, GitHub takipçi/yıldız sayısı, bağış bilgileri
@@ -121,8 +129,8 @@ docs/                                   yayınlanan site: ICS dosyaları + index
 SECURITY.md                             güvenlik politikası ve açık bildirme yolu
 ```
 
-Yeni bir müsabaka eklemek için `providers/` altına Beşiktaş maçlarını `Match` listesi olarak döndüren
-bir işlev yazıp `providers/__init__.py` içindeki `PROVIDERS` listesine eklemek yeterlidir.
+Yeni bir müsabaka eklemek için `providers/` altına kulübün maçlarını `Match` listesi olarak döndüren
+bir işlev yazıp `providers/__init__.py` içindeki `providers_for` işlevine eklemek yeterlidir.
 
 ## Projeyi destekle
 

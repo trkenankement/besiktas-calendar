@@ -7,8 +7,9 @@ import hashlib
 from datetime import datetime
 from html import escape
 
+from .club import Club
 from .donate import ANCHOR, NETWORK_NAME, QR_FILENAME, USDT_ADDRESS
-from .feeds import FEEDS
+from .feeds import feeds_for
 from .models import MATCH_DURATION, SPORT_LABELS, TURKEY_TZ, Match
 from .stats import RepoStats
 
@@ -170,10 +171,18 @@ def _stats_line(stats: RepoStats | None) -> str:
     return f'<p class="muted" id="stats">GitHub\'da <strong>{stats.watchers}</strong> takipçi · <strong>{stats.stars}</strong> yıldız</p>\n'
 
 
-def render_index(matches: list[Match], now: datetime, stats: RepoStats | None = None) -> str:
-    feeds = "\n".join(_feed_card(feed) for feed in FEEDS)
+def _sources_text(club: Club) -> str:
+    names = ["TFF", "UEFA", *(["EuroLeague Basketball"] if club.euroleague_code else []), "TBF"]
+    return f"{', '.join(names[:-1])} ve {names[-1]}"
+
+
+def render_index(matches: list[Match], now: datetime, club: Club, stats: RepoStats | None = None) -> str:
+    feeds = "\n".join(_feed_card(feed) for feed in feeds_for(club))
     coming = upcoming(matches, now)
     items = "\n".join(_match_item(m) for m in coming) or "<li>Yaklaşan maç bulunamadı.</li>"
+    name = escape(club.name)
+    title = f"{name} Maç Takvimi"
+    summary = f"{name} erkek futbol ve basketbol maçları için her gün otomatik güncellenen takvim aboneliği."
     return f"""<!doctype html>
 <html lang="tr">
 <head>
@@ -182,10 +191,10 @@ def render_index(matches: list[Match], now: datetime, stats: RepoStats | None = 
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>Beşiktaş Maç Takvimi</title>
-<meta name="description" content="Beşiktaş erkek futbol ve basketbol maçları için her gün otomatik güncellenen takvim aboneliği.">
-<meta property="og:title" content="Beşiktaş Maç Takvimi">
-<meta property="og:description" content="Beşiktaş erkek futbol ve basketbol maçları için her gün otomatik güncellenen takvim aboneliği.">
+<title>{title}</title>
+<meta name="description" content="{summary}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{summary}">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="tr_TR">
 <link rel="icon" href="data:,">
@@ -193,7 +202,7 @@ def render_index(matches: list[Match], now: datetime, stats: RepoStats | None = 
 </head>
 <body>
 <main>
-<h1>Beşiktaş Maç Takvimi</h1>
+<h1>{title}</h1>
 <p>Erkek A takım futbol ve basketbol maçları. Takvim her gün otomatik güncellenir; bir kez abone olmanız yeterli.</p>
 {_stats_line(stats)}<p id="stale" class="warn" role="alert" hidden></p>
 <h2>Takvime abone ol</h2>
@@ -205,7 +214,7 @@ def render_index(matches: list[Match], now: datetime, stats: RepoStats | None = 
 </ul>
 <p class="muted">Saati henüz açıklanmamış maçlar, yanlış bir gece yarısı saati yazılmasın diye tüm gün etkinliği olarak gösterilir; saat kesinleşince aynı etkinlik güncellenir.</p>
 {_donate_section()}<p class="muted">Son kontrol: <span id="checked">yükleniyor…</span></p>
-<p class="muted">Kaynaklar: TFF, UEFA, EuroLeague Basketball ve TBF. <a id="repo" rel="noopener noreferrer" hidden>Kaynak kod (GitHub)</a></p>
+<p class="muted">Kaynaklar: {_sources_text(club)}. <a id="repo" rel="noopener noreferrer" hidden>Kaynak kod (GitHub)</a></p>
 </main>
 <script>{SCRIPT}</script>
 </body>

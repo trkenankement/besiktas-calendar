@@ -9,6 +9,9 @@ from typing import Any
 
 import requests
 
+from club_calendar.club import get_club
+
+BESIKTAS = get_club("besiktas")  # gerçek yanıt örnekleri Beşiktaş'a aittir
 FIXTURES = Path(__file__).parent / "fixtures"
 EMPTY_PAGE = "<!doctype html><html><head><title>boş</title></head><body></body></html>"
 

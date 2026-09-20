@@ -7,6 +7,7 @@ from typing import Any
 
 import requests
 
+from ..club import Club
 from ..console import warn
 from ..http import SourceError, get_json
 from ..models import FOOTBALL, TURKEY_TZ, Match
@@ -14,7 +15,6 @@ from ..names import join_parts
 from ._common import guard_skipped
 
 API_URL = "https://match.uefa.com/v5/matches"
-BESIKTAS_TEAM_ID = "50157"
 PAGE_SIZE = 100
 COMPETITIONS = (
     ("1", "UEFA Şampiyonlar Ligi"),
@@ -79,7 +79,7 @@ def _kickoff(item: dict[str, Any]) -> date | datetime | None:
     return None
 
 
-def parse_match(item: dict[str, Any], competition: str) -> Match | None:
+def parse_match(item: dict[str, Any], competition: str, club: Club) -> Match | None:
     """Maçı ortak biçime çevirir; tarihi okunamıyorsa uyarı verip None döndürür."""
     start = _kickoff(item)
     if start is None:
@@ -93,14 +93,14 @@ def parse_match(item: dict[str, Any], competition: str) -> Match | None:
         competition=competition,
         round_label=_round_label(item),
         start=start,
-        home=item["homeTeam"]["internationalName"],
-        away=item["awayTeam"]["internationalName"],
+        home=club.team_name(item["homeTeam"]["internationalName"]),
+        away=club.team_name(item["awayTeam"]["internationalName"]),
         venue=join_parts(_translated(stadium, "name"), _translated(stadium.get("city") or {}, "name")),
         result=_result(item),
     )
 
 
-def fetch(session: requests.Session, today: date) -> list[Match]:
+def fetch(session: requests.Session, today: date, club: Club) -> list[Match]:
     season_year = season_year_for(today)
     matches: list[Match] = []
     skipped = 0
@@ -112,7 +112,7 @@ def fetch(session: requests.Session, today: date) -> list[Match]:
                 API_URL,
                 competitionId=competition_id,
                 seasonYear=season_year,
-                teamId=BESIKTAS_TEAM_ID,
+                teamId=club.uefa_team_id,
                 limit=PAGE_SIZE,
                 offset=offset,
                 order="ASC",
@@ -120,7 +120,7 @@ def fetch(session: requests.Session, today: date) -> list[Match]:
             if not isinstance(page, list):
                 raise SourceError(f"UEFA beklenmeyen yanıt biçimi döndürdü ({type(page).__name__})")
             for item in page:
-                match = parse_match(item, competition)
+                match = parse_match(item, competition, club)
                 if match is None:
                     skipped += 1
                 else:

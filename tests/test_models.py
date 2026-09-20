@@ -1,6 +1,7 @@
+import re
 from datetime import UTC, date, datetime, timedelta
 
-from besiktas_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match, kickoff_or_day
+from club_calendar.models import BASKETBALL, FOOTBALL, TURKEY_TZ, Match, kickoff_or_day
 
 
 def make_match(**overrides):
@@ -39,7 +40,7 @@ def test_uid_is_stable_when_date_and_time_change():
     original = make_match()
     moved = make_match(start=datetime(2026, 10, 12, 20, 0, tzinfo=TURKEY_TZ))
     assert original.uid == moved.uid
-    assert original.uid.endswith("@besiktas-calendar")
+    assert re.fullmatch(r"[0-9a-f]{24}", original.uid)
 
 
 def test_uid_differs_between_matches_and_sources():

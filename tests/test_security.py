@@ -13,12 +13,13 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 import yaml
+from helpers import BESIKTAS
 from icalendar import Calendar
 
-from besiktas_calendar.ics import escape_text, render_calendar
-from besiktas_calendar.models import FOOTBALL, TURKEY_TZ, Match
-from besiktas_calendar.names import display_name
-from besiktas_calendar.site import CONTENT_SECURITY_POLICY, SCRIPT, STALE_AFTER_HOURS, render_index
+from club_calendar.ics import escape_text, render_calendar
+from club_calendar.models import FOOTBALL, TURKEY_TZ, Match
+from club_calendar.names import display_name
+from club_calendar.site import CONTENT_SECURITY_POLICY, SCRIPT, STALE_AFTER_HOURS, render_index
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "update-calendar.yml"
@@ -49,7 +50,7 @@ def match_with(text: str) -> Match:
 
 
 def test_source_text_cannot_inject_ics_properties_or_events():
-    text = render_calendar([match_with(ICS_PAYLOAD)], "Test", "", stamp=STAMP)
+    text = render_calendar([match_with(ICS_PAYLOAD)], "Test", "", BESIKTAS, stamp=STAMP)
     lines = text.replace("\r\n ", "").split("\r\n")  # katlanmış satırları birleştir
 
     assert sum(line == "BEGIN:VEVENT" for line in lines) == 1
@@ -62,7 +63,7 @@ def test_source_text_cannot_inject_ics_properties_or_events():
 
 
 def test_calendar_level_text_is_escaped_too():
-    text = render_calendar([], "Ad\r\nX-INJECT:1", "Açıklama\r\nX-INJECT:2", stamp=STAMP)
+    text = render_calendar([], "Ad\r\nX-INJECT:1", "Açıklama\r\nX-INJECT:2", BESIKTAS, stamp=STAMP)
     assert not any(line.startswith("X-INJECT") for line in text.replace("\r\n ", "").split("\r\n"))
 
 
@@ -71,7 +72,7 @@ def test_control_characters_are_removed_but_tab_is_kept():
 
 
 def test_output_never_contains_bare_control_characters():
-    text = render_calendar([match_with("x\x00y\x07z\x1b")], "Test", "", stamp=STAMP)
+    text = render_calendar([match_with("x\x00y\x07z\x1b")], "Test", "", BESIKTAS, stamp=STAMP)
     assert not re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", text)
 
 
@@ -98,7 +99,7 @@ def _parse(html: str) -> _TagCollector:
 
 
 def test_page_escapes_every_dynamic_field():
-    page = render_index([match_with(HTML_PAYLOAD)], NOW)
+    page = render_index([match_with(HTML_PAYLOAD)], NOW, BESIKTAS)
     parsed = _parse(page)
     assert parsed.tags.count("img") == 1  # yalnızca bağış QR'ı; kaynak verisinden gelen bir <img> yok
     assert parsed.tags.count("script") == 1  # yalnızca kendi betiğimiz
@@ -106,7 +107,7 @@ def test_page_escapes_every_dynamic_field():
 
 
 def test_page_has_no_inline_event_handlers_or_external_resources():
-    page = render_index([match_with("Rakip")], NOW)
+    page = render_index([match_with("Rakip")], NOW, BESIKTAS)
     parsed = _parse(page)
     assert not [a for a in parsed.attributes if a.startswith("on")]
     assert not {"iframe", "object", "embed", "form", "input"} & set(parsed.tags)
@@ -117,7 +118,7 @@ def test_page_has_no_inline_event_handlers_or_external_resources():
 
 
 def test_csp_allows_exactly_the_inline_script_and_style_that_the_page_contains():
-    page = render_index([match_with("Rakip")], NOW)
+    page = render_index([match_with("Rakip")], NOW, BESIKTAS)
 
     def source_hash(tag: str) -> str:
         (content,) = re.findall(rf"<{tag}>(.*?)</{tag}>", page, re.DOTALL)
@@ -140,14 +141,14 @@ def test_csp_is_restrictive():
 
 
 def test_page_warns_when_the_last_check_is_stale():
-    page = render_index([match_with("Rakip")], NOW)
+    page = render_index([match_with("Rakip")], NOW, BESIKTAS)
     assert 'id="stale"' in page and 'role="alert"' in page
     assert f"hours > {STALE_AFTER_HOURS}" in SCRIPT
     assert "textContent" in SCRIPT and "innerHTML" not in SCRIPT
 
 
 def test_external_link_cannot_leak_the_opener_or_referrer():
-    page = render_index([match_with("Rakip")], NOW)
+    page = render_index([match_with("Rakip")], NOW, BESIKTAS)
     assert 'rel="noopener noreferrer"' in page
     assert '<meta name="referrer" content="no-referrer">' in page
 
@@ -203,7 +204,7 @@ def test_token_steps_run_no_project_code():
         for step in job["steps"]:
             if "github.token" in str(step.get("env", {})):
                 script = step["run"]
-                assert not re.search(r"\b(python|pip|pytest|besiktas-calendar)\b", script), step["name"]
+                assert not re.search(r"\b(python|pip|pytest|club-calendar)\b", script), step["name"]
 
 
 def test_permissions_follow_least_privilege():
