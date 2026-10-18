@@ -11,7 +11,7 @@ REFRESH-INTERVAL;VALUE=DURATION:PT12H
 X-PUBLISHED-TTL:PT12H
 BEGIN:VEVENT
 UID:f6a26a50b94283d72909e54f@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Fenerbahçe Tarfin - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Cumhurbaşkanlığı Kupası
 DTSTART:20260922T170000Z
@@ -23,7 +23,7 @@ DESCRIPTION:Basketbol · Cumhurbaşkanlığı Kupası\nSonuç: 72-59\nKayna
 END:VEVENT
 BEGIN:VEVENT
 UID:697a0390ef19e9b9a8b54cb9@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Valencia
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20260925T170000Z
@@ -35,7 +35,7 @@ DESCRIPTION:Basketbol · EuroLeague · 1. Hafta\nSonuç: 94-96\nKaynak: Eur
 END:VEVENT
 BEGIN:VEVENT
 UID:4c1b3e5d1efa6751e4d3cccc@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Anadolu Efes - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20260927T173000Z
@@ -48,7 +48,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 1. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:14b5f69bb1f99ed2113bd416@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Maccabi - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20260930T180500Z
@@ -60,7 +60,7 @@ DESCRIPTION:Basketbol · EuroLeague · 2. Hafta\nSonuç: 93-109\nKaynak: Eu
 END:VEVENT
 BEGIN:VEVENT
 UID:f092cdd12399af67cf75e9e1@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - FC Barcelona
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261002T170000Z
@@ -72,7 +72,7 @@ DESCRIPTION:Basketbol · EuroLeague · 3. Hafta\nSonuç: 82-95\nKaynak: Eur
 END:VEVENT
 BEGIN:VEVENT
 UID:a38e97bf79fb09c08ff8dbda@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Trabzonspor
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261005T160000Z
@@ -85,7 +85,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 2. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:a185476933aeafa8928af935@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Baskonia - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261009T183000Z
@@ -97,7 +97,7 @@ DESCRIPTION:Basketbol · EuroLeague · 4. Hafta\nSonuç: 84-92\nKaynak: Eur
 END:VEVENT
 BEGIN:VEVENT
 UID:e17729622cf50aff5dcf6335@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Türk Telekom - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261011T150000Z
@@ -110,7 +110,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 3. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:fc357d772835b69f41739ce1@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Hapoel TLV - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261014T160000Z
@@ -122,7 +122,7 @@ DESCRIPTION:Basketbol · EuroLeague · 5. Hafta\nSonuç: 100-82\nKaynak: Eu
 END:VEVENT
 BEGIN:VEVENT
 UID:4ca41693989c89963e973bb1@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Bayern Munich
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261016T170000Z
@@ -134,7 +134,7 @@ DESCRIPTION:Basketbol · EuroLeague · 6. Hafta\nSonuç: 95-87\nKaynak: Eur
 END:VEVENT
 BEGIN:VEVENT
 UID:51ea79fd503501f397d2360a@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Galatasaray MCT Technic
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261018T173000Z
@@ -142,11 +142,12 @@ DTEND:20261018T193000Z
 STATUS:CONFIRMED
 LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
 DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 4. Hafta
- \nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Federasyonu)
+ \nSonuç: 83-80\nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Feder
+ asyonu)
 END:VEVENT
 BEGIN:VEVENT
 UID:d4fb2e7d967f77fc9b4c761b@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Anadolu Efes - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261022T173000Z
@@ -158,7 +159,7 @@ DESCRIPTION:Basketbol · EuroLeague · 7. Hafta\nKaynak: EuroLeague Basketb
 END:VEVENT
 BEGIN:VEVENT
 UID:219ca2fe42265ee6f39cd31c@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Bahçeşehir Koleji - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261024T173000Z
@@ -170,7 +171,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 5. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:2fcaf0a25dbee0469de2b6a4@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Olympiacos
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261028T173000Z
@@ -182,7 +183,7 @@ DESCRIPTION:Basketbol · EuroLeague · 8. Hafta\nKaynak: EuroLeague Basketb
 END:VEVENT
 BEGIN:VEVENT
 UID:a926606586aca756c1d3ba7b@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Virtus Bologna - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261030T193000Z
@@ -194,7 +195,7 @@ DESCRIPTION:Basketbol · EuroLeague · 9. Hafta\nKaynak: EuroLeague Basketb
 END:VEVENT
 BEGIN:VEVENT
 UID:e754d52b29cf8467994cba0b@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Glint Çayırova Belediyesi
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261102T173000Z
@@ -206,7 +207,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 6. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:57b4b5f2e25747d2c0636215@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Zalgiris
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261106T170000Z
@@ -218,7 +219,7 @@ DESCRIPTION:Basketbol · EuroLeague · 10. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:3e329bafa99c57d890538304@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Karşıyaka - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261109T160000Z
@@ -230,7 +231,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 7. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:9223746c6518fb3b243bf86c@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:LDLC ASVEL - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261113T193000Z
@@ -242,7 +243,7 @@ DESCRIPTION:Basketbol · EuroLeague · 11. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:79107d11ebeb7e18b1353a08@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Bursaspor Basketbol
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261115T150000Z
@@ -254,7 +255,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 8. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:8ee08b7681d7bc77d757023e@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Real Madrid
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261118T170000Z
@@ -266,7 +267,7 @@ DESCRIPTION:Basketbol · EuroLeague · 12. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:44ffa3e75fd119fd296e8c75@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Partizan - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261120T194500Z
@@ -278,7 +279,7 @@ DESCRIPTION:Basketbol · EuroLeague · 13. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:7b095859f5a4da272a2a18a8@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Fenerbahçe Tarfin
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261122T173000Z
@@ -290,7 +291,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 9. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:b72e03c340bb8e1a0f6e4c80@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Paris
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261124T170000Z
@@ -302,7 +303,7 @@ DESCRIPTION:Basketbol · EuroLeague · 14. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:eccc8b7353fce9f005dde446@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Panathinaikos
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261204T170000Z
@@ -314,7 +315,7 @@ DESCRIPTION:Basketbol · EuroLeague · 15. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:2814cf31ef49bc156451bd0d@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Pizzabulls Bordo Bandırma - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261207T160000Z
@@ -326,7 +327,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 10. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:e3688e02e0fbcf910ade9b70@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Dubai - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261211T160000Z
@@ -338,7 +339,7 @@ DESCRIPTION:Basketbol · EuroLeague · 16. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:655ca16f27f597979c2cf341@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Yukatel Denizli Basket
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261213T150000Z
@@ -350,7 +351,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 11. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:466c5c361d50f6df496fd24e@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Milan
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261216T170000Z
@@ -362,7 +363,7 @@ DESCRIPTION:Basketbol · EuroLeague · 17. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:1ce58206cd162a6916aa1e3f@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Crvena Zvezda - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261218T193000Z
@@ -374,7 +375,7 @@ DESCRIPTION:Basketbol · EuroLeague · 18. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:b81bc5e29f5861c82d95b07b@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Esenler Erokspor - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261220T173000Z
@@ -386,7 +387,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 12. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:22f114736ea8a7ce4ca43f73@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Fenerbahce
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261222T170000Z
@@ -398,7 +399,7 @@ DESCRIPTION:Basketbol · EuroLeague · 19. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:7faaf10bcc487091f80febe8@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Biotekno Körfez Basket
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20261226
@@ -413,7 +414,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 13. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:ba4a38e65ad81d0e94e82817@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Bayern Munich - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261230T190000Z
@@ -425,7 +426,7 @@ DESCRIPTION:Basketbol · EuroLeague · 20. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:d0ca0bc95cad4f2154d379de@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Aliağa Petkim Spor - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270102
@@ -440,7 +441,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 14. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:0c7656f69d592509b0e940d1@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:FC Barcelona - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270106T193000Z
@@ -452,7 +453,7 @@ DESCRIPTION:Basketbol · EuroLeague · 21. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:983e77207aff5c6068c09edc@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Tofaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270109
@@ -467,7 +468,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 15. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:3000274e78ce4f0b2868866b@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Partizan
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270113T170000Z
@@ -479,7 +480,7 @@ DESCRIPTION:Basketbol · EuroLeague · 22. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:e3dab0509344a0e7102bdb1c@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Baskonia
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270115T170000Z
@@ -491,7 +492,7 @@ DESCRIPTION:Basketbol · EuroLeague · 23. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:59bf23c12d1aaa4ae4cfec99@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Anadolu Efes
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270116
@@ -506,7 +507,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 16. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:8f4018e3c537f24525928eb2@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Fenerbahce - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270121T174500Z
@@ -518,7 +519,7 @@ DESCRIPTION:Basketbol · EuroLeague · 24. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:39f7fad323e48a3e9ce4b1f3@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Trabzonspor - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270123
@@ -533,7 +534,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 17. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:1d4289c72790d9f60753d24f@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Crvena Zvezda
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270128T170000Z
@@ -545,7 +546,7 @@ DESCRIPTION:Basketbol · EuroLeague · 25. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:5012c35530fe84de7e9c7063@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Türk Telekom
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270130
@@ -560,7 +561,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 18. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:8f48f77955b67f4c9c572aec@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Paris - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270202T194500Z
@@ -572,7 +573,7 @@ DESCRIPTION:Basketbol · EuroLeague · 26. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:7ae29de854167525d3530084@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Zalgiris - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270204T180000Z
@@ -584,7 +585,7 @@ DESCRIPTION:Basketbol · EuroLeague · 27. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:98ff170eab3858d02f5fba5a@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Galatasaray MCT Technic - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270206
@@ -599,7 +600,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 19. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:8af614b8cd2978ae8737f4a3@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Dubai
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270211T170000Z
@@ -611,7 +612,7 @@ DESCRIPTION:Basketbol · EuroLeague · 28. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:57466fdd700bfe8b0affcfbb@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Bahçeşehir Koleji
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270213
@@ -626,7 +627,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 20. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:4980b992e216d6226c00c1d5@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Panathinaikos - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270304T191500Z
@@ -638,7 +639,7 @@ DESCRIPTION:Basketbol · EuroLeague · 29. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:7a3a925cf468677762d5ea5b@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Glint Çayırova Belediyesi - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270306
@@ -653,7 +654,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 21. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:83f2eabd84fdf7e912f4e94c@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - LDLC ASVEL
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270309T170000Z
@@ -665,7 +666,7 @@ DESCRIPTION:Basketbol · EuroLeague · 30. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:56ba9eaef1bed109c2cafa31@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Olympiacos - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270312T191500Z
@@ -677,7 +678,7 @@ DESCRIPTION:Basketbol · EuroLeague · 31. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:b91da15d031c6aa17c07be20@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Karşıyaka
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270313
@@ -692,7 +693,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 22. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:f531df13bf6f8b7855da57b7@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Anadolu Efes
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270319T170000Z
@@ -704,7 +705,7 @@ DESCRIPTION:Basketbol · EuroLeague · 32. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:d12d7954d9eb1bfa94381453@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Bursaspor Basketbol - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270320
@@ -719,7 +720,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 23. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:bb47f8dac3afb5f541a5c5ff@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Valencia - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270324T193000Z
@@ -731,7 +732,7 @@ DESCRIPTION:Basketbol · EuroLeague · 33. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:0948abcde5aeeb9fea0ca8ba@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Real Madrid - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270326T194500Z
@@ -743,7 +744,7 @@ DESCRIPTION:Basketbol · EuroLeague · 34. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:1581f3128bd471c324163cbf@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Fenerbahçe Tarfin - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270327
@@ -758,7 +759,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 24. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:5b16e04124348894b3c1960f@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Milan - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270401T183000Z
@@ -770,7 +771,7 @@ DESCRIPTION:Basketbol · EuroLeague · 35. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:10158f773ea1700067e49446@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Pizzabulls Bordo Bandırma
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270403
@@ -785,7 +786,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 25. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:430025c5f064fd86a0942903@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Hapoel TLV
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270406T170000Z
@@ -797,7 +798,7 @@ DESCRIPTION:Basketbol · EuroLeague · 36. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:9e1ed043cd7c98cc933d5acb@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Maccabi
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270409T170000Z
@@ -809,7 +810,7 @@ DESCRIPTION:Basketbol · EuroLeague · 37. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:8b24fc1cff8697bee3e153e2@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Yukatel Denizli Basket - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270410
@@ -824,7 +825,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 26. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:ad5ce1ed5bc45abae2f69ad6@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Virtus Bologna
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20270416T170000Z
@@ -836,7 +837,7 @@ DESCRIPTION:Basketbol · EuroLeague · 38. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:290204b734ea643f5bbe973e@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Esenler Erokspor
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270417
@@ -851,7 +852,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 27. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:3bdf88e8bbd6a25d8d31af95@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Biotekno Körfez Basket - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270424
@@ -866,7 +867,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 28. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:56c0a30c7fd9404f246f002c@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Beşiktaş - Aliağa Petkim Spor
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270501
@@ -881,7 +882,7 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 29. Haft
 END:VEVENT
 BEGIN:VEVENT
 UID:b7df42536a7bbcba4d1156df@besiktas-calendar
-DTSTAMP:20261016T232844Z
+DTSTAMP:20261018T230059Z
 SUMMARY:Tofaş - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270508
