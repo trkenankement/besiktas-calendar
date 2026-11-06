@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import re
 import tomllib
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -40,8 +41,8 @@ class Club:
         return any(term in folded for term in self.match_terms)
 
     def team_name(self, raw: str) -> str:
-        """Kulübün kendi tarafı her kaynakta aynı ve sponsorsuz adla yazılır; rakipler düzeltilmiş adlarıyla."""
-        return self.name if self.matches(raw) else display_name(raw)
+        """Tanınan kulüpler iki tarafta da aynı sponsorsuz adla yazılır."""
+        return canonical_team_name(raw) or display_name(raw)
 
 
 CLUBS: dict[str, Club] = {
@@ -52,6 +53,35 @@ CLUBS: dict[str, Club] = {
         Club("galatasaray", "Galatasaray", ("galatasaray",), uefa_team_id="50067"),
     )
 }
+
+
+# Yalnızca doğrulanmış kaynak adları eşlenir; benzer adlı başka takımlar eşlenmez.
+# Yeni sponsor yazımları görüldüğünde bu sözlük ve regresyon örnekleri birlikte güncellenir.
+TEAM_ALIASES = {
+    "besiktas": ("Besiktas", "Besiktas Istanbul", "Besiktas Gain", "Besiktas Gain Istanbul"),
+    "fenerbahce": (
+        "Fenerbahce", "Fenerbahce Tarfin", "Fenerbahce Tarfin Istanbul",
+        "Fenerbahce Beko", "Fenerbahce Beko Istanbul",
+    ),
+    "galatasaray": ("Galatasaray", "Galatasaray MCT Technic"),
+}
+
+
+def _team_key(raw: str | None) -> str:
+    text = unicodedata.normalize("NFC", raw or "")
+    return fold(display_name(text))
+
+
+TEAM_NAMES = {
+    _team_key(alias): club.name
+    for key, club in CLUBS.items()
+    for alias in (club.name, *TEAM_ALIASES.get(key, ()))
+}
+
+
+def canonical_team_name(raw: str | None) -> str | None:
+    """Tanınan kaynak adını kanonik ada çevirir; bilinmeyen adlar için None döndürür."""
+    return TEAM_NAMES.get(_team_key(raw))
 
 
 def get_club(key: str) -> Club:

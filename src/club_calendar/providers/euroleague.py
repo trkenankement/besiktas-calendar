@@ -7,7 +7,7 @@ from typing import Any
 
 import requests
 
-from ..club import Club
+from ..club import CLUBS, Club, canonical_team_name
 from ..console import warn
 from ..http import SourceError, get_json
 from ..models import BASKETBALL, TURKEY_TZ, Match
@@ -20,9 +20,11 @@ COMPETITIONS = (("E", "EuroLeague"), ("U", "EuroCup"))
 
 def _club_name(side: dict[str, Any], own: Club) -> str:
     club = side.get("club") or {}
-    if own.euroleague_code and club.get("code") == own.euroleague_code:
-        return own.name
-    return club.get("abbreviatedName") or club.get("name") or "?"
+    for profile in CLUBS.values():
+        if profile.euroleague_code and club.get("code") == profile.euroleague_code:
+            return profile.name
+    raw = club.get("abbreviatedName") or club.get("name") or "?"
+    return canonical_team_name(raw) or canonical_team_name(club.get("name")) or raw
 
 
 def _round_label(game: dict[str, Any]) -> str:

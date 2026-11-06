@@ -66,3 +66,11 @@ olabilirsiniz; herhangi bir borsa ya da cüzdandan gönderebilirsiniz.
 ## Lisans
 
 [MIT](LICENSE)
+
+### Takım adları
+
+Tanınan kulüpler, hem ev sahibi hem deplasman tarafında aynı sponsorsuz Türkçe adla
+(Beşiktaş, Fenerbahçe, Galatasaray) gösterilir. Doğrulanmış sponsor ve sağlayıcı
+karşılıkları `club.py` içindeki ortak sözlükte tutulur; bilinmeyen takım adlarının
+sponsorları otomatik silinmez. EuroLeague takım kodları ad metninden önce değerlendirilir.
+Bu gösterim politikası maç kimliklerini, tarihleri veya mevcut abonelik adreslerini değiştirmez.

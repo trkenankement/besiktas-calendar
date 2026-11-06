@@ -180,7 +180,7 @@ def test_cup_match_of_the_current_edition_is_read_and_older_editions_are_ignored
     (match,) = tbf.fetch_cups(session, TODAY, BESIKTAS)
 
     # Sorgu önceki yılların maçlarını da döndürür (2025'te "Fenerbahçe Beko - Beşiktaş Gain" gibi)
-    assert (match.home, match.away) == ("Fenerbahçe Tarfin", "Beşiktaş")
+    assert (match.home, match.away) == ("Fenerbahçe", "Beşiktaş")
     assert match.start == datetime(2026, 9, 22, 20, 0, tzinfo=TURKEY_TZ)
     assert match.competition == "Cumhurbaşkanlığı Kupası"
     assert match.round_label == ""  # tek turluk turnuvada "1. Hafta" anlamsız

@@ -93,10 +93,10 @@ def test_a_club_never_claims_another_clubs_name():
                 assert not club.matches(other.name), (club.key, other.name)
 
 
-def test_opponents_are_tidied_but_keep_their_own_name():
+def test_opponents_use_canonical_names_and_unknown_names_are_tidied():
     assert BESIKTAS.team_name("KASIMPAŞA A.Ş.") == "Kasımpaşa"
     assert GALATASARAY.team_name("FENERBAHÇE A.Ş.") == "Fenerbahçe"
-    assert FENERBAHCE.team_name("Galatasaray MCT Technic") == "Galatasaray MCT Technic"  # sponsor adı rakipte korunur
+    assert FENERBAHCE.team_name("Galatasaray MCT Technic") == "Galatasaray"  # tanınan rakipler de sponsorsuz yazılır
 
 
 # --- club.toml --------------------------------------------------------------------------------
