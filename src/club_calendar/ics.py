@@ -98,10 +98,78 @@ def event_lines(match: Match, stamp: str, club: Club) -> list[str]:
     return lines
 
 
+_REVISION_FIELDS = {"DTSTAMP", "LAST-MODIFIED", "SEQUENCE"}
+
+
+def _property(lines: list[str], name: str) -> str | None:
+    values = [line.split(":", 1)[1] for line in lines if line.startswith(name + ":")]
+    if len(values) > 1:
+        raise ValueError(f"Duplicate {name}")
+    return values[0] if values else None
+
+
+def _parse_stamp(value: str) -> datetime:
+    if not re.fullmatch(r"[0-9]{8}T[0-9]{6}Z", value):
+        raise ValueError(f"Invalid UTC timestamp: {value}")
+    return datetime.strptime(value, "%Y%m%dT%H%M%SZ").replace(tzinfo=UTC)
+
+
+def _event_content(lines: list[str]) -> list[str]:
+    # Unfold before comparing so line wrapping alone never creates a revision.
+    return sorted(line for line in lines if line.split(":", 1)[0].split(";", 1)[0] not in _REVISION_FIELDS)
+
+
+def _previous_events(text: str) -> dict[str, list[str]]:
+    """Read only our non-recurring VEVENT format; invalid history stops publication.
+
+    This is deliberately not a general-purpose iCalendar parser. Providers continue
+    to produce Match objects; only this generator's own published files are read.
+    """
+    lines: list[str] = []
+    for line in text.splitlines():
+        if line.startswith((" ", "\t")):
+            if not lines:
+                raise ValueError("Orphan folded line")
+            lines[-1] += line[1:]
+        else:
+            lines.append(line)
+    if not lines or lines[0] != "BEGIN:VCALENDAR" or lines[-1] != "END:VCALENDAR":
+        raise ValueError("Invalid previous calendar")
+    events: dict[str, list[str]] = {}
+    event: list[str] | None = None
+    for line in lines[1:-1]:
+        if line == "BEGIN:VEVENT" and event is None:
+            event = [line]
+        elif line == "END:VEVENT" and event is not None:
+            event.append(line)
+            uid = _property(event, "UID")
+            stamp = _property(event, "DTSTAMP")
+            if not uid or uid in events or not stamp:
+                raise ValueError("Missing/duplicate UID or missing DTSTAMP")
+            _parse_stamp(stamp)
+            modified = _property(event, "LAST-MODIFIED")
+            if modified is not None:
+                _parse_stamp(modified)
+            sequence = _property(event, "SEQUENCE")
+            if sequence is not None and (not re.fullmatch(r"[0-9]+", sequence) or int(sequence) > 2147483647):
+                raise ValueError("Invalid SEQUENCE")
+            events[uid] = event
+            event = None
+        elif line.startswith(("BEGIN:", "END:", "RECURRENCE-ID", "RRULE:", "RDATE:", "EXDATE:")):
+            raise ValueError("Unsupported previous calendar structure")
+        elif event is not None:
+            event.append(line)
+    if event is not None:
+        raise ValueError("Unclosed previous event")
+    return events
+
+
 def render_calendar(
-    matches: Iterable[Match], name: str, description: str, club: Club, *, stamp: datetime | None = None
+    matches: Iterable[Match], name: str, description: str, club: Club, *,
+    stamp: datetime | None = None, previous: str | None = None,
 ) -> str:
     stamp_text = _utc(stamp or datetime.now(UTC))
+    old_events = _previous_events(previous) if previous is not None else {}
     lines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
@@ -115,14 +183,33 @@ def render_calendar(
         "REFRESH-INTERVAL;VALUE=DURATION:PT12H",
         "X-PUBLISHED-TTL:PT12H",
     ]
+    seen: set[str] = set()
     for match in sorted(matches, key=lambda m: m.sort_key):
-        lines += event_lines(match, stamp_text, club)
+        uid = f"{match.uid}@{club.uid_domain}"
+        if uid in seen:
+            raise ValueError(f"Duplicate generated UID: {uid}")
+        seen.add(uid)
+        candidate = event_lines(match, stamp_text, club)
+        old = old_events.get(uid)
+        if old is not None and _event_content(old) == _event_content(candidate):
+            lines += old
+            continue
+        sequence = int(_property(old, "SEQUENCE") or "0") + 1 if old else 0
+        if sequence > 2147483647:
+            raise ValueError(f"SEQUENCE overflow: {uid}")
+        revised = stamp_text
+        if old:
+            # A clock rollback or two revisions in one second must not move metadata backwards.
+            latest = max(_property(old, "DTSTAMP"), _property(old, "LAST-MODIFIED") or "")
+            revised = max(revised, _utc(_parse_stamp(latest) + timedelta(seconds=1)))
+        candidate[2:3] = [f"DTSTAMP:{revised}", f"LAST-MODIFIED:{revised}", f"SEQUENCE:{sequence}"]
+        lines += candidate
     lines.append("END:VCALENDAR")
     return CRLF.join(fold_line(line) for line in lines) + CRLF
 
 
-def write_if_changed(path: Path, content: str, *, ignore_prefixes: tuple[str, ...] = ("DTSTAMP:",)) -> bool:
-    """İçerik gerçekten değiştiyse yazar (DTSTAMP gibi her çalışmada değişen satırlar sayılmaz)."""
+def write_if_changed(path: Path, content: str, *, ignore_prefixes: tuple[str, ...] = ()) -> bool:
+    """İçerik gerçekten değiştiyse yazar; etkinlik metadata karşılaştırması üreticide yapılır."""
 
     def comparable(text: str) -> list[str]:
         return [line for line in text.splitlines() if not line.startswith(ignore_prefixes)] if ignore_prefixes else text.splitlines()

@@ -73,11 +73,16 @@ def write_outputs(out_dir: Path, matches: list[Match], now: datetime, club: Club
     """Dosyaları yazar; yalnızca gerçekten değişenler için True döndürür."""
     out_dir.mkdir(parents=True, exist_ok=True)
     changed: dict[str, bool] = {}
+    calendars: dict[str, str] = {}
     for feed in feeds_for(club):
-        content = ics.render_calendar(
-            feed.select(matches), feed.calendar_name, feed.description, club, stamp=now.astimezone(UTC)
+        path = out_dir / feed.filename
+        calendars[feed.filename] = ics.render_calendar(
+            feed.select(matches), feed.calendar_name, feed.description, club, stamp=now.astimezone(UTC),
+            previous=path.read_text(encoding="utf-8") if path.exists() else None,
         )
-        changed[feed.filename] = ics.write_if_changed(out_dir / feed.filename, content)
+    # Validate every feed's history before changing any published output.
+    for filename, content in calendars.items():
+        changed[filename] = ics.write_if_changed(out_dir / filename, content)
     page = site.render_index(matches, now, club, load_stats(out_dir / "stats.json"))
     changed["index.html"] = ics.write_if_changed(out_dir / "index.html", page, ignore_prefixes=())
     # Son kontrol zamanı her çalışmada değişir; bu yüzden git'te izlenmez (.gitignore) ama siteye girer.

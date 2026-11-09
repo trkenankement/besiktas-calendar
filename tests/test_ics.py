@@ -133,12 +133,12 @@ def test_empty_calendar_is_still_valid():
     assert events == []
 
 
-def test_write_if_changed_ignores_dtstamp_only_differences(tmp_path):
+def test_previous_event_metadata_is_kept_when_content_is_unchanged(tmp_path):
     path = tmp_path / "feed.ics"
     first = render_calendar([football()], "Test", "", BESIKTAS, stamp=STAMP)
     assert write_if_changed(path, first) is True
-    later = render_calendar([football()], "Test", "", BESIKTAS, stamp=STAMP + timedelta(days=1))
-    assert later != first
+    later = render_calendar([football()], "Test", "", BESIKTAS, stamp=STAMP + timedelta(days=1), previous=first)
+    assert later == first
     assert write_if_changed(path, later) is False
     assert path.read_bytes() == first.encode("utf-8")
 
