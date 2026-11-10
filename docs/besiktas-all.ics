@@ -473,7 +473,9 @@ DESCRIPTION:Futbol · Trendyol Süper Lig · 11. Hafta\nSonuç: 3-0\nKaynak
 END:VEVENT
 BEGIN:VEVENT
 UID:3e329bafa99c57d890538304@besiktas-calendar
-DTSTAMP:20261109T004512Z
+DTSTAMP:20261110T032618Z
+LAST-MODIFIED:20261110T032618Z
+SEQUENCE:1
 SUMMARY:Karşıyaka - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261109T160000Z
@@ -481,7 +483,8 @@ DTEND:20261109T180000Z
 STATUS:CONFIRMED
 LOCATION:Mustafa Kemal Atatürk Karşıyaka Spor Salonu\, İzmir
 DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 7. Hafta
- \nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Federasyonu)
+ \nSonuç: 84-83\nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Feder
+ asyonu)
 END:VEVENT
 BEGIN:VEVENT
 UID:9223746c6518fb3b243bf86c@besiktas-calendar
