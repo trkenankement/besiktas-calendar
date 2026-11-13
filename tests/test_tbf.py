@@ -228,3 +228,28 @@ def test_half_value_is_sent_for_phases_other_than_the_two_regular_halves():
     tbf.fetch_bsl(session, TODAY, BESIKTAS)
     (params,) = [p for url, p in session.requests if url.endswith("get-all-matches-for-filter")]
     assert params["HalfValue"] == "PO"
+
+
+def test_tbf_rejects_excess_rows_before_parsing(monkeypatch):
+    monkeypatch.setattr(tbf, "MAX_WEEK_ROWS", 2)
+    session = FakeSession(lambda url, params: {"data": [deepcopy(besiktas_row("1"))] * 3})
+    with pytest.raises(SourceError, match="maç satırı sınırı"):
+        tbf._club_matches(session, BESIKTAS, NEW_LEAGUE, 174, [{"sezon_Hafta": "1"}])
+
+
+def test_tbf_shared_budget_limits_aggregate_rows_and_matches(monkeypatch):
+    row = deepcopy(besiktas_row("1"))
+    session = FakeSession(lambda url, params: {"data": [row]})
+    budget = tbf._Budget()
+    weeks = [{"sezon_Hafta": "1"}]
+    monkeypatch.setattr(tbf, "MAX_TOTAL_ROWS", 2)
+    assert len(tbf._club_matches(session, BESIKTAS, NEW_LEAGUE, 174, weeks, budget)) == 1
+    assert len(tbf._club_matches(session, BESIKTAS, NEW_LEAGUE, 174, weeks, budget)) == 1
+    with pytest.raises(SourceError, match="maç satırı sınırı"):
+        tbf._club_matches(session, BESIKTAS, NEW_LEAGUE, 174, weeks, budget)
+
+    monkeypatch.setattr(tbf, "MAX_TOTAL_ROWS", 10)
+    monkeypatch.setattr(tbf, "MAX_MATCHES", 1)
+    session = FakeSession(lambda url, params: {"data": [row, row]})
+    with pytest.raises(SourceError, match="maç sayısı sınırı"):
+        tbf._club_matches(session, BESIKTAS, NEW_LEAGUE, 174, weeks, tbf._Budget())

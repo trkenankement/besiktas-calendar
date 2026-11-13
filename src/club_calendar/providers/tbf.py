@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import replace
+from dataclasses import dataclass, replace
 from datetime import date, datetime
 from typing import Any
 
@@ -20,6 +20,15 @@ API_URL = "https://miniappapi.tbf.org.tr/webapi-service/api"
 LEAGUE_PREFIX = "bsl"
 # Erkekler: Cumhurbaşkanlığı Kupası, Türkiye Kupası, Federasyon Kupası
 CUP_PREFIXES = ("cbek", "etk", "efk")
+MAX_WEEK_ROWS = 1000
+MAX_TOTAL_ROWS = 3000
+MAX_MATCHES = 200
+
+
+@dataclass
+class _Budget:
+    rows: int = 0
+    matches: int = 0
 
 _SEASON_SUFFIX = re.compile(r"\s*\d{4}-\d{4}\s*$")
 _GENERIC_ROUND = re.compile(r"\d+\.\s*Hafta")
@@ -77,9 +86,11 @@ def _in_season(row: dict[str, Any], season_id: int) -> bool:
         return True  # sezon bilgisi yoksa sorgunun kendisine güven
 
 
-def _club_matches(session: requests.Session, club: Club, league_id: int, season_id: int, weeks: list[dict[str, Any]]) -> list[Match]:
+def _club_matches(session: requests.Session, club: Club, league_id: int, season_id: int, weeks: list[dict[str, Any]], budget: _Budget | None = None) -> list[Match]:
     if len(weeks) > 60:
         raise SourceError("TBF: hafta sayısı sınırı aşıldı")
+    if budget is None:
+        budget = _Budget()
     matches: list[Match] = []
     skipped = 0
     for week in weeks:
@@ -88,6 +99,9 @@ def _club_matches(session: requests.Session, club: Club, league_id: int, season_
         if int(week.get("devre_ID") or 1) not in (1, 2) and half:
             params["HalfValue"] = half
         rows = get_json(session, f"{API_URL}/Match/get-all-matches-for-filter", **params).get("data") or []
+        if len(rows) > MAX_WEEK_ROWS or budget.rows + len(rows) > MAX_TOTAL_ROWS:
+            raise SourceError("TBF: maç satırı sınırı aşıldı")
+        budget.rows += len(rows)
         for row in rows:
             teams = (row.get("homeTeam") or {}).get("name", ""), (row.get("awayTeam") or {}).get("name", "")
             if not _in_season(row, season_id) or not any(club.matches(name) for name in teams):
@@ -96,6 +110,9 @@ def _club_matches(session: requests.Session, club: Club, league_id: int, season_
             if match is None:
                 skipped += 1
             else:
+                if budget.matches >= MAX_MATCHES:
+                    raise SourceError("TBF: maç sayısı sınırı aşıldı")
+                budget.matches += 1
                 matches.append(match)
     guard_skipped("TBF", skipped, len(matches))
     if len(weeks) == 1:  # tek turluk turnuvalarda "1. Hafta" etiketi anlamsız
@@ -125,10 +142,11 @@ def fetch_cups(session: requests.Session, today: date, club: Club) -> list[Match
     """Cumhurbaşkanlığı, Türkiye ve Federasyon kupaları; turnuva bu sezon için henüz oluşturulmadıysa atlanır."""
     _, season_id, _ = _current_season(session)
     matches: list[Match] = []
+    budget = _Budget()
     for prefix in CUP_PREFIXES:
         edition = next((s for s in _seasons(session, prefix) if int(s["sezon_ID"]) == season_id), None)
         if edition is None:
             continue
         league_id = int(edition["faaliyet_ID"])
-        matches += _club_matches(session, club, league_id, season_id, _weeks(session, league_id, season_id))
+        matches += _club_matches(session, club, league_id, season_id, _weeks(session, league_id, season_id), budget)
     return matches

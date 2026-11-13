@@ -13,10 +13,37 @@ from urllib3.util.retry import Retry
 TIMEOUT = (10, 45)  # (bağlanma, okuma) saniye
 REQUEST_PAUSE_SECONDS = 0.15  # kaynak sitelere art arda yüklenmemek için
 MAX_RESPONSE_BYTES = 4 * 1024 * 1024
+MAX_RETRY_AFTER_SECONDS = 30
+MAX_SESSION_RETRY_AFTER_SECONDS = 60
 
 
 class SourceError(RuntimeError):
     """Bir veri kaynağı yanıt vermedi ya da beklenmedik bir biçimde yanıt verdi."""
+
+
+class _BoundedRetry(Retry):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._retry_after_budget = [MAX_SESSION_RETRY_AFTER_SECONDS]
+
+    def new(self, **kwargs):
+        retry = super().new(**kwargs)
+        retry._retry_after_budget = self._retry_after_budget
+        return retry
+
+    def get_retry_after(self, response):
+        delay = super().get_retry_after(response)
+        return min(delay, MAX_RETRY_AFTER_SECONDS) if delay is not None else None
+
+    def sleep_for_retry(self, response):
+        delay = self.get_retry_after(response)
+        if not delay:
+            return False
+        if delay > self._retry_after_budget[0]:
+            raise SourceError("HTTP: yeniden deneme bekleme sınırı aşıldı")
+        self._retry_after_budget[0] -= delay
+        time.sleep(delay)
+        return True
 
 
 def user_agent() -> str:
@@ -26,7 +53,7 @@ def user_agent() -> str:
 
 
 def new_session() -> requests.Session:
-    retry = Retry(
+    retry = _BoundedRetry(
         total=4,
         backoff_factor=2.0,
         status_forcelist=(429, 500, 502, 503, 504),
