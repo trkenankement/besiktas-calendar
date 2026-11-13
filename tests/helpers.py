@@ -28,6 +28,7 @@ class FakeResponse:
     def __init__(self, payload: Any) -> None:
         self._payload = payload
         self.encoding: str | None = None
+        self._content = b""
 
     def raise_for_status(self) -> None:
         return None
@@ -36,6 +37,14 @@ class FakeResponse:
         if isinstance(self._payload, str):
             raise ValueError("JSON değil")
         return self._payload
+
+    def iter_content(self, chunk_size: int):
+        data = self._payload.encode("utf-8") if isinstance(self._payload, str) else json.dumps(self._payload).encode("utf-8")
+        for start in range(0, len(data), chunk_size):
+            yield data[start : start + chunk_size]
+
+    def close(self) -> None:
+        pass
 
     @property
     def text(self) -> str:
@@ -52,7 +61,7 @@ class FakeSession:
         self.route = route
         self.requests: list[tuple[str, dict[str, Any]]] = []
 
-    def get(self, url: str, params: dict[str, Any] | None = None, timeout: Any = None, headers: Any = None) -> FakeResponse:
+    def get(self, url: str, params: dict[str, Any] | None = None, timeout: Any = None, headers: Any = None, stream: bool = False) -> FakeResponse:
         params = dict(params or {})
         self.requests.append((url, params))
         payload = self.route(url, params)

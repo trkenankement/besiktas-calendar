@@ -78,6 +78,8 @@ def _in_season(row: dict[str, Any], season_id: int) -> bool:
 
 
 def _club_matches(session: requests.Session, club: Club, league_id: int, season_id: int, weeks: list[dict[str, Any]]) -> list[Match]:
+    if len(weeks) > 60:
+        raise SourceError("TBF: hafta sayısı sınırı aşıldı")
     matches: list[Match] = []
     skipped = 0
     for week in weeks:

@@ -12,6 +12,7 @@ from urllib3.util.retry import Retry
 
 TIMEOUT = (10, 45)  # (bağlanma, okuma) saniye
 REQUEST_PAUSE_SECONDS = 0.15  # kaynak sitelere art arda yüklenmemek için
+MAX_RESPONSE_BYTES = 4 * 1024 * 1024
 
 
 class SourceError(RuntimeError):
@@ -45,8 +46,19 @@ def new_session() -> requests.Session:
 def _get(session: requests.Session, url: str, params: dict[str, Any], accept: str):
     time.sleep(REQUEST_PAUSE_SECONDS)
     try:
-        response = session.get(url, params=params, timeout=TIMEOUT, headers={"Accept": accept})
-        response.raise_for_status()
+        response = session.get(url, params=params, timeout=TIMEOUT, headers={"Accept": accept}, stream=True)
+        try:
+            response.raise_for_status()
+            chunks = []
+            size = 0
+            for chunk in response.iter_content(chunk_size=65536):
+                size += len(chunk)
+                if size > MAX_RESPONSE_BYTES:
+                    raise SourceError(f"{url} yanıtı {MAX_RESPONSE_BYTES} bayt sınırını aştı")
+                chunks.append(chunk)
+            response._content = b"".join(chunks)
+        finally:
+            response.close()
     except requests.RequestException as exc:
         raise SourceError(f"{url} alınamadı: {exc}") from exc
     return response

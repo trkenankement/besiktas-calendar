@@ -137,6 +137,8 @@ def parse_venue(html: str) -> str:
 
 def _with_venues(session: requests.Session, matches: list[Match]) -> list[Match]:
     """Oynanmamış maçlar için stadyum bilgisini maç sayfasından ekler (alınamazsa boş bırakılır)."""
+    if len(matches) > 200:
+        raise SourceError("TFF: maç sayısı sınırı aşıldı")
     enriched: list[Match] = []
     for match in matches:
         if match.result or not match.source_id.isdigit():
@@ -153,6 +155,8 @@ def _with_venues(session: requests.Session, matches: list[Match]) -> list[Match]
 def fetch_super_lig(session: requests.Session, today: date, club: Club) -> list[Match]:
     overview = get_html(session, BASE_URL, encoding=ENCODING, pageID=LEAGUE_PAGE)
     competition, weeks = parse_league_overview(overview)
+    if weeks > 50:
+        raise SourceError("TFF: hafta sayısı sınırı aşıldı")
     matches: list[Match] = []
     for week in range(1, weeks + 1):
         html = get_html(session, BASE_URL, encoding=ENCODING, pageID=LEAGUE_PAGE, hafta=week)

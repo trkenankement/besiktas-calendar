@@ -107,6 +107,8 @@ def fetch(session: requests.Session, today: date, club: Club) -> list[Match]:
     for competition_id, competition in COMPETITIONS:
         offset = 0
         while True:
+            if offset > 10 * PAGE_SIZE:
+                raise SourceError("UEFA: sayfa sınırı aşıldı")
             page = get_json(
                 session,
                 API_URL,
@@ -119,6 +121,8 @@ def fetch(session: requests.Session, today: date, club: Club) -> list[Match]:
             )
             if not isinstance(page, list):
                 raise SourceError(f"UEFA beklenmeyen yanıt biçimi döndürdü ({type(page).__name__})")
+            if len(page) > PAGE_SIZE:
+                raise SourceError("UEFA: sayfa boyutu sınırı aşıldı")
             for item in page:
                 match = parse_match(item, competition, club)
                 if match is None:

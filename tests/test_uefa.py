@@ -95,6 +95,26 @@ def test_fetch_follows_pagination():
     assert len({m.uid for m in matches}) == 105
 
 
+def test_fetch_stops_endless_full_pages():
+    template = fixture_json("uefa_matches.json")[0]
+    page = [dict(template, id=str(i)) for i in range(uefa.PAGE_SIZE)]
+    session = FakeSession(lambda url, params: page)
+    with pytest.raises(SourceError, match="sayfa sınırı"):
+        uefa.fetch(session, date(2026, 9, 20), BESIKTAS)
+    assert len(session.requests) == 11
+
+
+def test_ten_full_pages_followed_by_empty_page_are_allowed():
+    template = fixture_json("uefa_matches.json")[0]
+
+    def route(url, params):
+        if params["competitionId"] != "14" or params["offset"] >= 1000:
+            return []
+        return [dict(template, id=str(params["offset"] + i)) for i in range(uefa.PAGE_SIZE)]
+
+    assert len(uefa.fetch(FakeSession(route), date(2026, 9, 20), BESIKTAS)) == 1000
+
+
 def test_kickoff_with_only_a_date_becomes_an_all_day_match():
     item = deepcopy(fixture_json("uefa_matches.json")[1])
     item["kickOffTime"] = {"date": "2026-10-15"}

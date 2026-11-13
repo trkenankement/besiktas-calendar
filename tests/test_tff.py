@@ -87,6 +87,15 @@ def test_venue_comes_from_the_match_page():
     assert tff.parse_venue(EMPTY_PAGE) == ""
 
 
+def test_excessive_fixture_count_stops_before_venue_requests():
+    fixture = tff.parse_week(fixture_text("tff_week_6.html"), BESIKTAS)[0]
+    match = tff._to_match(fixture, "Trendyol Süper Lig", "6. Hafta", BESIKTAS)
+    session = FakeSession(lambda url, params: fixture_text("tff_match_page.html"))
+    with pytest.raises(SourceError, match="maç sayısı sınırı"):
+        tff._with_venues(session, [match] * 201)
+    assert session.requests == []
+
+
 def test_fetch_super_lig_reads_every_week_and_looks_up_venues_only_for_unplayed_matches():
     session = FakeSession(league_route())
     matches = tff.fetch_super_lig(session, TODAY, BESIKTAS)
