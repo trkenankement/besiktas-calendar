@@ -488,15 +488,17 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 7. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:9223746c6518fb3b243bf86c@besiktas-calendar
-DTSTAMP:20261109T004512Z
+DTSTAMP:20261114T012421Z
+LAST-MODIFIED:20261114T012421Z
+SEQUENCE:1
 SUMMARY:LDLC ASVEL - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261113T193000Z
 DTEND:20261113T213000Z
 STATUS:CONFIRMED
 LOCATION:Ldlc Arena
-DESCRIPTION:Basketbol · EuroLeague · 11. Hafta\nKaynak: EuroLeague Basket
- ball
+DESCRIPTION:Basketbol · EuroLeague · 11. Hafta\nSonuç: 91-95\nKaynak: Eu
+ roLeague Basketball
 END:VEVENT
 BEGIN:VEVENT
 UID:79107d11ebeb7e18b1353a08@besiktas-calendar
