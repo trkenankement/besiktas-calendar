@@ -250,7 +250,9 @@ DESCRIPTION:Basketbol · EuroLeague · 11. Hafta\nSonuç: 91-95\nKaynak: Eu
 END:VEVENT
 BEGIN:VEVENT
 UID:79107d11ebeb7e18b1353a08@besiktas-calendar
-DTSTAMP:20261107T005136Z
+DTSTAMP:20261116T005546Z
+LAST-MODIFIED:20261116T005546Z
+SEQUENCE:1
 SUMMARY:Beşiktaş - Bursaspor Basketbol
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261115T150000Z
@@ -258,7 +260,8 @@ DTEND:20261115T170000Z
 STATUS:CONFIRMED
 LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
 DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 8. Hafta
- \nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Federasyonu)
+ \nSonuç: 76-71\nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Feder
+ asyonu)
 END:VEVENT
 BEGIN:VEVENT
 UID:8ee08b7681d7bc77d757023e@besiktas-calendar
