@@ -649,14 +649,16 @@ DESCRIPTION:Basketbol · EuroLeague · 29. Hafta\nKaynak: EuroLeague Basket
 END:VEVENT
 BEGIN:VEVENT
 UID:7a3a925cf468677762d5ea5b@besiktas-calendar
-DTSTAMP:20261107T005136Z
+DTSTAMP:20261117T034214Z
+LAST-MODIFIED:20261117T034214Z
+SEQUENCE:1
 SUMMARY:Glint Çayırova Belediyesi - Beşiktaş
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART;VALUE=DATE:20270306
 DTEND;VALUE=DATE:20270307
 STATUS:TENTATIVE
 TRANSP:TRANSPARENT
-LOCATION:Atanmadı
+LOCATION:Çayırova Belediyesi Spor Kompleksi\, Kocaeli
 DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 21. Haft
  a\nMaç saati henüz açıklanmadı\; takvimde tüm gün etkinliği olarak
   görünür. Saat kesinleşince etkinlik otomatik güncellenir.\nKaynak: T
