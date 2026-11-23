@@ -263,16 +263,17 @@ DESCRIPTION:Futbol · Trendyol Süper Lig · 11. Hafta\nSonuç: 3-0\nKaynak
 END:VEVENT
 BEGIN:VEVENT
 UID:1635159b73df39219e15767e@besiktas-calendar
-DTSTAMP:20261109T004512Z
+DTSTAMP:20261123T013359Z
+LAST-MODIFIED:20261123T013359Z
+SEQUENCE:1
 SUMMARY:Tümosan Konyaspor - Beşiktaş
 CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
 DTSTART:20261122T130000Z
 DTEND:20261122T151500Z
 STATUS:CONFIRMED
-LOCATION:Medaş Konya Büyükşehir Stadyumu\, Konya
-DESCRIPTION:Futbol · Trendyol Süper Lig · 12. Hafta\nKaynak: TFF (Türki
- ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
- d=317888
+DESCRIPTION:Futbol · Trendyol Süper Lig · 12. Hafta\nSonuç: 2-4\nKaynak
+ : TFF (Türkiye Futbol Federasyonu) — https://www.tff.org/Default.aspx?p
+ ageId=29&macId=317888
 END:VEVENT
 BEGIN:VEVENT
 UID:9ba2ffb8e0435db4de69b9b6@besiktas-calendar

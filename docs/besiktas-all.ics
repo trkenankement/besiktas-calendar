@@ -557,22 +557,23 @@ DESCRIPTION:Basketbol · EuroLeague · 13. Hafta\nSonuç: 91-87\nKaynak: Eu
 END:VEVENT
 BEGIN:VEVENT
 UID:1635159b73df39219e15767e@besiktas-calendar
-DTSTAMP:20261109T004512Z
+DTSTAMP:20261123T013359Z
+LAST-MODIFIED:20261123T013359Z
+SEQUENCE:1
 SUMMARY:Tümosan Konyaspor - Beşiktaş
 CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
 DTSTART:20261122T130000Z
 DTEND:20261122T151500Z
 STATUS:CONFIRMED
-LOCATION:Medaş Konya Büyükşehir Stadyumu\, Konya
-DESCRIPTION:Futbol · Trendyol Süper Lig · 12. Hafta\nKaynak: TFF (Türki
- ye Futbol Federasyonu) — https://www.tff.org/Default.aspx?pageId=29&macI
- d=317888
+DESCRIPTION:Futbol · Trendyol Süper Lig · 12. Hafta\nSonuç: 2-4\nKaynak
+ : TFF (Türkiye Futbol Federasyonu) — https://www.tff.org/Default.aspx?p
+ ageId=29&macId=317888
 END:VEVENT
 BEGIN:VEVENT
 UID:7b095859f5a4da272a2a18a8@besiktas-calendar
-DTSTAMP:20261121T020651Z
-LAST-MODIFIED:20261121T020651Z
-SEQUENCE:1
+DTSTAMP:20261123T013359Z
+LAST-MODIFIED:20261123T013359Z
+SEQUENCE:2
 SUMMARY:Beşiktaş Fuzul - Fenerbahçe
 CATEGORIES:Beşiktaş,Basketbol,Türkiye Sigorta Basketbol Süper Ligi
 DTSTART:20261122T173000Z
@@ -580,7 +581,8 @@ DTEND:20261122T193000Z
 STATUS:CONFIRMED
 LOCATION:Turkcell Basketbol Gelişim Merkezi\, İstanbul
 DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 9. Hafta
- \nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Federasyonu)
+ \nSonuç: 92-88\nYayın: beINSports\nKaynak: TBF (Türkiye Basketbol Feder
+ asyonu)
 END:VEVENT
 BEGIN:VEVENT
 UID:b72e03c340bb8e1a0f6e4c80@besiktas-calendar
