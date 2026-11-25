@@ -254,11 +254,16 @@ def test_data_is_refreshed_once_a_day_shortly_after_midnight_turkey_time():
     """Türkiye UTC+3'tür: 21:xx UTC = gece 00:xx. Saatlik ya da sık bir zamanlama yanlışlıkla eklenemez."""
     workflow = _workflow()
     schedule = workflow.get("on", workflow.get(True))["schedule"]
-    assert len(schedule) == 1
-    minute, hour, day, month, weekday = schedule[0]["cron"].split()
-    assert (day, month, weekday) == ("*", "*", "*")  # her gün
-    assert hour == "21"  # 00:xx Türkiye saati
-    assert minute.isdigit() and minute != "0"  # tam :00 yoğun; GitHub o dakikadaki işleri geciktirebilir ya da düşürebilir
+    assert len(schedule) == 2
+    recent, full = (entry["cron"].split() for entry in schedule)
+    assert recent[:4] == full[:4]
+    minute, hour, day, month, _ = recent
+    assert (day, month, hour) == ("*", "*", "21")
+    assert minute.isdigit() and minute != "0"
+    assert (recent[4], full[4]) == ("1-6", "0")
+    update = next(step for step in workflow["jobs"]["build"]["steps"] if step["name"] == "Update calendars")
+    assert "endsWith(github.event.schedule, ' 1-6')" in update["env"]["CALENDAR_SCOPE"]
+    assert '"$CALENDAR_SCOPE"' in update["run"]
 
 
 def test_runners_are_pinned_to_a_specific_image():

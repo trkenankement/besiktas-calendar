@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import re
 from dataclasses import replace
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -11,63 +10,16 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-from .. import ics
 from ..club import Club
+from ..console import log
 from ..http import SourceError, get_html, get_json
-from ..models import FOOTBALL, SOURCE_LABELS, TURKEY_TZ, Match
-from ..names import display_name, fold
-from .tff import DEFAULT_LEAGUE_NAME, season_start
+from ..models import TURKEY_TZ, Match
+from ..names import display_name
+from ._league_history import read_league_history, recent_weeks, same_teams, season_start
 
 FIXTURE_URL = "https://www.beinsports.com.tr/lig/super-lig/fikstur"
 API_URL = "https://www.beinsports.com.tr/api/fixture"
 ORG_ID = 18
-_LEAGUE_WEEK = re.compile(rf"^Futbol · {DEFAULT_LEAGUE_NAME} · ([0-9]+)\. Hafta$")
-_UID = re.compile(r"[0-9a-f]{24}")
-
-
-def _unescape(value: str) -> str:
-    return re.sub(r"\\([,;\\nN])", lambda m: "\n" if m[1] in "nN" else m[1], value)
-
-
-def _previous_matches(path: Path, today: date, club: Club) -> dict[int, Match]:
-    matches: dict[int, Match] = {}
-    start_of_season = season_start(today)
-    for uid, event in ics._previous_events(path.read_text(encoding="utf-8")).items():
-        description = _unescape(ics._property(event, "DESCRIPTION") or "").splitlines()
-        week_label = _LEAGUE_WEEK.fullmatch(description[0]) if description else None
-        if week_label is None:
-            continue
-        timestamp = ics._property(event, "DTSTART")
-        if timestamp:
-            start = datetime.strptime(timestamp, "%Y%m%dT%H%M%SZ").replace(tzinfo=UTC).astimezone(TURKEY_TZ)
-        else:
-            start = datetime.strptime(ics._property(event, "DTSTART;VALUE=DATE") or "", "%Y%m%d").date()
-        day = start.date() if isinstance(start, datetime) else start
-        if not start_of_season <= day < date(start_of_season.year + 1, 7, 1):
-            continue
-        week = int(week_label[1])
-        home, sep, away = _unescape(ics._property(event, "SUMMARY") or "").partition(" - ")
-        digest, _, domain = uid.partition("@")
-        if not sep or not home or not away or week in matches or not _UID.fullmatch(digest) or domain != club.uid_domain:
-            raise SourceError("Önceki Süper Lig takviminde geçersiz veya mükerrer maç kaydı")
-        details = dict(line.split(": ", 1) for line in description[1:] if ": " in line)
-        label, _, url = details.get("Kaynak", "").partition(" — ")
-        source = next((key for key in ("tff", "bein") if SOURCE_LABELS[key] == label), "")
-        if not source:
-            raise SourceError("Önceki Süper Lig takvimindeki kaynak tanınamadı")
-        matches[week] = Match(
-            source=source, source_id=str(week), sport=FOOTBALL, competition=DEFAULT_LEAGUE_NAME,
-            round_label=f"{week}. Hafta", start=start, home=home, away=away, calendar_uid=digest,
-            venue=_unescape(ics._property(event, "LOCATION") or ""), result=details.get("Sonuç", ""),
-            broadcast=details.get("Yayın", ""), info_url=url,
-        )
-    return matches
-
-
-def _team_key(name: str) -> str:
-    # Only documented display differences between the two fixture sources.
-    name = fold(name)
-    return {"gaziantep futbol kulubu": "gaziantep fk", "istanbul basaksehir fk": "istanbul basaksehir"}.get(name, name)
 
 
 def _updated_match(old: Match, rows: list[dict], week: int, club: Club) -> Match:
@@ -80,7 +32,7 @@ def _updated_match(old: Match, rows: list[dict], week: int, club: Club) -> Match
     row = candidates[0]
     home = club.team_name(row["homeTeam"]["name"])
     away = club.team_name(row["awayTeam"]["name"])
-    if row["round"] != week or (_team_key(home), _team_key(away)) != (_team_key(old.home), _team_key(old.away)):
+    if row["round"] != week or not same_teams(old, home, away):
         raise SourceError(f"beIN SPORTS: {week}. haftanın eşleşmesi önceki takvimden farklı")
 
     kickoff = datetime.fromisoformat(row["matchDate"])
@@ -111,9 +63,11 @@ def _updated_match(old: Match, rows: list[dict], week: int, club: Club) -> Match
     return old
 
 
-def fetch_super_lig(session: requests.Session, today: date, club: Club, previous: Path) -> list[Match]:
+def fetch_super_lig(
+    session: requests.Session, today: date, club: Club, previous: Path, *, recent: bool = False,
+) -> list[Match]:
     try:
-        history = _previous_matches(previous, today, club)
+        history = read_league_history(previous, today, club)
         soup = BeautifulSoup(get_html(session, FIXTURE_URL, encoding="utf-8"), "html.parser")
         script = soup.find("script", id="__NEXT_DATA__", type="application/json")
         if script is None or script.string is None:
@@ -128,12 +82,14 @@ def fetch_super_lig(session: requests.Session, today: date, club: Club, previous
             raise SourceError("beIN SPORTS: hafta listesi eksik veya geçersiz")
         if history.keys() != set(rounds):
             raise SourceError("Yedek fikstür için aynı sezonun eksiksiz yayımlanmış Süper Lig takvimi gerekli")
-        matches = []
-        for week in rounds:
+        selected = recent_weeks(history, today) if recent else rounds
+        log(f"beIN SPORTS · Süper Lig: {len(selected)}/{len(rounds)} hafta sorgulanıyor.")
+        matches = dict(history)
+        for week in selected:
             rows = get_json(session, API_URL, a="l", o=ORG_ID, s=season["id"], r=week, st=0)["Data"]
             if not isinstance(rows, list) or not 8 <= len(rows) <= 12:
                 raise SourceError(f"beIN SPORTS: {week}. haftanın fikstürü eksik veya geçersiz")
-            matches.append(_updated_match(history[week], rows, week, club))
-        return matches
+            matches[week] = _updated_match(history[week], rows, week, club)
+        return list(matches.values())
     except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
         raise SourceError(f"beIN SPORTS: fikstür veya önceki takvim okunamadı: {exc}") from exc

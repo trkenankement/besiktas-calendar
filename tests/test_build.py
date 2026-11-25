@@ -161,10 +161,10 @@ def test_github_actions_gets_annotations_and_a_step_summary(tmp_path, capsys, mo
 
 def test_cli_forwards_the_output_folder_and_the_club(monkeypatch, tmp_path):
     received = []
-    monkeypatch.setattr(cli, "run", lambda out, club: received.append((out, club.key)) or 0)
+    monkeypatch.setattr(cli, "run", lambda out, club, *, recent: received.append((out, club.key, recent)) or 0)
     monkeypatch.chdir(tmp_path)
     (tmp_path / "club.toml").write_text('club = "fenerbahce"\n', encoding="utf-8")
 
     assert cli.main(["--out", "cikti"]) == 0  # kulüp club.toml dosyasından gelir
-    assert cli.main(["--club", "galatasaray"]) == 0  # komut satırı club.toml'u geçersiz kılar
-    assert received == [(Path("cikti"), "fenerbahce"), (Path("docs"), "galatasaray")]
+    assert cli.main(["--club", "galatasaray", "--scope", "recent"]) == 0  # komut satırı club.toml'u geçersiz kılar
+    assert received == [(Path("cikti"), "fenerbahce", False), (Path("docs"), "galatasaray", True)]

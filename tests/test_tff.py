@@ -1,4 +1,5 @@
 import re
+from dataclasses import replace
 from datetime import date, datetime
 
 import pytest
@@ -208,3 +209,28 @@ def test_fetch_cup_adds_venue_for_upcoming_match():
 
     (match,) = tff.fetch_cup(FakeSession(route), TODAY, BESIKTAS)
     assert match.venue == "Diyarbakır Stadyumu, Diyarbakır"
+
+
+def test_recent_league_refresh_requests_only_nearby_weeks_and_keeps_the_season():
+    old = tff.fetch_super_lig(FakeSession(league_route()), TODAY, BESIKTAS)
+    by_week = {int(m.round_label.split(".")[0]): m for m in old}
+    history = {week: replace(old[0], source_id=f"published-{week}") for week in range(1, 35)}
+    history.update(by_week)
+    history[6] = replace(history[6], source_id="published-6", start=date(2026, 9, 13))
+    session = FakeSession(league_route())
+
+    matches = tff.fetch_super_lig(session, TODAY, BESIKTAS, history=history)
+
+    assert [p["hafta"] for _, p in session.requests if "hafta" in p] == [6, 7]
+    assert {m.uid for m in matches} == {m.uid for m in history.values()}
+    assert len(matches) == 34
+    assert matches[5].start == datetime(2026, 9, 20, 20, 0, tzinfo=TURKEY_TZ)
+    assert matches[19] == history[20]
+
+
+def test_recent_refresh_bootstraps_with_full_scan_if_prior_fixture_incomplete():
+    session = FakeSession(league_route())
+
+    tff.fetch_super_lig(session, TODAY, BESIKTAS, history={})
+
+    assert [p["hafta"] for _, p in session.requests if "hafta" in p] == list(range(1, 35))

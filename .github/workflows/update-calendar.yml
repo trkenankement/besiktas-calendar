@@ -6,8 +6,15 @@ on:
   schedule:
     # Günde bir kez, gece 00:07 (Türkiye saati = 21:07 UTC). Tam :00 yerine :07 seçildi: GitHub yoğun
     # saat başlarında zamanlanmış işleri geciktirebilir ya da düşürebilir.
-    - cron: "7 21 * * *"
+    - cron: "7 21 * * 1-6" # Türkiye saatiyle salı–pazar: yakın maçlar
+    - cron: "7 21 * * 0"   # Türkiye saatiyle pazartesi: tam sezon
   workflow_dispatch:
+    inputs:
+      scope:
+        description: Fikstür tarama kapsamı
+        type: choice
+        options: [full, recent]
+        default: full
 
 permissions:
   contents: read
@@ -65,7 +72,9 @@ jobs:
       # Kaynaklardan biri hata verirse bu adım başarısız olur; böylece eksik veri yayınlanmaz
       # ve bir önceki sağlam site yayında kalır.
       - name: Update calendars
-        run: python -m club_calendar
+        env:
+          CALENDAR_SCOPE: ${{ (github.event_name == 'schedule' && endsWith(github.event.schedule, ' 1-6') && 'recent') || inputs.scope || 'full' }}
+        run: python -m club_calendar --scope "$CALENDAR_SCOPE"
 
       - name: Commit changes
         if: github.ref == 'refs/heads/main'

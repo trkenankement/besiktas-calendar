@@ -32,6 +32,8 @@ katman koymak gerekir; bu, adresi değiştirdiği ve bir dış hizmet gerektirdi
 
 - **Süper Lig:** TFF fikstürü okunamazsa resmi yayıncı beIN SPORTS kullanılır. Yedek güncelleme,
   aynı sezonun yayımlanmış fikstürüyle hafta ve takım eşleşmelerini doğrular ve etkinlik kimliklerini korur.
+  Salı–pazar, son 7 gün ve önümüzdeki 21 gün içindeki maçların haftaları sorgulanır. Diğer haftalar yayımdaki
+  takvimden alınır. Pazartesi bütün sezon yeniden taranır. Kupa ve UEFA akışları günlük kontrol edilir.
 - **Basketbol kupaları** (Cumhurbaşkanlığı, Türkiye ve Federasyon Kupası) TBF'den güncel sezonun turnuvası
   oluşturulur oluşturulmaz otomatik eklenir; henüz oluşturulmamış olanlar atlanır.
 - **Ziraat Türkiye Kupası** (futbol): TFF sayfası yalnızca güncel turu gösterir; Beşiktaş'ın maçı listelenince

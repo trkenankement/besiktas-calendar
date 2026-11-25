@@ -6,6 +6,7 @@ import os
 from collections.abc import Iterable
 from dataclasses import dataclass, replace
 from datetime import UTC, date, datetime
+from functools import partial
 from pathlib import Path
 
 import requests
@@ -16,7 +17,8 @@ from .console import error, log, warn
 from .feeds import feeds_for
 from .http import SourceError, new_session
 from .models import BASKETBALL, FOOTBALL, SPORT_LABELS, TURKEY_TZ, Match
-from .providers import Provider, providers_for
+from .providers import Provider, providers_for, tff
+from .providers._league_history import read_league_history
 from .providers.bein import fetch_super_lig as fetch_backup_super_lig
 from .stats import load_stats
 
@@ -112,11 +114,26 @@ def run(
     providers: Iterable[Provider] | None = None,
     session: requests.Session | None = None,
     now: datetime | None = None,
+    recent: bool = False,
 ) -> int:
     now = now or datetime.now(TURKEY_TZ)
     use_default_sources = providers is None
     providers = providers_for(club) if providers is None else providers
     session = session or new_session()
+    previous = out_dir / f"{club.key}-football.ics"
+    if use_default_sources and recent:
+        try:
+            history = read_league_history(previous, now.date(), club)
+        except (OSError, ValueError, SourceError) as exc:
+            warn(f"Süper Lig: önceki fikstür okunamadı, tam tarama yapılıyor: {exc}")
+            recent = False
+        else:
+            providers = tuple(
+                replace(provider, fetch=partial(tff.fetch_super_lig, history=history))
+                if provider.id == "tff-super-lig" else provider
+                for provider in providers
+            )
+    log(f"Fikstür taraması: {'günlük yakın maçlar' if recent else 'tam sezon'}.")
     outcomes = collect(providers, session, now.date(), club)
     if use_default_sources:
         for outcome in outcomes:
@@ -125,7 +142,7 @@ def run(
                 continue
             warn(f"{outcome.provider.name} okunamadı, beIN SPORTS deneniyor: {outcome.error}")
             try:
-                outcome.matches = fetch_backup_super_lig(session, now.date(), club, out_dir / f"{club.key}-football.ics")
+                outcome.matches = fetch_backup_super_lig(session, now.date(), club, previous, recent=recent)
             except SourceError as exc:
                 outcome.error = f"{failure} | Yedek kaynak: {exc}"
             else:

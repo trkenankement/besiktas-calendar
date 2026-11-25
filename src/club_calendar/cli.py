@@ -21,6 +21,7 @@ def main(argv: list[str] | None = None) -> int:
         choices=sorted(CLUBS),
         help="takip edilen kulüp (varsayılan: deponun kökündeki club.toml dosyasındaki `club` değeri)",
     )
+    parser.add_argument("--scope", choices=("recent", "full"), default="full", help="fikstür taramasının kapsamı")
     args = parser.parse_args(argv)
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
@@ -29,4 +30,4 @@ def main(argv: list[str] | None = None) -> int:
         club = get_club(args.club) if args.club else load_club()
     except ValueError as exc:
         parser.error(str(exc))
-    return run(args.out, club)
+    return run(args.out, club, recent=args.scope == "recent")

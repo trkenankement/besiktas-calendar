@@ -10,10 +10,11 @@ import requests
 from bs4 import BeautifulSoup, Tag
 
 from ..club import Club
-from ..console import warn
+from ..console import log, warn
 from ..http import SourceError, get_html
 from ..models import FOOTBALL, Match, kickoff_or_day
 from ..names import display_name, fold, join_parts, tr_lower
+from ._league_history import DEFAULT_LEAGUE_NAME, recent_weeks, same_teams, season_start
 
 BASE_URL = "https://www.tff.org/Default.aspx"
 ENCODING = "windows-1254"  # TFF sayfaları Windows-1254 ile yayınlanır
@@ -21,7 +22,6 @@ LEAGUE_PAGE = 198  # lig fikstürü; "Haftanın Maçları" bileşeni ?hafta=N il
 CUP_PAGE = 598  # Türkiye Kupası fikstürü
 SUPER_CUP_PAGE = 329  # Süper Kupa arşivi (yeni maç belli olunca aynı tabloya eklenir)
 MATCH_PAGE = 29  # maç detayı (stadyum burada)
-DEFAULT_LEAGUE_NAME = "Trendyol Süper Lig"
 CUP_NAME = "Ziraat Türkiye Kupası"
 SUPER_CUP_NAME = "Süper Kupa"  # sponsor adı her yıl değişir; sponsorsuz ad kullanılır
 
@@ -152,16 +152,39 @@ def _with_venues(session: requests.Session, matches: list[Match]) -> list[Match]
     return enriched
 
 
-def fetch_super_lig(session: requests.Session, today: date, club: Club) -> list[Match]:
+def fetch_super_lig(
+    session: requests.Session, today: date, club: Club, *, history: dict[int, Match] | None = None,
+) -> list[Match]:
     overview = get_html(session, BASE_URL, encoding=ENCODING, pageID=LEAGUE_PAGE)
     competition, weeks = parse_league_overview(overview)
     if weeks > 50:
         raise SourceError("TFF: hafta sayısı sınırı aşıldı")
-    matches: list[Match] = []
-    for week in range(1, weeks + 1):
+    all_weeks = range(1, weeks + 1)
+    if history is not None and (weeks < 30 or set(history) != set(all_weeks)):
+        log("TFF · Süper Lig: aynı sezon için tam fikstür bulunamadı, tam tarama yapılıyor.")
+        history = None
+    selected = list(all_weeks) if history is None else recent_weeks(history, today)
+    log(f"TFF · Süper Lig: {len(selected)}/{weeks} hafta sorgulanıyor.")
+    matches: list[tuple[int, Match]] = []
+    for week in selected:
         html = get_html(session, BASE_URL, encoding=ENCODING, pageID=LEAGUE_PAGE, hafta=week)
-        matches += [_to_match(fixture, competition, f"{week}. Hafta", club) for fixture in parse_week(html, club)]
-    return _with_venues(session, matches)
+        fixtures = parse_week(html, club)
+        if history is not None:
+            if len(fixtures) != 1:
+                raise SourceError(f"TFF: {week}. haftada kulübün tek maçı bulunamadı")
+            fixture = fixtures[0]
+            if not same_teams(history[week], club.team_name(fixture.home), club.team_name(fixture.away)):
+                raise SourceError(f"TFF: {week}. haftanın eşleşmesi önceki takvimden farklı")
+        matches.extend((week, _to_match(f, competition, f"{week}. Hafta", club)) for f in fixtures)
+
+    enriched = _with_venues(session, [match for _, match in matches])
+    if history is None:
+        return enriched
+    merged = dict(history)
+    for (week, _), match in zip(matches, enriched, strict=True):
+        old = history[week]
+        merged[week] = replace(match, calendar_uid=old.uid, venue=match.venue or old.venue)
+    return list(merged.values())
 
 
 # --- Ziraat Türkiye Kupası -------------------------------------------------------------------
@@ -213,11 +236,6 @@ def fetch_cup(session: requests.Session, today: date, club: Club) -> list[Match]
 
 
 # --- Süper Kupa ------------------------------------------------------------------------------
-
-
-def season_start(today: date) -> date:
-    """Futbol sezonu temmuzda başlar."""
-    return date(today.year if today.month >= 7 else today.year - 1, 7, 1)
 
 
 def parse_super_cup(html: str, since: date, club: Club) -> list[Match]:
