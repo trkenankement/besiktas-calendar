@@ -320,15 +320,17 @@ DESCRIPTION:Basketbol · Türkiye Sigorta Basketbol Süper Ligi · 9. Hafta
 END:VEVENT
 BEGIN:VEVENT
 UID:b72e03c340bb8e1a0f6e4c80@besiktas-calendar
-DTSTAMP:20261107T005136Z
+DTSTAMP:20261125T105000Z
+LAST-MODIFIED:20261125T105000Z
+SEQUENCE:1
 SUMMARY:Beşiktaş - Paris
 CATEGORIES:Beşiktaş,Basketbol,EuroLeague
 DTSTART:20261124T170000Z
 DTEND:20261124T190000Z
 STATUS:CONFIRMED
 LOCATION:Turkcell Basketball Development Center
-DESCRIPTION:Basketbol · EuroLeague · 14. Hafta\nKaynak: EuroLeague Basket
- ball
+DESCRIPTION:Basketbol · EuroLeague · 14. Hafta\nSonuç: 76-88\nKaynak: Eu
+ roLeague Basketball
 END:VEVENT
 BEGIN:VEVENT
 UID:eccc8b7353fce9f005dde446@besiktas-calendar

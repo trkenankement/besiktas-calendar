@@ -481,14 +481,16 @@ DESCRIPTION:Futbol · Trendyol Süper Lig · 23. Hafta\nMaç saati henüz a
 END:VEVENT
 BEGIN:VEVENT
 UID:27370c86c833f631d892b74d@besiktas-calendar
-DTSTAMP:20261109T004512Z
+DTSTAMP:20261125T105000Z
+LAST-MODIFIED:20261125T105000Z
+SEQUENCE:1
 SUMMARY:Kocaelispor - Beşiktaş
 CATEGORIES:Beşiktaş,Futbol,Trendyol Süper Lig
 DTSTART;VALUE=DATE:20270307
 DTEND;VALUE=DATE:20270308
 STATUS:TENTATIVE
 TRANSP:TRANSPARENT
-LOCATION:Kocaeli Stadyumu\, Kocaeli
+LOCATION:Turka Araç Muayene Kocaeli Stadyumu\, Kocaeli
 DESCRIPTION:Futbol · Trendyol Süper Lig · 24. Hafta\nMaç saati henüz a
  çıklanmadı\; takvimde tüm gün etkinliği olarak görünür. Saat kesi
  nleşince etkinlik otomatik güncellenir.\nKaynak: TFF (Türkiye Futbol Fe
