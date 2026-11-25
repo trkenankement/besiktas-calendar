@@ -30,6 +30,8 @@ katman koymak gerekir; bu, adresi değiştirdiği ve bir dış hizmet gerektirdi
 
 ## Kapsam ve bilinen sınırlar
 
+- **Süper Lig:** TFF fikstürü okunamazsa resmi yayıncı beIN SPORTS kullanılır. Yedek güncelleme,
+  aynı sezonun yayımlanmış fikstürüyle hafta ve takım eşleşmelerini doğrular ve etkinlik kimliklerini korur.
 - **Basketbol kupaları** (Cumhurbaşkanlığı, Türkiye ve Federasyon Kupası) TBF'den güncel sezonun turnuvası
   oluşturulur oluşturulmaz otomatik eklenir; henüz oluşturulmamış olanlar atlanır.
 - **Ziraat Türkiye Kupası** (futbol): TFF sayfası yalnızca güncel turu gösterir; Beşiktaş'ın maçı listelenince

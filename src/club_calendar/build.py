@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from collections.abc import Iterable
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, date, datetime
 from pathlib import Path
 
@@ -17,6 +17,7 @@ from .feeds import feeds_for
 from .http import SourceError, new_session
 from .models import BASKETBALL, FOOTBALL, SPORT_LABELS, TURKEY_TZ, Match
 from .providers import Provider, providers_for
+from .providers.bein import fetch_super_lig as fetch_backup_super_lig
 from .stats import load_stats
 
 MIN_MATCHES_PER_SPORT = 5  # bunun altı, kaynakların ciddi biçimde bozulduğu anlamına gelir
@@ -113,8 +114,24 @@ def run(
     now: datetime | None = None,
 ) -> int:
     now = now or datetime.now(TURKEY_TZ)
+    use_default_sources = providers is None
     providers = providers_for(club) if providers is None else providers
-    outcomes = collect(providers, session or new_session(), now.date(), club)
+    session = session or new_session()
+    outcomes = collect(providers, session, now.date(), club)
+    if use_default_sources:
+        for outcome in outcomes:
+            failure = outcome.error
+            if outcome.provider.id != "tff-super-lig" or failure is None or not failure.startswith("SourceError:"):
+                continue
+            warn(f"{outcome.provider.name} okunamadı, beIN SPORTS deneniyor: {outcome.error}")
+            try:
+                outcome.matches = fetch_backup_super_lig(session, now.date(), club, out_dir / f"{club.key}-football.ics")
+            except SourceError as exc:
+                outcome.error = f"{failure} | Yedek kaynak: {exc}"
+            else:
+                outcome.provider = replace(outcome.provider, name="beIN SPORTS · Trendyol Süper Lig")
+                outcome.error = None
+            break
 
     errors: list[str] = []
     for outcome in outcomes:

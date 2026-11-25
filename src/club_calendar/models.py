@@ -19,6 +19,7 @@ MATCH_DURATION = {
 }
 SOURCE_LABELS = {
     "tff": "TFF (Türkiye Futbol Federasyonu)",
+    "bein": "beIN SPORTS",
     "uefa": "UEFA",
     "euroleague": "EuroLeague Basketball",
     "tbf": "TBF (Türkiye Basketbol Federasyonu)",
@@ -52,6 +53,7 @@ class Match:
     result: str = ""  # oynandıktan sonra "2-1"
     info_url: str = ""
     broadcast: str = ""
+    calendar_uid: str = ""  # On fallback, preserve the existing published event identity.
 
     @property
     def time_confirmed(self) -> bool:
@@ -70,6 +72,8 @@ class Match:
         Tarih/saat değişse bile aynı kalır; takvim uygulaması etkinliği güncelleyip çoğaltmaz.
         SHA1 burada yalnızca kararlı bir kimlik üretir, güvenlik amacıyla kullanılmaz.
         """
+        if self.calendar_uid:
+            return self.calendar_uid
         key = f"{self.source}:{self.source_id}".encode()
         return hashlib.sha1(key, usedforsecurity=False).hexdigest()[:24]
 
