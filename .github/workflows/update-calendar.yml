@@ -30,7 +30,7 @@ jobs:
   build:
     # ubuntu-latest 19 Ekim 2026'da Ubuntu 26'ya geçecek; günlük iş doğrulanmış imajda kalsın.
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 35
     permissions:
       contents: write # docs/ değişirse commit atmak için
 

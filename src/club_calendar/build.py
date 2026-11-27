@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import time
 from collections.abc import Iterable
 from dataclasses import dataclass, replace
 from datetime import UTC, date, datetime
@@ -34,8 +35,7 @@ class Outcome:
 
 
 def collect(providers: Iterable[Provider], session: requests.Session, today: date, club: Club) -> list[Outcome]:
-    outcomes: list[Outcome] = []
-    for provider in providers:
+    def fetch(provider: Provider) -> tuple[Outcome, bool]:
         try:
             matches = provider.fetch(session, today, club)
             if len(matches) < provider.min_matches:
@@ -43,10 +43,25 @@ def collect(providers: Iterable[Provider], session: requests.Session, today: dat
                     f"beklenenden az maç bulundu ({len(matches)} < {provider.min_matches}); "
                     "kaynak sayfanın yapısı değişmiş olabilir"
                 )
-        except Exception as exc:  # noqa: BLE001 - bir kaynağın hatası diğerlerinin raporlanmasını engellemesin
-            outcomes.append(Outcome(provider, [], f"{type(exc).__name__}: {exc}"))
-        else:
-            outcomes.append(Outcome(provider, matches))
+        except Exception as exc:  # noqa: BLE001 - diğer kaynakların sonuçları da raporlanır
+            cause = exc.__cause__ if isinstance(exc, SourceError) else exc
+            retryable = isinstance(cause, (requests.ConnectionError, requests.Timeout, requests.exceptions.RetryError))
+            return Outcome(provider, [], f"{type(exc).__name__}: {exc}"), retryable
+        return Outcome(provider, matches), False
+
+    outcomes = []
+    pending = []
+    for provider in providers:
+        outcome, retryable = fetch(provider)
+        if retryable:
+            pending.append(len(outcomes))
+        outcomes.append(outcome)
+    if pending:
+        names = ", ".join(outcomes[i].provider.name for i in pending)
+        warn(f"Bağlantı sorunu: {names}. Bu kaynaklar 2 dakika sonra bir kez daha denenecek.")
+        time.sleep(120)
+        for i in pending:
+            outcomes[i], _ = fetch(outcomes[i].provider)
     return outcomes
 
 

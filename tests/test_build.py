@@ -2,6 +2,7 @@ from dataclasses import replace
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
+import requests
 from helpers import BESIKTAS
 from icalendar import Calendar
 
@@ -168,3 +169,31 @@ def test_cli_forwards_the_output_folder_and_the_club(monkeypatch, tmp_path):
     assert cli.main(["--out", "cikti"]) == 0  # kulüp club.toml dosyasından gelir
     assert cli.main(["--club", "galatasaray", "--scope", "recent"]) == 0  # komut satırı club.toml'u geçersiz kılar
     assert received == [(Path("cikti"), "fenerbahce", False), (Path("docs"), "galatasaray", True)]
+
+def test_retry_only_unreachable_sources_after_one_shared_pause(monkeypatch):
+    calls = []
+    waits = []
+    monkeypatch.setattr(build.time, "sleep", waits.append)
+
+    def flaky(session, today, club):
+        calls.append("flaky")
+        if calls.count("flaky") == 1:
+            raise SourceError("TBF") from requests.ConnectTimeout()
+        return []
+
+    def offline(session, today, club):
+        calls.append("offline")
+        raise SourceError("TBF") from requests.ConnectionError()
+
+    def healthy(session, today, club):
+        calls.append("healthy")
+        return []
+
+    sources = [replace(provider(name), fetch=method) for name, method in
+               (("flaky", flaky), ("healthy", healthy), ("offline", offline))]
+    sources.append(provider("invalid", error=SourceError("geçersiz veri")))
+    outcomes = build.collect(sources, object(), NOW.date(), BESIKTAS)
+
+    assert waits == [120]
+    assert calls == ["flaky", "healthy", "offline", "flaky", "offline"]
+    assert [o.error is None for o in outcomes] == [True, True, False, False]
